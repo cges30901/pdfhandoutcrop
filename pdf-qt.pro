@@ -7,7 +7,7 @@
 QT       += core gui
 QMAKE_CXXFLAGS+=`Magick++-config --cppflags --cxxflags --ldflags --lib`
 QMAKE_LFLAGS+=`Magick++-config --cppflags --cxxflags --ldflags --lib`
-LIBS+=-lpoppler-qt5
+LIBS+=-lpoppler-qt5 -lpodofo
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

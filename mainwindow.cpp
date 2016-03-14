@@ -5,11 +5,27 @@
 #include <vector>
 #include <QMessageBox>
 #include <poppler/qt5/poppler-qt5.h>
+#include <podofo/podofo.h>
 
 #define IMAGE_DENSITY 300
 
 using namespace Magick;
+using namespace PoDoFo;
 using namespace std;
+
+void crop_page( PdfPage* pPage, const PdfRect & rCropBox )
+{
+    PdfVariant var;
+    /*
+    printf("%f %f %f %f\n",
+           rCropBox.GetLeft(),
+           rCropBox.GetBottom(),
+           rCropBox.GetWidth(),
+           rCropBox.GetHeight());
+    */
+    rCropBox.ToVariant( var );
+    pPage->GetObject()->GetDictionary().AddKey( PdfName("MediaBox"), var );
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -34,16 +50,11 @@ void MainWindow::on_lneInput_returnPressed()
     if(ui->lneInput->text()!=0){
         ui->labelSelectPoint->setText(tr("Loading..."));
         ui->labelSelectPoint->repaint();
+
         Poppler::Document* document=Poppler::Document::load(ui->lneInput->text());
         Poppler::Page* pdfPage = document->page(0);
         //pixmap=new QPixmap::fromImage(pdfPage->renderToImage(300,300));
-        ui->labelSelectPoint->setPixmap(QPixmap::fromImage(pdfPage->renderToImage(300,300)));
-        /*Image image;
-        image.density(Geometry(IMAGE_DENSITY,IMAGE_DENSITY));
-        image.read(ui->lneInput->text().toStdString()+"[0]");
-        image.write("pdf-qt-output.png");
-        pixmap=new QPixmap("pdf-qt-output.png");
-        ui->labelSelectPoint->setPixmap(*pixmap);*/
+        ui->labelSelectPoint->setPixmap(QPixmap::fromImage(pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY)));
     }
 }
 void MainWindow::on_btnFrameOne_clicked()
@@ -122,7 +133,7 @@ void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
 
 void MainWindow::on_btnConvert_clicked()
 {
-    vector<Image> input;
+    /*vector<Image> input;
     ReadOptions options;
     options.density(Geometry(IMAGE_DENSITY,IMAGE_DENSITY));
     ui->statusBar->showMessage("reading...");
@@ -158,5 +169,43 @@ void MainWindow::on_btnConvert_clicked()
     ui->statusBar->showMessage("writing...");
     writeImages(output.begin(),output.end(),ui->lneOutput->text().toStdString());
     ui->statusBar->clearMessage();
+    QMessageBox::information(this,"finished","finished");
+    */
+    PdfError::EnableDebug( true );
+    PdfError::EnableLogging(false);
+    PdfMemDocument pdfInput;
+    pdfInput.Load(ui->lneInput->text().toLocal8Bit().constData());
+    int frames=ui->spbFrames->value();
+    PdfMemDocument pdfOutput;
+    int xOffset[6];
+    int yOffset[6];
+    xOffset[0]=ui->lneFrameOneX->text().toInt();
+    yOffset[0]=ui->lneFrameOneY->text().toInt();
+    xOffset[1]=ui->lneFrameTwoX->text().toInt();
+    yOffset[1]=ui->lneFrameTwoY->text().toInt();
+    xOffset[2]=ui->lneFrameThreeX->text().toInt();
+    yOffset[2]=ui->lneFrameThreeY->text().toInt();
+    xOffset[3]=ui->lneFrameFourX->text().toInt();
+    yOffset[3]=ui->lneFrameFourY->text().toInt();
+    xOffset[4]=ui->lneFrameFiveX->text().toInt();
+    yOffset[4]=ui->lneFrameFiveY->text().toInt();
+    xOffset[5]=ui->lneFrameSixX->text().toInt();
+    yOffset[5]=ui->lneFrameSixY->text().toInt();
+    int width=ui->lneWidth->text().toDouble()*72/300;
+    int height=ui->lneHeight->text().toDouble()*72/300;
+    PdfRect cropbox[frames];
+    for(int i=0;i<frames;i++){
+        cropbox[i]=PdfRect(double(xOffset[i]*72/300),
+                                pdfInput.GetPage(0)->GetPageSize().GetHeight()-yOffset[i]*72/300-height,
+                                width,height);
+    }
+    for(int pageInput=0;pageInput<pdfInput.GetPageCount();pageInput++){
+        for(int frameCount=0;frameCount<frames;frameCount++){
+            pdfOutput.InsertExistingPageAt(pdfInput,pageInput,pageInput*6+frameCount);
+            PdfPage* pPage = pdfOutput.GetPage(pageInput*6+frameCount);
+            crop_page(pPage,cropbox[frameCount]);
+        }
+    }
+    pdfOutput.Write(ui->lneOutput->text().toLocal8Bit().constData());
     QMessageBox::information(this,"finished","finished");
 }
