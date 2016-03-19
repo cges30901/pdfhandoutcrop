@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
-#include <Magick++.h>
 #include <vector>
 #include <QMessageBox>
 #include <poppler/qt5/poppler-qt5.h>
@@ -9,7 +8,6 @@
 
 #define IMAGE_DENSITY 300
 
-using namespace Magick;
 using namespace PoDoFo;
 using namespace std;
 
@@ -201,8 +199,8 @@ void MainWindow::on_btnConvert_clicked()
     }
     for(int pageInput=0;pageInput<pdfInput.GetPageCount();pageInput++){
         for(int frameCount=0;frameCount<frames;frameCount++){
-            pdfOutput.InsertExistingPageAt(pdfInput,pageInput,pageInput*6+frameCount);
-            PdfPage* pPage = pdfOutput.GetPage(pageInput*6+frameCount);
+            pdfOutput.InsertExistingPageAt(pdfInput,pageInput,pageInput*frames+frameCount);
+            PdfPage* pPage = pdfOutput.GetPage(pageInput*frames+frameCount);
             crop_page(pPage,cropbox[frameCount]);
         }
     }
