@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <poppler/qt5/poppler-qt5.h>
 #include <podofo/podofo.h>
+#include <QFileDialog>
 
 #define IMAGE_DENSITY 300
 
@@ -206,4 +207,21 @@ void MainWindow::on_btnConvert_clicked()
     }
     pdfOutput.Write(ui->lneOutput->text().toLocal8Bit().constData());
     QMessageBox::information(this,"finished","finished");
+}
+
+void MainWindow::on_btnInput_clicked()
+{
+    QString filename=QFileDialog::getOpenFileName(this,QString(),ui->lneInput->text());
+    if(filename.length()!=0){
+        ui->lneInput->setText(filename);
+    }
+    emit on_lneInput_returnPressed();
+}
+
+void MainWindow::on_btnOutput_clicked()
+{
+    QString filename=QFileDialog::getOpenFileName(this,QString(),ui->lneOutput->text());
+    if(filename.length()!=0){
+        ui->lneOutput->setText(filename);
+    }
 }

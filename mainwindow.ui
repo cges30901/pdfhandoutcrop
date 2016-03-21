@@ -38,6 +38,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QToolButton" name="btnInput">
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -56,6 +63,13 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnOutput">
+            <property name="text">
+             <string>...</string>
             </property>
            </widget>
           </item>
@@ -142,7 +156,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>355</width>
+           <width>320</width>
            <height>216</height>
           </rect>
          </property>

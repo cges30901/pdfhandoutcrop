@@ -29,6 +29,8 @@ private slots:
     void on_btnFrameSix_clicked();
     void on_labelSelectPoint_mousePressed(int , int );
     void on_btnConvert_clicked();
+    void on_btnInput_clicked();
+    void on_btnOutput_clicked();
 
 private:
     Ui::MainWindow *ui;
