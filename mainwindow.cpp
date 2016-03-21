@@ -228,7 +228,7 @@ void MainWindow::on_btnInput_clicked()
 
 void MainWindow::on_btnOutput_clicked()
 {
-    QString filename=QFileDialog::getOpenFileName(this,QString(),ui->lneOutput->text());
+    QString filename=QFileDialog::getSaveFileName(this,QString(),ui->lneOutput->text());
     if(filename.length()!=0){
         ui->lneOutput->setText(filename);
     }
