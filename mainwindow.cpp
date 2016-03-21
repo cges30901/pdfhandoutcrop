@@ -51,6 +51,11 @@ void MainWindow::on_lneInput_returnPressed()
         ui->labelSelectPoint->repaint();
 
         Poppler::Document* document=Poppler::Document::load(ui->lneInput->text());
+        if (!document || document->isLocked()) {
+            QMessageBox::warning(this,tr("warning"),tr("can not open input file"));
+            ui->labelSelectPoint->setText(tr(""));
+            return;
+        }
         Poppler::Page* pdfPage = document->page(0);
         //pixmap=new QPixmap::fromImage(pdfPage->renderToImage(300,300));
         ui->labelSelectPoint->setPixmap(QPixmap::fromImage(pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY)));
