@@ -15,13 +15,6 @@ using namespace std;
 void crop_page( PdfPage* pPage, const PdfRect & rCropBox )
 {
     PdfVariant var;
-    /*
-    printf("%f %f %f %f\n",
-           rCropBox.GetLeft(),
-           rCropBox.GetBottom(),
-           rCropBox.GetWidth(),
-           rCropBox.GetHeight());
-    */
     rCropBox.ToVariant( var );
     pPage->GetObject()->GetDictionary().AddKey( PdfName("MediaBox"), var );
 }
@@ -129,44 +122,6 @@ void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
 
 void MainWindow::on_btnConvert_clicked()
 {
-    /*vector<Image> input;
-    ReadOptions options;
-    options.density(Geometry(IMAGE_DENSITY,IMAGE_DENSITY));
-    ui->statusBar->showMessage("reading...");
-    readImages(&input,ui->lneInput->text().toStdString(),options);
-    int frames=ui->spbFrames->value();
-    //int size=input.size()*frames;
-    vector<Image> output(input.size()*frames);
-    int xOffset[6];
-    int yOffset[6];
-    //for(int i=0;i<frames;i++){
-        //cin>>xOffset[i]>>yOffset[i];
-    //}
-    xOffset[0]=ui->lneFrameOneX->text().toInt();
-    yOffset[0]=ui->lneFrameOneY->text().toInt();
-    xOffset[1]=ui->lneFrameTwoX->text().toInt();
-    yOffset[1]=ui->lneFrameTwoY->text().toInt();
-    xOffset[2]=ui->lneFrameThreeX->text().toInt();
-    yOffset[2]=ui->lneFrameThreeY->text().toInt();
-    xOffset[3]=ui->lneFrameFourX->text().toInt();
-    yOffset[3]=ui->lneFrameFourY->text().toInt();
-    xOffset[4]=ui->lneFrameFiveX->text().toInt();
-    yOffset[4]=ui->lneFrameFiveY->text().toInt();
-    xOffset[5]=ui->lneFrameSixX->text().toInt();
-    yOffset[5]=ui->lneFrameSixY->text().toInt();
-    ui->statusBar->showMessage("cropping...");
-    for(unsigned int i=0;i<input.size();i++){
-        for(int j=0;j<frames;j++){
-            output[i*frames+j]=input[i];
-            output[i*frames+j].crop(Geometry(ui->lneWidth->text().toInt(),ui->lneHeight->text().toInt(),xOffset[j],yOffset[j]));
-            output[i*frames+j].page(Geometry(ui->lneWidth->text().toInt(),ui->lneHeight->text().toInt()));
-        }
-    }
-    ui->statusBar->showMessage("writing...");
-    writeImages(output.begin(),output.end(),ui->lneOutput->text().toStdString());
-    ui->statusBar->clearMessage();
-    QMessageBox::information(this,"finished","finished");
-    */
     PdfError::EnableDebug( true );
     PdfError::EnableLogging(false);
     PdfMemDocument pdfInput;
