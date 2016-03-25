@@ -32,6 +32,18 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     set=0;
+    lneFrame[1][0]=ui->lneFrameOneX;
+    lneFrame[1][1]=ui->lneFrameOneY;
+    lneFrame[2][0]=ui->lneFrameTwoX;
+    lneFrame[2][1]=ui->lneFrameTwoY;
+    lneFrame[3][0]=ui->lneFrameThreeX;
+    lneFrame[3][1]=ui->lneFrameThreeY;
+    lneFrame[4][0]=ui->lneFrameFourX;
+    lneFrame[4][1]=ui->lneFrameFourY;
+    lneFrame[5][0]=ui->lneFrameFiveX;
+    lneFrame[5][1]=ui->lneFrameFiveY;
+    lneFrame[6][0]=ui->lneFrameSixX;
+    lneFrame[6][1]=ui->lneFrameSixY;
     pixmap_draw=new QPixmap(*pixmap);
 }
 
@@ -97,34 +109,9 @@ void MainWindow::on_btnFrameSix_clicked()
 
 void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
 {
-    if(set==1){
-        ui->lneFrameOneX->setText(QString::number(x));
-        ui->lneFrameOneY->setText(QString::number(y));
-        set=0;
-    }
-    else if(set==2){
-        ui->lneFrameTwoX->setText(QString::number(x));
-        ui->lneFrameTwoY->setText(QString::number(y));
-        set=0;
-    }
-    else if(set==3){
-        ui->lneFrameThreeX->setText(QString::number(x));
-        ui->lneFrameThreeY->setText(QString::number(y));
-        set=0;
-    }
-    else if(set==4){
-        ui->lneFrameFourX->setText(QString::number(x));
-        ui->lneFrameFourY->setText(QString::number(y));
-        set=0;
-    }
-    else if(set==5){
-        ui->lneFrameFiveX->setText(QString::number(x));
-        ui->lneFrameFiveY->setText(QString::number(y));
-        set=0;
-    }
-    else if(set==6){
-        ui->lneFrameSixX->setText(QString::number(x));
-        ui->lneFrameSixY->setText(QString::number(y));
+    if(set>=1 and set <=6){
+        lneFrame[set][0]->setText(QString::number(x));
+        lneFrame[set][1]->setText(QString::number(y));
         set=0;
     }
     else if(set==7){//set Width and Height - step one
@@ -186,20 +173,12 @@ void MainWindow::on_btnConvert_clicked()
     pdfInput.Load(ui->lneInput->text().toLocal8Bit().constData());
     int frames=ui->spbFrames->value();
     PdfMemDocument pdfOutput;
-    int xOffset[6];
-    int yOffset[6];
-    xOffset[0]=ui->lneFrameOneX->text().toInt();
-    yOffset[0]=ui->lneFrameOneY->text().toInt();
-    xOffset[1]=ui->lneFrameTwoX->text().toInt();
-    yOffset[1]=ui->lneFrameTwoY->text().toInt();
-    xOffset[2]=ui->lneFrameThreeX->text().toInt();
-    yOffset[2]=ui->lneFrameThreeY->text().toInt();
-    xOffset[3]=ui->lneFrameFourX->text().toInt();
-    yOffset[3]=ui->lneFrameFourY->text().toInt();
-    xOffset[4]=ui->lneFrameFiveX->text().toInt();
-    yOffset[4]=ui->lneFrameFiveY->text().toInt();
-    xOffset[5]=ui->lneFrameSixX->text().toInt();
-    yOffset[5]=ui->lneFrameSixY->text().toInt();
+    int xOffset[frames];
+    int yOffset[frames];
+    for(int i=0;i<frames;i++){
+        xOffset[i]=lneFrame[i+1][0]->text().toInt();
+        yOffset[i]=lneFrame[i+1][1]->text().toInt();
+    }
     int width=ui->lneWidth->text().toDouble()*72/300;
     int height=ui->lneHeight->text().toDouble()*72/300;
     PdfRect cropbox[frames];
@@ -242,38 +221,15 @@ void MainWindow::drawPixmap()
     pixmap_draw=new QPixmap(*pixmap);
     QPainter painter(pixmap_draw);
     painter.setPen(Qt::red);
-    QPainterPath path[6];
-    path[0].moveTo(ui->lneFrameOneX->text().toDouble(),ui->lneFrameOneY->text().toDouble());
-    path[0].lineTo(ui->lneFrameOneX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameOneY->text().toDouble());
-    path[0].lineTo(ui->lneFrameOneX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameOneY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[0].lineTo(ui->lneFrameOneX->text().toDouble(),ui->lneFrameOneY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[0].lineTo(ui->lneFrameOneX->text().toDouble(),ui->lneFrameOneY->text().toDouble());
-    path[1].moveTo(ui->lneFrameTwoX->text().toDouble(),ui->lneFrameTwoY->text().toDouble());
-    path[1].lineTo(ui->lneFrameTwoX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameTwoY->text().toDouble());
-    path[1].lineTo(ui->lneFrameTwoX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameTwoY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[1].lineTo(ui->lneFrameTwoX->text().toDouble(),ui->lneFrameTwoY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[1].lineTo(ui->lneFrameTwoX->text().toDouble(),ui->lneFrameTwoY->text().toDouble());
-    path[2].moveTo(ui->lneFrameThreeX->text().toDouble(),ui->lneFrameThreeY->text().toDouble());
-    path[2].lineTo(ui->lneFrameThreeX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameThreeY->text().toDouble());
-    path[2].lineTo(ui->lneFrameThreeX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameThreeY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[2].lineTo(ui->lneFrameThreeX->text().toDouble(),ui->lneFrameThreeY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[2].lineTo(ui->lneFrameThreeX->text().toDouble(),ui->lneFrameThreeY->text().toDouble());
-    path[3].moveTo(ui->lneFrameFourX->text().toDouble(),ui->lneFrameFourY->text().toDouble());
-    path[3].lineTo(ui->lneFrameFourX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameFourY->text().toDouble());
-    path[3].lineTo(ui->lneFrameFourX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameFourY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[3].lineTo(ui->lneFrameFourX->text().toDouble(),ui->lneFrameFourY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[3].lineTo(ui->lneFrameFourX->text().toDouble(),ui->lneFrameFourY->text().toDouble());
-    path[4].moveTo(ui->lneFrameFiveX->text().toDouble(),ui->lneFrameFiveY->text().toDouble());
-    path[4].lineTo(ui->lneFrameFiveX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameFiveY->text().toDouble());
-    path[4].lineTo(ui->lneFrameFiveX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameFiveY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[4].lineTo(ui->lneFrameFiveX->text().toDouble(),ui->lneFrameFiveY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[4].lineTo(ui->lneFrameFiveX->text().toDouble(),ui->lneFrameFiveY->text().toDouble());
-    path[5].moveTo(ui->lneFrameSixX->text().toDouble(),ui->lneFrameSixY->text().toDouble());
-    path[5].lineTo(ui->lneFrameSixX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameSixY->text().toDouble());
-    path[5].lineTo(ui->lneFrameSixX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameSixY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[5].lineTo(ui->lneFrameSixX->text().toDouble(),ui->lneFrameSixY->text().toDouble()+ui->lneHeight->text().toDouble());
-    path[5].lineTo(ui->lneFrameSixX->text().toDouble(),ui->lneFrameSixY->text().toDouble());
-
+    QPainterPath path[ui->spbFrames->value()];
+    for(int i=0;i<ui->spbFrames->value();i++){
+        if(lneFrame[i+1][0]->text().isEmpty() or lneFrame[i+1][1]->text().isEmpty()) continue;
+        path[i].moveTo(lneFrame[i+1][0]->text().toDouble(),lneFrame[i+1][1]->text().toDouble());
+        path[i].lineTo(lneFrame[i+1][0]->text().toDouble()+ui->lneWidth->text().toDouble(),lneFrame[i+1][1]->text().toDouble());
+        path[i].lineTo(lneFrame[i+1][0]->text().toDouble()+ui->lneWidth->text().toDouble(),lneFrame[i+1][1]->text().toDouble()+ui->lneHeight->text().toDouble());
+        path[i].lineTo(lneFrame[i+1][0]->text().toDouble(),lneFrame[i+1][1]->text().toDouble()+ui->lneHeight->text().toDouble());
+        path[i].lineTo(lneFrame[i+1][0]->text().toDouble(),lneFrame[i+1][1]->text().toDouble());
+    }
     for(int i=0;i<ui->spbFrames->value();i++){
         painter.drawPath(path[i]);
     }

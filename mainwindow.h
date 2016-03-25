@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QPixmap>
 #include <QPainter>
+#include <QLineEdit>
 
 namespace Ui {
 class MainWindow;
@@ -12,6 +13,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    QLineEdit *lneFrame[7][2];
     QPixmap *pixmap;
     QPixmap *pixmap_draw;
     int set;
