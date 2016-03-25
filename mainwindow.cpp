@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     set=0;
+    pixmap_draw=new QPixmap(*pixmap);
 }
 
 MainWindow::~MainWindow()
@@ -58,8 +59,8 @@ void MainWindow::on_lneInput_returnPressed()
             return;
         }
         Poppler::Page* pdfPage = document->page(0);
-        //pixmap=new QPixmap::fromImage(pdfPage->renderToImage(300,300));
-        ui->labelSelectPoint->setPixmap(QPixmap::fromImage(pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY)));
+        pixmap=new QPixmap(QPixmap::fromImage(pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY)));
+        ui->labelSelectPoint->setPixmap(*pixmap);
         delete pdfPage;
         delete document;
     }
@@ -136,6 +137,7 @@ void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
         ui->lneHeight->setText(QString::number(y-upperleftY));
         set=0;
     }
+    drawPixmap();
 }
 
 void MainWindow::on_btnConvert_clicked()
@@ -232,4 +234,48 @@ void MainWindow::on_btnOutput_clicked()
     if(filename.length()!=0){
         ui->lneOutput->setText(filename);
     }
+}
+
+void MainWindow::drawPixmap()
+{
+    delete pixmap_draw;
+    pixmap_draw=new QPixmap(*pixmap);
+    QPainter painter(pixmap_draw);
+    painter.setPen(Qt::red);
+    QPainterPath path[6];
+    path[0].moveTo(ui->lneFrameOneX->text().toDouble(),ui->lneFrameOneY->text().toDouble());
+    path[0].lineTo(ui->lneFrameOneX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameOneY->text().toDouble());
+    path[0].lineTo(ui->lneFrameOneX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameOneY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[0].lineTo(ui->lneFrameOneX->text().toDouble(),ui->lneFrameOneY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[0].lineTo(ui->lneFrameOneX->text().toDouble(),ui->lneFrameOneY->text().toDouble());
+    path[1].moveTo(ui->lneFrameTwoX->text().toDouble(),ui->lneFrameTwoY->text().toDouble());
+    path[1].lineTo(ui->lneFrameTwoX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameTwoY->text().toDouble());
+    path[1].lineTo(ui->lneFrameTwoX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameTwoY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[1].lineTo(ui->lneFrameTwoX->text().toDouble(),ui->lneFrameTwoY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[1].lineTo(ui->lneFrameTwoX->text().toDouble(),ui->lneFrameTwoY->text().toDouble());
+    path[2].moveTo(ui->lneFrameThreeX->text().toDouble(),ui->lneFrameThreeY->text().toDouble());
+    path[2].lineTo(ui->lneFrameThreeX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameThreeY->text().toDouble());
+    path[2].lineTo(ui->lneFrameThreeX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameThreeY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[2].lineTo(ui->lneFrameThreeX->text().toDouble(),ui->lneFrameThreeY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[2].lineTo(ui->lneFrameThreeX->text().toDouble(),ui->lneFrameThreeY->text().toDouble());
+    path[3].moveTo(ui->lneFrameFourX->text().toDouble(),ui->lneFrameFourY->text().toDouble());
+    path[3].lineTo(ui->lneFrameFourX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameFourY->text().toDouble());
+    path[3].lineTo(ui->lneFrameFourX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameFourY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[3].lineTo(ui->lneFrameFourX->text().toDouble(),ui->lneFrameFourY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[3].lineTo(ui->lneFrameFourX->text().toDouble(),ui->lneFrameFourY->text().toDouble());
+    path[4].moveTo(ui->lneFrameFiveX->text().toDouble(),ui->lneFrameFiveY->text().toDouble());
+    path[4].lineTo(ui->lneFrameFiveX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameFiveY->text().toDouble());
+    path[4].lineTo(ui->lneFrameFiveX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameFiveY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[4].lineTo(ui->lneFrameFiveX->text().toDouble(),ui->lneFrameFiveY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[4].lineTo(ui->lneFrameFiveX->text().toDouble(),ui->lneFrameFiveY->text().toDouble());
+    path[5].moveTo(ui->lneFrameSixX->text().toDouble(),ui->lneFrameSixY->text().toDouble());
+    path[5].lineTo(ui->lneFrameSixX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameSixY->text().toDouble());
+    path[5].lineTo(ui->lneFrameSixX->text().toDouble()+ui->lneWidth->text().toDouble(),ui->lneFrameSixY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[5].lineTo(ui->lneFrameSixX->text().toDouble(),ui->lneFrameSixY->text().toDouble()+ui->lneHeight->text().toDouble());
+    path[5].lineTo(ui->lneFrameSixX->text().toDouble(),ui->lneFrameSixY->text().toDouble());
+
+    for(int i=0;i<ui->spbFrames->value();i++){
+        painter.drawPath(path[i]);
+    }
+    ui->labelSelectPoint->setPixmap(*pixmap_draw);
 }

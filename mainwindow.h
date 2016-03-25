@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPixmap>
+#include <QPainter>
 
 namespace Ui {
 class MainWindow;
@@ -12,8 +13,10 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     QPixmap *pixmap;
+    QPixmap *pixmap_draw;
     int set;
     int upperleftX,upperleftY;
+    void drawPixmap();
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
