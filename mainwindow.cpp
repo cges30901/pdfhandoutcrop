@@ -134,12 +134,12 @@ void MainWindow::on_btnConvert_clicked()
         xOffset[i]=lneFrame[i+1][0]->text().toInt();
         yOffset[i]=lneFrame[i+1][1]->text().toInt();
     }
-    int width=ui->lneWidth->text().toDouble()*72/300;
-    int height=ui->lneHeight->text().toDouble()*72/300;
+    int width=ui->lneWidth->text().toDouble()*72/IMAGE_DENSITY;
+    int height=ui->lneHeight->text().toDouble()*72/IMAGE_DENSITY;
     PdfRect cropbox[frames];
     for(int i=0;i<frames;i++){
-        cropbox[i]=PdfRect(double(xOffset[i]*72/300),
-                                pdfInput.GetPage(0)->GetPageSize().GetHeight()-yOffset[i]*72/300-height,
+        cropbox[i]=PdfRect(double(xOffset[i]*72/IMAGE_DENSITY),
+                                pdfInput.GetPage(0)->GetPageSize().GetHeight()-yOffset[i]*72/IMAGE_DENSITY-height,
                                 width,height);
     }
     for(int pageInput=0;pageInput<pdfInput.GetPageCount();pageInput++){
