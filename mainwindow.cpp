@@ -64,7 +64,8 @@ void MainWindow::on_lneInput_returnPressed()
             return;
         }
         Poppler::Page* pdfPage = document->page(0);
-        pixmap=new QPixmap(QPixmap::fromImage(pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY)));
+        image=new QImage(pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY));
+        pixmap=new QPixmap(QPixmap::fromImage(*image));
         ui->labelSelectPoint->setPixmap(*pixmap);
         delete pdfPage;
         delete document;
