@@ -191,3 +191,33 @@ void MainWindow::drawPixmap()
     }
     ui->labelSelectPoint->setPixmap(*pixmap_draw);
 }
+
+void MainWindow::on_btnAutoDetect_clicked()
+{
+    //find the upperleft point of the first frame
+    QPoint point[ui->spbFrames->text().toInt()];
+    point[0]=findFirstPoint();
+    qDebug()<<point[0].x()<<point[0].y();
+}
+
+QPoint MainWindow::findFirstPoint(int xOffset, int yOffset)
+{
+    QPoint point;
+    for(;yOffset<image->height();yOffset++){
+        const QRgb *pixel=reinterpret_cast< const QRgb* >(image->constScanLine(yOffset));
+        for(;xOffset<image->width();xOffset++){
+            if(*(pixel+xOffset)!=4294967295){
+                point.setX(xOffset);
+                point.setY(yOffset);
+                //if white in 100, find the next point
+                for(int length=0;length<100 and point.y()+length<image->height() and point.x()+length<image->width();length++){
+                    if(image->pixel(point.x(),point.y()+length)==4294967295 or image->pixel(point.x()+length,point.y())==4294967295)
+                        point=findFirstPoint(point.x()+1,point.y());
+                }
+                return point;
+            }
+        }
+        xOffset=0;
+    }
+    return point;
+}

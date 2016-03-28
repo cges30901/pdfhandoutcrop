@@ -21,6 +21,7 @@ class MainWindow : public QMainWindow
     int set;
     int upperleftX,upperleftY;
     void drawPixmap();
+    QPoint findFirstPoint(int xOffset=0,int yOffset=0);
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -38,6 +39,8 @@ private slots:
     void on_btnConvert_clicked();
     void on_btnInput_clicked();
     void on_btnOutput_clicked();
+
+    void on_btnAutoDetect_clicked();
 
 private:
     Ui::MainWindow *ui;
