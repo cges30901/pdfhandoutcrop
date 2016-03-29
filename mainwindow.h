@@ -22,6 +22,7 @@ class MainWindow : public QMainWindow
     int upperleftX,upperleftY;
     void drawPixmap();
     QPoint findFirstPoint(int xOffset=0,int yOffset=0);
+    void findSize(QPoint first,int &width,int &height);
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();

@@ -198,6 +198,11 @@ void MainWindow::on_btnAutoDetect_clicked()
     QPoint point[ui->spbFrames->text().toInt()];
     point[0]=findFirstPoint();
     qDebug()<<point[0].x()<<point[0].y();
+
+    //find the height and width
+    int height,width;
+    findSize(point[0],width,height);
+    qDebug()<<width<<height;
 }
 
 QPoint MainWindow::findFirstPoint(int xOffset, int yOffset)
@@ -220,4 +225,20 @@ QPoint MainWindow::findFirstPoint(int xOffset, int yOffset)
         xOffset=0;
     }
     return point;
+}
+
+void MainWindow::findSize(QPoint first, int &width, int &height){
+    //find width
+    for(int i=0;i+first.x()<image->width();i++){
+        if(image->pixel(first.x()+i,first.y())==4294967295){
+            width=i;
+            break;
+        }
+    }
+    for(int i=0;i+first.y()<image->height();i++){
+        if(image->pixel(first.x(),first.y()+i)==4294967295){
+            height=i;
+            break;
+        }
+    }
 }
