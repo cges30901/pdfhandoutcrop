@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QLineEdit>
 #include <QImage>
+#include <vector>
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +24,7 @@ class MainWindow : public QMainWindow
     void drawPixmap();
     QPoint findFirstPoint(int xOffset=0,int yOffset=0);
     void findSize(QPoint first,int &width,int &height);
+    void findColumns(QPoint first,int width,std::vector<int>& columns);
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();

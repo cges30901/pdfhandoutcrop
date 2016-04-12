@@ -203,6 +203,13 @@ void MainWindow::on_btnAutoDetect_clicked()
     int height,width;
     findSize(point[0],width,height);
     qDebug()<<width<<height;
+
+    //find columns
+    std::vector<int> columns(1);
+    findColumns(point[0],width,columns);
+    for(unsigned int i=0;i<columns.size();i++){
+        qDebug()<<columns[i];
+    }
 }
 
 QPoint MainWindow::findFirstPoint(int xOffset, int yOffset)
@@ -239,6 +246,18 @@ void MainWindow::findSize(QPoint first, int &width, int &height){
         if(image->pixel(first.x(),first.y()+i)==4294967295){
             height=i;
             break;
+        }
+    }
+}
+
+void MainWindow::findColumns(QPoint first, int width, std::vector<int>& columns)
+{
+    columns[0]=first.x();
+    const QRgb *pixel=reinterpret_cast< const QRgb* >(image->constScanLine(first.y()));
+    for(int xOffset=first.x()+width;xOffset<image->width();xOffset++){
+        if(*(pixel+xOffset)!=4294967295){
+            columns.push_back(xOffset);
+            xOffset+=width;
         }
     }
 }
