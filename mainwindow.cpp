@@ -197,19 +197,25 @@ void MainWindow::on_btnAutoDetect_clicked()
     //find the upperleft point of the first frame
     QPoint point[ui->spbFrames->text().toInt()];
     point[0]=findFirstPoint();
-    qDebug()<<point[0].x()<<point[0].y();
 
     //find the height and width
     int height,width;
     findSize(point[0],width,height);
-    qDebug()<<width<<height;
 
     //find columns
     std::vector<int> columns(1);
     findColumns(point[0],width,columns);
-    for(unsigned int i=0;i<columns.size();i++){
-        qDebug()<<columns[i];
+
+    //find rows
+    std::vector<int> rows(1);
+    findRows(point[0],height,rows);
+    ui->lneWidth->setText(QString::number(width));
+    ui->lneHeight->setText(QString::number(height));
+    for(int i=1;i<=ui->spbFrames->value() and i<=rows.size()*columns.size();i++){
+        lneFrame[i][0]->setText(QString::number(columns[(i-1)%2]));
+        lneFrame[i][1]->setText(QString::number(rows[(i-1)/2]));
     }
+    drawPixmap();
 }
 
 QPoint MainWindow::findFirstPoint(int xOffset, int yOffset)
@@ -258,6 +264,17 @@ void MainWindow::findColumns(QPoint first, int width, std::vector<int>& columns)
         if(*(pixel+xOffset)!=4294967295){
             columns.push_back(xOffset);
             xOffset+=width;
+        }
+    }
+}
+
+void MainWindow::findRows(QPoint first, int height, std::vector<int>& rows)
+{
+    rows[0]=first.y();
+    for(int yOffset=first.y()+height;yOffset<image->height();yOffset++){
+        if(image->pixel(first.x(),yOffset)!=4294967295){
+            rows.push_back(yOffset);
+            yOffset+=height;
         }
     }
 }

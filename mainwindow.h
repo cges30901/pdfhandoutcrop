@@ -25,6 +25,7 @@ class MainWindow : public QMainWindow
     QPoint findFirstPoint(int xOffset=0,int yOffset=0);
     void findSize(QPoint first,int &width,int &height);
     void findColumns(QPoint first,int width,std::vector<int>& columns);
+    void findRows(QPoint first,int height,std::vector<int>& rows);
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
