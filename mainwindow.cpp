@@ -56,6 +56,13 @@ void MainWindow::on_lneInput_returnPressed()//load PDF file
         ui->labelSelectPoint->setText(tr("Loading..."));
         ui->labelSelectPoint->repaint();
 
+        ui->lneWidth->clear();
+        ui->lneHeight->clear();
+        for(int i=1;i<=6;i++){
+            lneFrame[i][0]->clear();
+            lneFrame[i][1]->clear();
+        }
+
         Poppler::Document* document=Poppler::Document::load(ui->lneInput->text());
         if (!document || document->isLocked()) {
             QMessageBox::warning(this,tr("warning"),tr("can not open input file"));
