@@ -218,6 +218,7 @@ void MainWindow::on_btnAutoDetect_clicked()
     std::vector<int> rows(1);
     findRows(point[0],height,rows);
 
+    ui->spbFrames->setValue(rows.size()*columns.size());
     ui->lneWidth->setText(QString::number(width));
     ui->lneHeight->setText(QString::number(height));
     for(int i=1;i<=ui->spbFrames->value() and i<=rows.size()*columns.size();i++){
