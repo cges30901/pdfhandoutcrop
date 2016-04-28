@@ -209,11 +209,12 @@ void MainWindow::on_btnAutoDetect_clicked()
     //find rows
     std::vector<int> rows(1);
     findRows(point[0],height,rows);
+
     ui->lneWidth->setText(QString::number(width));
     ui->lneHeight->setText(QString::number(height));
     for(int i=1;i<=ui->spbFrames->value() and i<=rows.size()*columns.size();i++){
-        lneFrame[i][0]->setText(QString::number(columns[(i-1)%2]));
-        lneFrame[i][1]->setText(QString::number(rows[(i-1)/2]));
+        lneFrame[i][0]->setText(QString::number(columns[(i-1)%columns.size()]));
+        lneFrame[i][1]->setText(QString::number(rows[(i-1)/columns.size()]));
     }
     drawPixmap();
 }
