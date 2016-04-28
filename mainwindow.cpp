@@ -50,7 +50,7 @@ void MainWindow::on_btnWidthHeight_clicked()
     set=7;
 }
 
-void MainWindow::on_lneInput_returnPressed()
+void MainWindow::on_lneInput_returnPressed()//load PDF file
 {
     if(ui->lneInput->text()!=0){
         ui->labelSelectPoint->setText(tr("Loading..."));
@@ -159,8 +159,8 @@ void MainWindow::on_btnInput_clicked()
     QString filename=QFileDialog::getOpenFileName(this,QString(),ui->lneInput->text());
     if(filename.length()!=0){
         ui->lneInput->setText(filename);
+        emit on_lneInput_returnPressed();
     }
-    emit on_lneInput_returnPressed();
 }
 
 void MainWindow::on_btnOutput_clicked()
