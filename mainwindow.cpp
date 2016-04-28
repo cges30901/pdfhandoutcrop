@@ -212,6 +212,10 @@ void MainWindow::on_btnAutoDetect_clicked()
     //find the upperleft point of the first frame
     QPoint point[ui->spbFrames->text().toInt()];
     point[0]=findFirstPoint();
+    if(point[0].x()==-1){
+        QMessageBox::warning(this,tr("warning"),tr("frame not found"));
+        return;
+    }
 
     //find the height and width
     int height,width;
@@ -245,16 +249,21 @@ QPoint MainWindow::findFirstPoint(int xOffset, int yOffset)
                 point.setX(xOffset);
                 point.setY(yOffset);
                 //if white in 100, find the next point
-                for(int length=0;length<100 and point.y()+length<image->height() and point.x()+length<image->width();length++){
-                    if(image->pixel(point.x(),point.y()+length)==4294967295 or image->pixel(point.x()+length,point.y())==4294967295)
-                        point=findFirstPoint(point.x()+1,point.y());
+                int length;
+                for(length=0;length<100 and point.y()+length<image->height() and point.x()+length<image->width();length++){
+                    if(image->pixel(point.x(),point.y()+length)==4294967295 or image->pixel(point.x()+length,point.y())==4294967295){
+                        length=101;//not a frame
+                        break;
+                    }
                 }
-                return point;
+                if(length!=101){
+                    return point;
+                }
             }
         }
         xOffset=0;
     }
-    return point;
+    return QPoint(-1,-1);
 }
 
 void MainWindow::findSize(QPoint first, int &width, int &height){
