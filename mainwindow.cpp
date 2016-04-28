@@ -126,6 +126,14 @@ void MainWindow::on_btnConvert_clicked()
     PdfError::EnableDebug( true );
     PdfError::EnableLogging(false);
     PdfMemDocument pdfInput;
+    if(ui->lneInput->text().isEmpty()){
+        QMessageBox::warning(this,tr("warning"),tr("Please set input file"));
+        return;
+    }
+    if(ui->lneOutput->text().isEmpty()){
+        QMessageBox::warning(this,tr("warning"),tr("Please set output file"));
+        return;
+    }
     pdfInput.Load(ui->lneInput->text().toLocal8Bit().constData());
     int frames=ui->spbFrames->value();
     PdfMemDocument pdfOutput;
