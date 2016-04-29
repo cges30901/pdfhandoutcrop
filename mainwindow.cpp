@@ -150,12 +150,12 @@ void MainWindow::on_btnConvert_clicked()
         xOffset[i]=lneFrame[i+1][0]->text().toInt();
         yOffset[i]=lneFrame[i+1][1]->text().toInt();
     }
-    int width=ui->lneWidth->text().toDouble()*72/IMAGE_DENSITY;
-    int height=ui->lneHeight->text().toDouble()*72/IMAGE_DENSITY;
+    double width=ui->lneWidth->text().toDouble()*72/IMAGE_DENSITY;
+    double height=ui->lneHeight->text().toDouble()*72/IMAGE_DENSITY;
     PdfRect cropbox[frames];
     for(int i=0;i<frames;i++){
-        cropbox[i]=PdfRect(double(xOffset[i]*72/IMAGE_DENSITY),
-                                pdfInput.GetPage(0)->GetPageSize().GetHeight()-yOffset[i]*72/IMAGE_DENSITY-height,
+        cropbox[i]=PdfRect((double)xOffset[i]*72/IMAGE_DENSITY,
+                                pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/IMAGE_DENSITY-height,
                                 width,height);
     }
     for(int pageInput=0;pageInput<pdfInput.GetPageCount();pageInput++){
@@ -166,7 +166,7 @@ void MainWindow::on_btnConvert_clicked()
         }
     }
     pdfOutput.Write(ui->lneOutput->text().toLocal8Bit().constData());
-    QMessageBox::information(this,"finished","finished");
+    QMessageBox::information(this,"finished","convert finished");
 }
 
 void MainWindow::on_btnInput_clicked()
