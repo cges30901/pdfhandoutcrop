@@ -304,3 +304,8 @@ void MainWindow::findRows(QPoint first, int height, std::vector<int>& rows)
         }
     }
 }
+
+void MainWindow::on_btnUpdate_clicked()
+{
+    drawPixmap();
+}

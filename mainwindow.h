@@ -46,6 +46,8 @@ private slots:
 
     void on_btnAutoDetect_clicked();
 
+    void on_btnUpdate_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

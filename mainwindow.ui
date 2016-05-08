@@ -169,8 +169,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>328</width>
-           <height>197</height>
+           <width>335</width>
+           <height>210</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -227,6 +227,13 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnUpdate">
+        <property name="text">
+         <string>Update</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -362,7 +369,7 @@
      <x>0</x>
      <y>0</y>
      <width>633</width>
-     <height>28</height>
+     <height>27</height>
     </rect>
    </property>
   </widget>
