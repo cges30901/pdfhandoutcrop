@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     set=0;
+    current_page=0;
     lneFrame[1][0]=ui->lneFrameOneX;
     lneFrame[1][1]=ui->lneFrameOneY;
     lneFrame[2][0]=ui->lneFrameTwoX;
@@ -50,34 +51,50 @@ void MainWindow::on_btnWidthHeight_clicked()
     set=7;
 }
 
-void MainWindow::on_lneInput_returnPressed()//load PDF file
+void MainWindow::on_lneInput_returnPressed()
 {
     if(ui->lneInput->text()!=0){
-        ui->labelSelectPoint->setText(tr("Loading..."));
-        ui->labelSelectPoint->repaint();
-
         ui->lneWidth->clear();
         ui->lneHeight->clear();
         for(int i=1;i<=6;i++){
             lneFrame[i][0]->clear();
             lneFrame[i][1]->clear();
         }
-
-        Poppler::Document* document=Poppler::Document::load(ui->lneInput->text());
-        if (!document || document->isLocked()) {
-            QMessageBox::warning(this,tr("warning"),tr("can not open input file"));
-            ui->labelSelectPoint->setText(tr(""));
-            delete document;
-            return;
-        }
-        Poppler::Page* pdfPage = document->page(0);
-        image=new QImage(pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY));
-        pixmap=new QPixmap(QPixmap::fromImage(*image));
-        ui->labelSelectPoint->setPixmap(*pixmap);
-        delete pdfPage;
-        delete document;
     }
+    loadPdf();
 }
+
+void MainWindow::loadPdf()
+{
+    ui->labelSelectPoint->setText(tr("Loading..."));
+    ui->labelSelectPoint->repaint();
+    Poppler::Document* document=Poppler::Document::load(ui->lneInput->text());
+    if (!document || document->isLocked()) {
+        QMessageBox::warning(this,tr("warning"),tr("can not open input file"));
+        ui->labelSelectPoint->setText(tr(""));
+        delete document;
+        return;
+    }
+    if(current_page==0){
+        ui->btnPrevious->setEnabled(false);
+    }
+    else{
+        ui->btnPrevious->setEnabled(true);
+    }
+    if(current_page==document->numPages()-1){
+        ui->btnNext->setEnabled(false);
+    }
+    else{
+        ui->btnNext->setEnabled(true);
+    }
+    Poppler::Page* pdfPage = document->page(current_page);
+    image=new QImage(pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY));
+    pixmap=new QPixmap(QPixmap::fromImage(*image));
+    ui->labelSelectPoint->setPixmap(*pixmap);
+    delete pdfPage;
+    delete document;
+}
+
 void MainWindow::on_btnFrameOne_clicked()
 {
     set=1;
@@ -307,5 +324,19 @@ void MainWindow::findRows(QPoint first, int height, std::vector<int>& rows)
 
 void MainWindow::on_btnUpdate_clicked()
 {
+    drawPixmap();
+}
+
+void MainWindow::on_btnPrevious_clicked()
+{
+    current_page-=1;
+    loadPdf();
+    drawPixmap();
+}
+
+void MainWindow::on_btnNext_clicked()
+{
+    current_page+=1;
+    loadPdf();
     drawPixmap();
 }

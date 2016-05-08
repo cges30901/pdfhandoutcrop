@@ -19,6 +19,7 @@ class MainWindow : public QMainWindow
     QPixmap *pixmap;
     QPixmap *pixmap_draw;
     QImage *image;
+    int current_page;
     int set;
     int upperleftX,upperleftY;
     void drawPixmap();
@@ -33,6 +34,7 @@ public:
 private slots:
     void on_btnWidthHeight_clicked();
     void on_lneInput_returnPressed();
+    void loadPdf();
     void on_btnFrameOne_clicked();
     void on_btnFrameTwo_clicked();
     void on_btnFrameThree_clicked();
@@ -47,6 +49,10 @@ private slots:
     void on_btnAutoDetect_clicked();
 
     void on_btnUpdate_clicked();
+
+    void on_btnPrevious_clicked();
+
+    void on_btnNext_clicked();
 
 private:
     Ui::MainWindow *ui;
