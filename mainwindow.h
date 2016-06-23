@@ -15,7 +15,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    QLineEdit *lneFrame[7][2];
+    QLineEdit *lnePage[7][2];
     QPixmap *pixmap;
     QPixmap *pixmap_draw;
     QImage *image;
@@ -35,12 +35,12 @@ private slots:
     void on_btnWidthHeight_clicked();
     void on_lneInput_returnPressed();
     void loadPdf();
-    void on_btnFrameOne_clicked();
-    void on_btnFrameTwo_clicked();
-    void on_btnFrameThree_clicked();
-    void on_btnFrameFour_clicked();
-    void on_btnFrameFive_clicked();
-    void on_btnFrameSix_clicked();
+    void on_btnPageOne_clicked();
+    void on_btnPageTwo_clicked();
+    void on_btnPageThree_clicked();
+    void on_btnPageFour_clicked();
+    void on_btnPageFive_clicked();
+    void on_btnPageSix_clicked();
     void on_labelSelectPoint_mousePressed(int , int );
     void on_btnConvert_clicked();
     void on_btnInput_clicked();

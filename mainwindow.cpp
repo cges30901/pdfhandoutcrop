@@ -26,18 +26,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     set=0;
     current_page=0;
-    lneFrame[1][0]=ui->lneFrameOneX;
-    lneFrame[1][1]=ui->lneFrameOneY;
-    lneFrame[2][0]=ui->lneFrameTwoX;
-    lneFrame[2][1]=ui->lneFrameTwoY;
-    lneFrame[3][0]=ui->lneFrameThreeX;
-    lneFrame[3][1]=ui->lneFrameThreeY;
-    lneFrame[4][0]=ui->lneFrameFourX;
-    lneFrame[4][1]=ui->lneFrameFourY;
-    lneFrame[5][0]=ui->lneFrameFiveX;
-    lneFrame[5][1]=ui->lneFrameFiveY;
-    lneFrame[6][0]=ui->lneFrameSixX;
-    lneFrame[6][1]=ui->lneFrameSixY;
+    lnePage[1][0]=ui->lnePageOneX;
+    lnePage[1][1]=ui->lnePageOneY;
+    lnePage[2][0]=ui->lnePageTwoX;
+    lnePage[2][1]=ui->lnePageTwoY;
+    lnePage[3][0]=ui->lnePageThreeX;
+    lnePage[3][1]=ui->lnePageThreeY;
+    lnePage[4][0]=ui->lnePageFourX;
+    lnePage[4][1]=ui->lnePageFourY;
+    lnePage[5][0]=ui->lnePageFiveX;
+    lnePage[5][1]=ui->lnePageFiveY;
+    lnePage[6][0]=ui->lnePageSixX;
+    lnePage[6][1]=ui->lnePageSixY;
     pixmap_draw=new QPixmap(*pixmap);
 }
 
@@ -57,8 +57,8 @@ void MainWindow::on_lneInput_returnPressed()
         ui->lneWidth->clear();
         ui->lneHeight->clear();
         for(int i=1;i<=6;i++){
-            lneFrame[i][0]->clear();
-            lneFrame[i][1]->clear();
+            lnePage[i][0]->clear();
+            lnePage[i][1]->clear();
         }
     }
     loadPdf();
@@ -95,32 +95,32 @@ void MainWindow::loadPdf()
     delete document;
 }
 
-void MainWindow::on_btnFrameOne_clicked()
+void MainWindow::on_btnPageOne_clicked()
 {
     set=1;
 }
 
-void MainWindow::on_btnFrameTwo_clicked()
+void MainWindow::on_btnPageTwo_clicked()
 {
     set=2;
 }
 
-void MainWindow::on_btnFrameThree_clicked()
+void MainWindow::on_btnPageThree_clicked()
 {
     set=3;
 }
 
-void MainWindow::on_btnFrameFour_clicked()
+void MainWindow::on_btnPageFour_clicked()
 {
     set=4;
 }
 
-void MainWindow::on_btnFrameFive_clicked()
+void MainWindow::on_btnPageFive_clicked()
 {
     set=5;
 }
 
-void MainWindow::on_btnFrameSix_clicked()
+void MainWindow::on_btnPageSix_clicked()
 {
     set=6;
 }
@@ -128,8 +128,8 @@ void MainWindow::on_btnFrameSix_clicked()
 void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
 {
     if(set>=1 and set <=6){
-        lneFrame[set][0]->setText(QString::number(x));
-        lneFrame[set][1]->setText(QString::number(y));
+        lnePage[set][0]->setText(QString::number(x));
+        lnePage[set][1]->setText(QString::number(y));
         set=0;
     }
     else if(set==7){//set Width and Height - step one
@@ -159,27 +159,27 @@ void MainWindow::on_btnConvert_clicked()
         return;
     }
     pdfInput.Load(ui->lneInput->text().toLocal8Bit().constData());
-    int frames=ui->spbFrames->value();
+    int pagesPerSheet=ui->spbPagesPerSheet->value();
     PdfMemDocument pdfOutput;
-    int xOffset[frames];
-    int yOffset[frames];
-    for(int i=0;i<frames;i++){
-        xOffset[i]=lneFrame[i+1][0]->text().toInt();
-        yOffset[i]=lneFrame[i+1][1]->text().toInt();
+    int xOffset[pagesPerSheet];
+    int yOffset[pagesPerSheet];
+    for(int i=0;i<pagesPerSheet;i++){
+        xOffset[i]=lnePage[i+1][0]->text().toInt();
+        yOffset[i]=lnePage[i+1][1]->text().toInt();
     }
     double width=ui->lneWidth->text().toDouble()*72/IMAGE_DENSITY;
     double height=ui->lneHeight->text().toDouble()*72/IMAGE_DENSITY;
-    PdfRect cropbox[frames];
-    for(int i=0;i<frames;i++){
+    PdfRect cropbox[pagesPerSheet];
+    for(int i=0;i<pagesPerSheet;i++){
         cropbox[i]=PdfRect((double)xOffset[i]*72/IMAGE_DENSITY,
                                 pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/IMAGE_DENSITY-height,
                                 width,height);
     }
     for(int pageInput=0;pageInput<pdfInput.GetPageCount();pageInput++){
-        for(int frameCount=0;frameCount<frames;frameCount++){
-            pdfOutput.InsertExistingPageAt(pdfInput,pageInput,pageInput*frames+frameCount);
-            PdfPage* pPage = pdfOutput.GetPage(pageInput*frames+frameCount);
-            crop_page(pPage,cropbox[frameCount]);
+        for(int pageCount=0;pageCount<pagesPerSheet;pageCount++){
+            pdfOutput.InsertExistingPageAt(pdfInput,pageInput,pageInput*pagesPerSheet+pageCount);
+            PdfPage* pPage = pdfOutput.GetPage(pageInput*pagesPerSheet+pageCount);
+            crop_page(pPage,cropbox[pageCount]);
         }
     }
     pdfOutput.Write(ui->lneOutput->text().toLocal8Bit().constData());
@@ -209,16 +209,16 @@ void MainWindow::drawPixmap()
     pixmap_draw=new QPixmap(*pixmap);
     QPainter painter(pixmap_draw);
     painter.setPen(Qt::red);
-    QPainterPath path[ui->spbFrames->value()];
-    for(int i=0;i<ui->spbFrames->value();i++){
-        if(lneFrame[i+1][0]->text().isEmpty() or lneFrame[i+1][1]->text().isEmpty()) continue;
-        path[i].moveTo(lneFrame[i+1][0]->text().toDouble(),lneFrame[i+1][1]->text().toDouble());
-        path[i].lineTo(lneFrame[i+1][0]->text().toDouble()+ui->lneWidth->text().toDouble(),lneFrame[i+1][1]->text().toDouble());
-        path[i].lineTo(lneFrame[i+1][0]->text().toDouble()+ui->lneWidth->text().toDouble(),lneFrame[i+1][1]->text().toDouble()+ui->lneHeight->text().toDouble());
-        path[i].lineTo(lneFrame[i+1][0]->text().toDouble(),lneFrame[i+1][1]->text().toDouble()+ui->lneHeight->text().toDouble());
-        path[i].lineTo(lneFrame[i+1][0]->text().toDouble(),lneFrame[i+1][1]->text().toDouble());
+    QPainterPath path[ui->spbPagesPerSheet->value()];
+    for(int i=0;i<ui->spbPagesPerSheet->value();i++){
+        if(lnePage[i+1][0]->text().isEmpty() or lnePage[i+1][1]->text().isEmpty()) continue;
+        path[i].moveTo(lnePage[i+1][0]->text().toDouble(),lnePage[i+1][1]->text().toDouble());
+        path[i].lineTo(lnePage[i+1][0]->text().toDouble()+ui->lneWidth->text().toDouble(),lnePage[i+1][1]->text().toDouble());
+        path[i].lineTo(lnePage[i+1][0]->text().toDouble()+ui->lneWidth->text().toDouble(),lnePage[i+1][1]->text().toDouble()+ui->lneHeight->text().toDouble());
+        path[i].lineTo(lnePage[i+1][0]->text().toDouble(),lnePage[i+1][1]->text().toDouble()+ui->lneHeight->text().toDouble());
+        path[i].lineTo(lnePage[i+1][0]->text().toDouble(),lnePage[i+1][1]->text().toDouble());
     }
-    for(int i=0;i<ui->spbFrames->value();i++){
+    for(int i=0;i<ui->spbPagesPerSheet->value();i++){
         painter.drawPath(path[i]);
     }
     ui->labelSelectPoint->setPixmap(*pixmap_draw);
@@ -226,11 +226,11 @@ void MainWindow::drawPixmap()
 
 void MainWindow::on_btnAutoDetect_clicked()
 {
-    //find the upperleft point of the first frame
-    QPoint point[ui->spbFrames->text().toInt()];
+    //find the upperleft point of the first page
+    QPoint point[ui->spbPagesPerSheet->text().toInt()];
     point[0]=findFirstPoint();
     if(point[0].x()==-1){
-        QMessageBox::warning(this,tr("warning"),tr("frame not found"));
+        QMessageBox::warning(this,tr("warning"),tr("page not found"));
         return;
     }
 
@@ -246,12 +246,12 @@ void MainWindow::on_btnAutoDetect_clicked()
     std::vector<int> rows(1);
     findRows(point[0],height,rows);
 
-    ui->spbFrames->setValue(rows.size()*columns.size());
+    ui->spbPagesPerSheet->setValue(rows.size()*columns.size());
     ui->lneWidth->setText(QString::number(width));
     ui->lneHeight->setText(QString::number(height));
-    for(int i=1;i<=ui->spbFrames->value() and i<=rows.size()*columns.size();i++){
-        lneFrame[i][0]->setText(QString::number(columns[(i-1)%columns.size()]));
-        lneFrame[i][1]->setText(QString::number(rows[(i-1)/columns.size()]));
+    for(int i=1;i<=ui->spbPagesPerSheet->value() and i<=rows.size()*columns.size();i++){
+        lnePage[i][0]->setText(QString::number(columns[(i-1)%columns.size()]));
+        lnePage[i][1]->setText(QString::number(rows[(i-1)/columns.size()]));
     }
     drawPixmap();
 }
@@ -269,7 +269,7 @@ QPoint MainWindow::findFirstPoint(int xOffset, int yOffset)
                 int length;
                 for(length=0;length<100 and point.y()+length<image->height() and point.x()+length<image->width();length++){
                     if(image->pixel(point.x(),point.y()+length)==4294967295 or image->pixel(point.x()+length,point.y())==4294967295){
-                        length=101;//not a frame
+                        length=101;//not a page
                         break;
                     }
                 }

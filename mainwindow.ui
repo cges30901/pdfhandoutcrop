@@ -80,12 +80,12 @@
           <item>
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>Frames:</string>
+             <string>Pages per sheet:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="spbFrames">
+           <widget class="QSpinBox" name="spbPagesPerSheet">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -257,120 +257,120 @@
     <item>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QLabel" name="labelFrameOne">
+       <widget class="QLabel" name="labelPageOne">
         <property name="text">
-         <string>Frame 1</string>
+         <string>Page 1</string>
         </property>
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QPushButton" name="btnFrameOne">
+       <widget class="QPushButton" name="btnPageOne">
         <property name="text">
          <string>Set</string>
         </property>
        </widget>
       </item>
       <item row="2" column="7">
-       <widget class="QPushButton" name="btnFrameSix">
+       <widget class="QPushButton" name="btnPageSix">
         <property name="text">
          <string>Set</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lneFrameOneX"/>
+       <widget class="QLineEdit" name="lnePageOneX"/>
       </item>
       <item row="2" column="5">
-       <widget class="QLineEdit" name="lneFrameSixX"/>
+       <widget class="QLineEdit" name="lnePageSixX"/>
       </item>
       <item row="2" column="4">
-       <widget class="QLabel" name="labelFrameSix">
+       <widget class="QLabel" name="labelPageSix">
         <property name="text">
-         <string>Frame 6</string>
+         <string>Page 6</string>
         </property>
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="QLineEdit" name="lneFrameOneY"/>
+       <widget class="QLineEdit" name="lnePageOneY"/>
       </item>
       <item row="2" column="6">
-       <widget class="QLineEdit" name="lneFrameSixY"/>
+       <widget class="QLineEdit" name="lnePageSixY"/>
       </item>
       <item row="0" column="4">
-       <widget class="QLabel" name="labelFrameTwo">
+       <widget class="QLabel" name="labelPageTwo">
         <property name="text">
-         <string>Frame 2</string>
+         <string>Page 2</string>
         </property>
        </widget>
       </item>
       <item row="0" column="5">
-       <widget class="QLineEdit" name="lneFrameTwoX"/>
+       <widget class="QLineEdit" name="lnePageTwoX"/>
       </item>
       <item row="0" column="6">
-       <widget class="QLineEdit" name="lneFrameTwoY"/>
+       <widget class="QLineEdit" name="lnePageTwoY"/>
       </item>
       <item row="0" column="7">
-       <widget class="QPushButton" name="btnFrameTwo">
+       <widget class="QPushButton" name="btnPageTwo">
         <property name="text">
          <string>Set</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="labelFrameThree">
+       <widget class="QLabel" name="labelPageThree">
         <property name="text">
-         <string>Frame 3</string>
+         <string>Page 3</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lneFrameThreeX"/>
+       <widget class="QLineEdit" name="lnePageThreeX"/>
       </item>
       <item row="1" column="2">
-       <widget class="QLineEdit" name="lneFrameThreeY"/>
+       <widget class="QLineEdit" name="lnePageThreeY"/>
       </item>
       <item row="1" column="3">
-       <widget class="QPushButton" name="btnFrameThree">
+       <widget class="QPushButton" name="btnPageThree">
         <property name="text">
          <string>Set</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="lneFrameFiveX"/>
+       <widget class="QLineEdit" name="lnePageFiveX"/>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="labelFrameFive">
+       <widget class="QLabel" name="labelPageFive">
         <property name="text">
-         <string>Frame 5</string>
+         <string>Page 5</string>
         </property>
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QLineEdit" name="lneFrameFiveY"/>
+       <widget class="QLineEdit" name="lnePageFiveY"/>
       </item>
       <item row="2" column="3">
-       <widget class="QPushButton" name="btnFrameFive">
+       <widget class="QPushButton" name="btnPageFive">
         <property name="text">
          <string>Set</string>
         </property>
        </widget>
       </item>
       <item row="1" column="4">
-       <widget class="QLabel" name="labelFrameFour">
+       <widget class="QLabel" name="labelPageFour">
         <property name="text">
-         <string>Frame 4</string>
+         <string>Page 4</string>
         </property>
        </widget>
       </item>
       <item row="1" column="5">
-       <widget class="QLineEdit" name="lneFrameFourX"/>
+       <widget class="QLineEdit" name="lnePageFourX"/>
       </item>
       <item row="1" column="6">
-       <widget class="QLineEdit" name="lneFrameFourY"/>
+       <widget class="QLineEdit" name="lnePageFourY"/>
       </item>
       <item row="1" column="7">
-       <widget class="QPushButton" name="btnFrameFour">
+       <widget class="QPushButton" name="btnPageFour">
         <property name="text">
          <string>Set</string>
         </property>
