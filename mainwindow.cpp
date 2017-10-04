@@ -170,10 +170,38 @@ void MainWindow::on_btnConvert_clicked()
     double width=ui->lneWidth->text().toDouble()*72/IMAGE_DENSITY;
     double height=ui->lneHeight->text().toDouble()*72/IMAGE_DENSITY;
     PdfRect cropbox[pagesPerSheet];
+
+    //detect rotation
+    PdfPage* pageRotation=pdfInput.GetPage(0);
+    int rotation=pageRotation->GetRotation();
+
     for(int i=0;i<pagesPerSheet;i++){
-        cropbox[i]=PdfRect((double)xOffset[i]*72/IMAGE_DENSITY,
-                                pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/IMAGE_DENSITY-height,
-                                width,height);
+
+        //if page is rotated, change offset and size
+        switch (rotation) {
+        case 0:
+            cropbox[i]=PdfRect((double)xOffset[i]*72/IMAGE_DENSITY,
+                                    pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/IMAGE_DENSITY-height,
+                                    width,height);
+            break;
+        case 90:
+            cropbox[i]=PdfRect((double)yOffset[i]*72/IMAGE_DENSITY,
+                                    (double)xOffset[i]*72/IMAGE_DENSITY,
+                                    height,width);
+            break;
+        case 180:
+            cropbox[i]=PdfRect(pdfInput.GetPage(0)->GetPageSize().GetWidth()-(double)xOffset[i]*72/IMAGE_DENSITY-width,
+                                    (double)yOffset[i]*72/IMAGE_DENSITY,
+                                    width,height);
+            break;
+        case 270:
+            cropbox[i]=PdfRect(pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/IMAGE_DENSITY-height,
+                                    pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)xOffset[i]*72/IMAGE_DENSITY-height,
+                                    height,width);
+            break;
+        default:
+            break;
+        }
     }
     for(int pageInput=0;pageInput<pdfInput.GetPageCount();pageInput++){
         for(int pageCount=0;pageCount<pagesPerSheet;pageCount++){
