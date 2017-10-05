@@ -26,18 +26,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     set=0;
     current_page=0;
-    lnePage[1][0]=ui->lnePageOneX;
-    lnePage[1][1]=ui->lnePageOneY;
-    lnePage[2][0]=ui->lnePageTwoX;
-    lnePage[2][1]=ui->lnePageTwoY;
-    lnePage[3][0]=ui->lnePageThreeX;
-    lnePage[3][1]=ui->lnePageThreeY;
-    lnePage[4][0]=ui->lnePageFourX;
-    lnePage[4][1]=ui->lnePageFourY;
-    lnePage[5][0]=ui->lnePageFiveX;
-    lnePage[5][1]=ui->lnePageFiveY;
-    lnePage[6][0]=ui->lnePageSixX;
-    lnePage[6][1]=ui->lnePageSixY;
+    spbPage[1][0]=ui->spbPage1X;
+    spbPage[1][1]=ui->spbPage1Y;
+    spbPage[2][0]=ui->spbPage2X;
+    spbPage[2][1]=ui->spbPage2Y;
+    spbPage[3][0]=ui->spbPage3X;
+    spbPage[3][1]=ui->spbPage3Y;
+    spbPage[4][0]=ui->spbPage4X;
+    spbPage[4][1]=ui->spbPage4Y;
+    spbPage[5][0]=ui->spbPage5X;
+    spbPage[5][1]=ui->spbPage5Y;
+    spbPage[6][0]=ui->spbPage6X;
+    spbPage[6][1]=ui->spbPage6Y;
     pixmap_draw=new QPixmap(*pixmap);
 }
 
@@ -53,14 +53,6 @@ void MainWindow::on_btnWidthHeight_clicked()
 
 void MainWindow::on_lneInput_returnPressed()
 {
-    if(ui->lneInput->text()!=0){
-        ui->lneWidth->clear();
-        ui->lneHeight->clear();
-        for(int i=1;i<=6;i++){
-            lnePage[i][0]->clear();
-            lnePage[i][1]->clear();
-        }
-    }
     loadPdf();
 }
 
@@ -128,8 +120,8 @@ void MainWindow::on_btnPageSix_clicked()
 void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
 {
     if(set>=1 and set <=6){
-        lnePage[set][0]->setText(QString::number(x));
-        lnePage[set][1]->setText(QString::number(y));
+        spbPage[set][0]->setValue(x);
+        spbPage[set][1]->setValue(y);
         set=0;
     }
     else if(set==7){//set Width and Height - step one
@@ -138,8 +130,8 @@ void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
         set=8;
     }
     else if(set==8){//set Width and Height - step two
-        ui->lneWidth->setText(QString::number(x-upperleftX));
-        ui->lneHeight->setText(QString::number(y-upperleftY));
+        ui->spbWidth->setValue(x-upperleftX);
+        ui->spbHeight->setValue(y-upperleftY);
         set=0;
     }
     drawPixmap();
@@ -164,11 +156,11 @@ void MainWindow::on_btnConvert_clicked()
     int xOffset[pagesPerSheet];
     int yOffset[pagesPerSheet];
     for(int i=0;i<pagesPerSheet;i++){
-        xOffset[i]=lnePage[i+1][0]->text().toInt();
-        yOffset[i]=lnePage[i+1][1]->text().toInt();
+        xOffset[i]=spbPage[i+1][0]->value();
+        yOffset[i]=spbPage[i+1][1]->value();
     }
-    double width=ui->lneWidth->text().toDouble()*72/IMAGE_DENSITY;
-    double height=ui->lneHeight->text().toDouble()*72/IMAGE_DENSITY;
+    double width=ui->spbWidth->value()*72/IMAGE_DENSITY;
+    double height=ui->spbHeight->value()*72/IMAGE_DENSITY;
     PdfRect cropbox[pagesPerSheet];
 
     //detect rotation
@@ -239,12 +231,11 @@ void MainWindow::drawPixmap()
     painter.setPen(Qt::red);
     QPainterPath path[ui->spbPagesPerSheet->value()];
     for(int i=0;i<ui->spbPagesPerSheet->value();i++){
-        if(lnePage[i+1][0]->text().isEmpty() or lnePage[i+1][1]->text().isEmpty()) continue;
-        path[i].moveTo(lnePage[i+1][0]->text().toDouble(),lnePage[i+1][1]->text().toDouble());
-        path[i].lineTo(lnePage[i+1][0]->text().toDouble()+ui->lneWidth->text().toDouble(),lnePage[i+1][1]->text().toDouble());
-        path[i].lineTo(lnePage[i+1][0]->text().toDouble()+ui->lneWidth->text().toDouble(),lnePage[i+1][1]->text().toDouble()+ui->lneHeight->text().toDouble());
-        path[i].lineTo(lnePage[i+1][0]->text().toDouble(),lnePage[i+1][1]->text().toDouble()+ui->lneHeight->text().toDouble());
-        path[i].lineTo(lnePage[i+1][0]->text().toDouble(),lnePage[i+1][1]->text().toDouble());
+        path[i].moveTo(spbPage[i+1][0]->value(),spbPage[i+1][1]->value());
+        path[i].lineTo(spbPage[i+1][0]->value()+ui->spbWidth->value(),spbPage[i+1][1]->value());
+        path[i].lineTo(spbPage[i+1][0]->value()+ui->spbWidth->value(),spbPage[i+1][1]->value()+ui->spbHeight->value());
+        path[i].lineTo(spbPage[i+1][0]->value(),spbPage[i+1][1]->value()+ui->spbHeight->value());
+        path[i].lineTo(spbPage[i+1][0]->value(),spbPage[i+1][1]->value());
     }
     for(int i=0;i<ui->spbPagesPerSheet->value();i++){
         painter.drawPath(path[i]);
@@ -275,11 +266,11 @@ void MainWindow::on_btnAutoDetect_clicked()
     findRows(point[0],height,rows);
 
     ui->spbPagesPerSheet->setValue(rows.size()*columns.size());
-    ui->lneWidth->setText(QString::number(width));
-    ui->lneHeight->setText(QString::number(height));
+    ui->spbWidth->setValue(width);
+    ui->spbHeight->setValue(height);
     for(int i=1;i<=ui->spbPagesPerSheet->value() and i<=rows.size()*columns.size();i++){
-        lnePage[i][0]->setText(QString::number(columns[(i-1)%columns.size()]));
-        lnePage[i][1]->setText(QString::number(rows[(i-1)/columns.size()]));
+        spbPage[i][0]->setValue(columns[(i-1)%columns.size()]);
+        spbPage[i][1]->setValue(rows[(i-1)/columns.size()]);
     }
     drawPixmap();
 }

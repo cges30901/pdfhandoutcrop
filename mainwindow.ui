@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>633</width>
+    <width>653</width>
     <height>446</height>
    </rect>
   </property>
@@ -169,8 +169,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>335</width>
-           <height>210</height>
+           <width>373</width>
+           <height>206</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -203,10 +203,18 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lneWidth"/>
+       <widget class="QSpinBox" name="spbWidth">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lneHeight"/>
+       <widget class="QSpinBox" name="spbHeight">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btnWidthHeight">
@@ -277,12 +285,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lnePageOneX"/>
-      </item>
-      <item row="2" column="5">
-       <widget class="QLineEdit" name="lnePageSixX"/>
-      </item>
       <item row="2" column="4">
        <widget class="QLabel" name="labelPageSix">
         <property name="text">
@@ -290,24 +292,12 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <widget class="QLineEdit" name="lnePageOneY"/>
-      </item>
-      <item row="2" column="6">
-       <widget class="QLineEdit" name="lnePageSixY"/>
-      </item>
       <item row="0" column="4">
        <widget class="QLabel" name="labelPageTwo">
         <property name="text">
          <string>Page 2</string>
         </property>
        </widget>
-      </item>
-      <item row="0" column="5">
-       <widget class="QLineEdit" name="lnePageTwoX"/>
-      </item>
-      <item row="0" column="6">
-       <widget class="QLineEdit" name="lnePageTwoY"/>
       </item>
       <item row="0" column="7">
        <widget class="QPushButton" name="btnPageTwo">
@@ -323,12 +313,6 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lnePageThreeX"/>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLineEdit" name="lnePageThreeY"/>
-      </item>
       <item row="1" column="3">
        <widget class="QPushButton" name="btnPageThree">
         <property name="text">
@@ -336,18 +320,12 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="lnePageFiveX"/>
-      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="labelPageFive">
         <property name="text">
          <string>Page 5</string>
         </property>
        </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QLineEdit" name="lnePageFiveY"/>
       </item>
       <item row="2" column="3">
        <widget class="QPushButton" name="btnPageFive">
@@ -363,16 +341,94 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="5">
-       <widget class="QLineEdit" name="lnePageFourX"/>
-      </item>
-      <item row="1" column="6">
-       <widget class="QLineEdit" name="lnePageFourY"/>
-      </item>
       <item row="1" column="7">
        <widget class="QPushButton" name="btnPageFour">
         <property name="text">
          <string>Set</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="spbPage1X">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QSpinBox" name="spbPage2X">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QSpinBox" name="spbPage4X">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="spbPage3X">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="spbPage5X">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QSpinBox" name="spbPage6X">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QSpinBox" name="spbPage1Y">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QSpinBox" name="spbPage3Y">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="6">
+       <widget class="QSpinBox" name="spbPage6Y">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QSpinBox" name="spbPage5Y">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QSpinBox" name="spbPage2Y">
+        <property name="maximum">
+         <number>99999</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="QSpinBox" name="spbPage4Y">
+        <property name="maximum">
+         <number>99999</number>
         </property>
        </widget>
       </item>
@@ -385,7 +441,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>633</width>
+     <width>653</width>
      <height>27</height>
     </rect>
    </property>

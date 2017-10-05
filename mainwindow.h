@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QImage>
 #include <vector>
+#include <QSpinBox>
 
 namespace Ui {
 class MainWindow;
@@ -15,7 +16,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    QLineEdit *lnePage[7][2];
+    QSpinBox *spbPage[7][2];
     QPixmap *pixmap;
     QPixmap *pixmap_draw;
     QImage *image;
