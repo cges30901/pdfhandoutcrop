@@ -15,9 +15,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    selectpointlabel.cpp
+    selectpointlabel.cpp \
+    setpagesdialog.cpp
 
 HEADERS  += mainwindow.h \
-    selectpointlabel.h
+    selectpointlabel.h \
+    setpagesdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    setpagesdialog.ui

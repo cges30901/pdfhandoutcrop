@@ -6,6 +6,7 @@
 #include <poppler/qt5/poppler-qt5.h>
 #include <podofo/podofo.h>
 #include <QFileDialog>
+#include "setpagesdialog.h"
 
 #define IMAGE_DENSITY 300
 
@@ -264,6 +265,24 @@ void MainWindow::on_btnAutoDetect_clicked()
     //find rows
     std::vector<int> rows(1);
     findRows(point[0],height,rows);
+
+    //ask if only one page is detected
+    if(columns.size()==1 and rows.size()==1){
+        int numColumns;
+        int numRows;
+        SetPagesDialog *dlgSetPages=new SetPagesDialog(numColumns,numRows,this);
+        dlgSetPages->exec();
+
+        height/=numRows;
+        width/=numColumns;
+        for(int i=1;i<numColumns;i++){
+            columns.push_back(columns[i-1]+width);
+        }
+        for(int i=1;i<numRows;i++){
+            rows.push_back(rows[i-1]+height);
+        }
+        delete dlgSetPages;
+    }
 
     ui->spbPagesPerSheet->setValue(rows.size()*columns.size());
     ui->spbWidth->setValue(width);
