@@ -246,7 +246,7 @@ void MainWindow::drawPixmap()
 void MainWindow::on_btnAutoDetect_clicked()
 {
     //find the upperleft point of the first page
-    QPoint point[ui->spbPagesPerSheet->text().toInt()];
+    QPoint point[ui->spbPagesPerSheet->value()];
     point[0]=findFirstPoint();
     if(point[0].x()==-1){
         QMessageBox::warning(this,tr("warning"),tr("page not found"));
