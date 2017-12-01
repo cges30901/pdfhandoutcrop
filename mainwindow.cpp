@@ -6,6 +6,7 @@
 #include <poppler/qt5/poppler-qt5.h>
 #include <podofo/podofo.h>
 #include <QFileDialog>
+#include <QPdfWriter>
 #include "setpagesdialog.h"
 
 #define IMAGE_DENSITY 300
@@ -140,6 +141,40 @@ void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
 
 void MainWindow::on_btnConvert_clicked()
 {
+#ifndef CONVERT_PODOFO
+    Poppler::Document* document=Poppler::Document::load(ui->lneInput->text());
+    int pages=document->numPages();
+
+    double width=ui->spbWidth->value();
+    double height=ui->spbHeight->value();
+
+    QPdfWriter pdfWriter(ui->lneOutput->text());
+    pdfWriter.setPageSize(QPageSize(QPageSize::A4));
+    pdfWriter.setPageOrientation(QPageLayout::Landscape); //width>height in slide
+    pdfWriter.setPageMargins(QMarginsF(0,0,0,0)); //remove margin
+    int dpi=max(width*2/11.69,height*2/8.27); //make image fit page
+    dpi+=1; //prevent round down
+    pdfWriter.setResolution(dpi);
+    QPainter painter(&pdfWriter);
+
+    int xOffset[ui->spbPagesPerSheet->value()];
+    int yOffset[ui->spbPagesPerSheet->value()];
+    for(int i=0;i<ui->spbPagesPerSheet->value();i++){
+        xOffset[i]=spbPage[i+1][0]->value();
+        yOffset[i]=spbPage[i+1][1]->value();
+    }
+
+    QImage cropped;
+    for(int i=0;i<pages;i++){
+        Poppler::Page* pdfPage = document->page(i);
+        QImage image=pdfPage->renderToImage(IMAGE_DENSITY*2,IMAGE_DENSITY*2);
+        for(int j=0;j<ui->spbPagesPerSheet->value();j++){
+            cropped=image.copy(xOffset[j]*2,yOffset[j]*2,width*2,height*2);
+            painter.drawImage(0,0, cropped);
+            pdfWriter.newPage();
+        }
+    }
+#else
     PdfError::EnableDebug( true );
     PdfError::EnableLogging(false);
     PdfMemDocument pdfInput;
@@ -204,6 +239,8 @@ void MainWindow::on_btnConvert_clicked()
         }
     }
     pdfOutput.Write(ui->lneOutput->text().toLocal8Bit().constData());
+#endif
+
     QMessageBox::information(this,"finished","convert finished");
 }
 
