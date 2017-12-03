@@ -174,6 +174,7 @@ void MainWindow::on_btnConvert_clicked()
             pdfWriter.newPage();
         }
     }
+    delete document;
 #else
     PdfError::EnableDebug( true );
     PdfError::EnableLogging(false);
