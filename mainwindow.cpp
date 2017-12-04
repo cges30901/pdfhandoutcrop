@@ -40,7 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
     spbPage[5][1]=ui->spbPage5Y;
     spbPage[6][0]=ui->spbPage6X;
     spbPage[6][1]=ui->spbPage6Y;
-    pixmap_draw=new QPixmap(*pixmap);
 }
 
 MainWindow::~MainWindow()
@@ -82,9 +81,9 @@ void MainWindow::loadPdf()
         ui->btnNext->setEnabled(true);
     }
     Poppler::Page* pdfPage = document->page(current_page);
-    image=new QImage(pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY));
-    pixmap=new QPixmap(QPixmap::fromImage(*image));
-    ui->labelSelectPoint->setPixmap(*pixmap);
+    image=pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY);
+    pixmap=QPixmap::fromImage(image);
+    ui->labelSelectPoint->setPixmap(pixmap);
     delete pdfPage;
     delete document;
 }
@@ -264,9 +263,8 @@ void MainWindow::on_btnOutput_clicked()
 
 void MainWindow::drawPixmap()
 {
-    delete pixmap_draw;
-    pixmap_draw=new QPixmap(*pixmap);
-    QPainter painter(pixmap_draw);
+    QPixmap pixmap_draw=pixmap;
+    QPainter painter(&pixmap_draw);
     painter.setPen(Qt::red);
     QPainterPath path[ui->spbPagesPerSheet->value()];
     for(int i=0;i<ui->spbPagesPerSheet->value();i++){
@@ -279,7 +277,7 @@ void MainWindow::drawPixmap()
     for(int i=0;i<ui->spbPagesPerSheet->value();i++){
         painter.drawPath(path[i]);
     }
-    ui->labelSelectPoint->setPixmap(*pixmap_draw);
+    ui->labelSelectPoint->setPixmap(pixmap_draw);
 }
 
 void MainWindow::on_btnAutoDetect_clicked()
@@ -335,16 +333,16 @@ void MainWindow::on_btnAutoDetect_clicked()
 QPoint MainWindow::findFirstPoint(int xOffset, int yOffset)
 {
     QPoint point;
-    for(;yOffset<image->height();yOffset++){
-        const QRgb *pixel=reinterpret_cast< const QRgb* >(image->constScanLine(yOffset));
-        for(;xOffset<image->width();xOffset++){
+    for(;yOffset<image.height();yOffset++){
+        const QRgb *pixel=reinterpret_cast< const QRgb* >(image.constScanLine(yOffset));
+        for(;xOffset<image.width();xOffset++){
             if(*(pixel+xOffset)!=4294967295){
                 point.setX(xOffset);
                 point.setY(yOffset);
                 //if white in 100, find the next point
                 int length;
-                for(length=0;length<100 and point.y()+length<image->height() and point.x()+length<image->width();length++){
-                    if(image->pixel(point.x(),point.y()+length)==4294967295 or image->pixel(point.x()+length,point.y())==4294967295){
+                for(length=0;length<100 and point.y()+length<image.height() and point.x()+length<image.width();length++){
+                    if(image.pixel(point.x(),point.y()+length)==4294967295 or image.pixel(point.x()+length,point.y())==4294967295){
                         length=101;//not a page
                         break;
                     }
@@ -361,14 +359,14 @@ QPoint MainWindow::findFirstPoint(int xOffset, int yOffset)
 
 void MainWindow::findSize(QPoint first, int &width, int &height){
     //find width
-    for(int i=0;i+first.x()<image->width();i++){
-        if(image->pixel(first.x()+i,first.y())==4294967295){
+    for(int i=0;i+first.x()<image.width();i++){
+        if(image.pixel(first.x()+i,first.y())==4294967295){
             width=i;
             break;
         }
     }
-    for(int i=0;i+first.y()<image->height();i++){
-        if(image->pixel(first.x(),first.y()+i)==4294967295){
+    for(int i=0;i+first.y()<image.height();i++){
+        if(image.pixel(first.x(),first.y()+i)==4294967295){
             height=i;
             break;
         }
@@ -378,8 +376,8 @@ void MainWindow::findSize(QPoint first, int &width, int &height){
 void MainWindow::findColumns(QPoint first, int width, std::vector<int>& columns)
 {
     columns[0]=first.x();
-    const QRgb *pixel=reinterpret_cast< const QRgb* >(image->constScanLine(first.y()));
-    for(int xOffset=first.x()+width;xOffset<image->width();xOffset++){
+    const QRgb *pixel=reinterpret_cast< const QRgb* >(image.constScanLine(first.y()));
+    for(int xOffset=first.x()+width;xOffset<image.width();xOffset++){
         if(*(pixel+xOffset)!=4294967295){
             columns.push_back(xOffset);
             xOffset+=width;
@@ -390,8 +388,8 @@ void MainWindow::findColumns(QPoint first, int width, std::vector<int>& columns)
 void MainWindow::findRows(QPoint first, int height, std::vector<int>& rows)
 {
     rows[0]=first.y();
-    for(int yOffset=first.y()+height;yOffset<image->height();yOffset++){
-        if(image->pixel(first.x(),yOffset)!=4294967295){
+    for(int yOffset=first.y()+height;yOffset<image.height();yOffset++){
+        if(image.pixel(first.x(),yOffset)!=4294967295){
             rows.push_back(yOffset);
             yOffset+=height;
         }

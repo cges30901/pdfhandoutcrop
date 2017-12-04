@@ -17,9 +17,8 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     QSpinBox *spbPage[7][2];
-    QPixmap *pixmap;
-    QPixmap *pixmap_draw;
-    QImage *image;
+    QPixmap pixmap;
+    QImage image;
     int current_page;
     int set;
     int upperleftX,upperleftY;
