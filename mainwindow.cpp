@@ -7,6 +7,7 @@
 #include <podofo/podofo.h>
 #include <QFileDialog>
 #include <QPdfWriter>
+#include <QProgressDialog>
 #include "setpagesdialog.h"
 
 #define IMAGE_DENSITY 300
@@ -143,6 +144,10 @@ void MainWindow::on_btnConvert_clicked()
 #ifndef CONVERT_PODOFO
     Poppler::Document* document=Poppler::Document::load(ui->lneInput->text());
     int pages=document->numPages();
+    QProgressDialog progress("Converting...", "Abort", 0, pages+1, this);
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setMinimumDuration(0);
+    progress.setValue(0);
 
     double width=ui->spbWidth->value();
     double height=ui->spbHeight->value();
@@ -163,8 +168,13 @@ void MainWindow::on_btnConvert_clicked()
         yOffset[i]=spbPage[i+1][1]->value();
     }
 
+    progress.setValue(1);
     QImage cropped;
     for(int i=0;i<pages;i++){
+        if (progress.wasCanceled())
+            return;
+        progress.setValue(i+1);
+
         Poppler::Page* pdfPage = document->page(i);
         QImage image=pdfPage->renderToImage(IMAGE_DENSITY*2,IMAGE_DENSITY*2);
         for(int j=0;j<ui->spbPagesPerSheet->value();j++){
@@ -174,7 +184,7 @@ void MainWindow::on_btnConvert_clicked()
         }
     }
     delete document;
-#else
+#else //CONVERT_PODOFO is defined
     PdfError::EnableDebug( true );
     PdfError::EnableLogging(false);
     PdfMemDocument pdfInput;
@@ -187,6 +197,10 @@ void MainWindow::on_btnConvert_clicked()
         return;
     }
     pdfInput.Load(ui->lneInput->text().toLocal8Bit().constData());
+    QProgressDialog progress("Converting...", "Abort", 0, pdfInput.GetPageCount()+2, this);
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setMinimumDuration(0);
+    progress.setValue(0);
     int pagesPerSheet=ui->spbPagesPerSheet->value();
     PdfMemDocument pdfOutput;
     int xOffset[pagesPerSheet];
@@ -231,16 +245,21 @@ void MainWindow::on_btnConvert_clicked()
             break;
         }
     }
+
+    progress.setValue(1);
     for(int pageInput=0;pageInput<pdfInput.GetPageCount();pageInput++){
+        if (progress.wasCanceled())
+            return;
+        progress.setValue(pageInput+1);
         for(int pageCount=0;pageCount<pagesPerSheet;pageCount++){
             pdfOutput.InsertExistingPageAt(pdfInput,pageInput,pageInput*pagesPerSheet+pageCount);
             PdfPage* pPage = pdfOutput.GetPage(pageInput*pagesPerSheet+pageCount);
             crop_page(pPage,cropbox[pageCount]);
         }
     }
+    progress.setValue(pdfInput.GetPageCount()+1);
     pdfOutput.Write(ui->lneOutput->text().toLocal8Bit().constData());
 #endif
-
     QMessageBox::information(this,"finished","convert finished");
 }
 
