@@ -141,8 +141,22 @@ void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
 
 void MainWindow::on_btnConvert_clicked()
 {
+    if(ui->lneInput->text().isEmpty()){
+        QMessageBox::warning(this,tr("warning"),tr("Please set input file"));
+        return;
+    }
+    if(ui->lneOutput->text().isEmpty()){
+        QMessageBox::warning(this,tr("warning"),tr("Please set output file"));
+        return;
+    }
 #ifndef CONVERT_PODOFO
     Poppler::Document* document=Poppler::Document::load(ui->lneInput->text());
+    if (!document || document->isLocked()) {
+        QMessageBox::warning(this,tr("warning"),tr("can not open input file"));
+        ui->labelSelectPoint->setText(tr(""));
+        delete document;
+        return;
+    }
     int pages=document->numPages();
     QProgressDialog progress("Converting...", "Abort", 0, pages+1, this);
     progress.setWindowModality(Qt::WindowModal);
@@ -188,77 +202,75 @@ void MainWindow::on_btnConvert_clicked()
     PdfError::EnableDebug( true );
     PdfError::EnableLogging(false);
     PdfMemDocument pdfInput;
-    if(ui->lneInput->text().isEmpty()){
-        QMessageBox::warning(this,tr("warning"),tr("Please set input file"));
+    try{
+        pdfInput.Load(ui->lneInput->text().toLocal8Bit().constData());
+        QProgressDialog progress("Converting...", "Abort", 0, pdfInput.GetPageCount()+2, this);
+        progress.setWindowModality(Qt::WindowModal);
+        progress.setMinimumDuration(0);
+        progress.setValue(0);
+        int pagesPerSheet=ui->spbPagesPerSheet->value();
+        PdfMemDocument pdfOutput;
+        int xOffset[pagesPerSheet];
+        int yOffset[pagesPerSheet];
+        for(int i=0;i<pagesPerSheet;i++){
+            xOffset[i]=spbPage[i+1][0]->value();
+            yOffset[i]=spbPage[i+1][1]->value();
+        }
+        double width=ui->spbWidth->value()*72/IMAGE_DENSITY;
+        double height=ui->spbHeight->value()*72/IMAGE_DENSITY;
+        PdfRect cropbox[pagesPerSheet];
+
+        //detect rotation
+        PdfPage* pageRotation=pdfInput.GetPage(0);
+        int rotation=pageRotation->GetRotation();
+
+        for(int i=0;i<pagesPerSheet;i++){
+
+            //if page is rotated, change offset and size
+            switch (rotation) {
+            case 0:
+                cropbox[i]=PdfRect((double)xOffset[i]*72/IMAGE_DENSITY,
+                                   pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/IMAGE_DENSITY-height,
+                                   width,height);
+                break;
+            case 90:
+                cropbox[i]=PdfRect((double)yOffset[i]*72/IMAGE_DENSITY,
+                                   (double)xOffset[i]*72/IMAGE_DENSITY,
+                                   height,width);
+                break;
+            case 180:
+                cropbox[i]=PdfRect(pdfInput.GetPage(0)->GetPageSize().GetWidth()-(double)xOffset[i]*72/IMAGE_DENSITY-width,
+                                   (double)yOffset[i]*72/IMAGE_DENSITY,
+                                   width,height);
+                break;
+            case 270:
+                cropbox[i]=PdfRect(pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/IMAGE_DENSITY-height,
+                                   pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)xOffset[i]*72/IMAGE_DENSITY-height,
+                                   height,width);
+                break;
+            default:
+                break;
+            }
+        }
+
+        progress.setValue(1);
+        for(int pageInput=0;pageInput<pdfInput.GetPageCount();pageInput++){
+            if (progress.wasCanceled())
+                return;
+            progress.setValue(pageInput+1);
+            for(int pageCount=0;pageCount<pagesPerSheet;pageCount++){
+                pdfOutput.InsertExistingPageAt(pdfInput,pageInput,pageInput*pagesPerSheet+pageCount);
+                PdfPage* pPage = pdfOutput.GetPage(pageInput*pagesPerSheet+pageCount);
+                crop_page(pPage,cropbox[pageCount]);
+            }
+        }
+        progress.setValue(pdfInput.GetPageCount()+1);
+        pdfOutput.Write(ui->lneOutput->text().toLocal8Bit().constData());
+    }
+    catch(PdfError &e){
+        QMessageBox::warning(this,tr("warning"),tr(e.what()));
         return;
     }
-    if(ui->lneOutput->text().isEmpty()){
-        QMessageBox::warning(this,tr("warning"),tr("Please set output file"));
-        return;
-    }
-    pdfInput.Load(ui->lneInput->text().toLocal8Bit().constData());
-    QProgressDialog progress("Converting...", "Abort", 0, pdfInput.GetPageCount()+2, this);
-    progress.setWindowModality(Qt::WindowModal);
-    progress.setMinimumDuration(0);
-    progress.setValue(0);
-    int pagesPerSheet=ui->spbPagesPerSheet->value();
-    PdfMemDocument pdfOutput;
-    int xOffset[pagesPerSheet];
-    int yOffset[pagesPerSheet];
-    for(int i=0;i<pagesPerSheet;i++){
-        xOffset[i]=spbPage[i+1][0]->value();
-        yOffset[i]=spbPage[i+1][1]->value();
-    }
-    double width=ui->spbWidth->value()*72/IMAGE_DENSITY;
-    double height=ui->spbHeight->value()*72/IMAGE_DENSITY;
-    PdfRect cropbox[pagesPerSheet];
-
-    //detect rotation
-    PdfPage* pageRotation=pdfInput.GetPage(0);
-    int rotation=pageRotation->GetRotation();
-
-    for(int i=0;i<pagesPerSheet;i++){
-
-        //if page is rotated, change offset and size
-        switch (rotation) {
-        case 0:
-            cropbox[i]=PdfRect((double)xOffset[i]*72/IMAGE_DENSITY,
-                                    pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/IMAGE_DENSITY-height,
-                                    width,height);
-            break;
-        case 90:
-            cropbox[i]=PdfRect((double)yOffset[i]*72/IMAGE_DENSITY,
-                                    (double)xOffset[i]*72/IMAGE_DENSITY,
-                                    height,width);
-            break;
-        case 180:
-            cropbox[i]=PdfRect(pdfInput.GetPage(0)->GetPageSize().GetWidth()-(double)xOffset[i]*72/IMAGE_DENSITY-width,
-                                    (double)yOffset[i]*72/IMAGE_DENSITY,
-                                    width,height);
-            break;
-        case 270:
-            cropbox[i]=PdfRect(pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/IMAGE_DENSITY-height,
-                                    pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)xOffset[i]*72/IMAGE_DENSITY-height,
-                                    height,width);
-            break;
-        default:
-            break;
-        }
-    }
-
-    progress.setValue(1);
-    for(int pageInput=0;pageInput<pdfInput.GetPageCount();pageInput++){
-        if (progress.wasCanceled())
-            return;
-        progress.setValue(pageInput+1);
-        for(int pageCount=0;pageCount<pagesPerSheet;pageCount++){
-            pdfOutput.InsertExistingPageAt(pdfInput,pageInput,pageInput*pagesPerSheet+pageCount);
-            PdfPage* pPage = pdfOutput.GetPage(pageInput*pagesPerSheet+pageCount);
-            crop_page(pPage,cropbox[pageCount]);
-        }
-    }
-    progress.setValue(pdfInput.GetPageCount()+1);
-    pdfOutput.Write(ui->lneOutput->text().toLocal8Bit().constData());
 #endif
     QMessageBox::information(this,"finished","convert finished");
 }
