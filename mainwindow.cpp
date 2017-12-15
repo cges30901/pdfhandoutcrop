@@ -194,7 +194,9 @@ void MainWindow::on_btnConvert_clicked()
         for(int j=0;j<ui->spbPagesPerSheet->value();j++){
             cropped=image.copy(xOffset[j]*2,yOffset[j]*2,width*2,height*2);
             painter.drawImage(0,0, cropped);
-            pdfWriter.newPage();
+            if(i!=pages-1 or j!=ui->spbPagesPerSheet->value()-1){ //avoid extra page at the end
+                pdfWriter.newPage();
+            }
         }
     }
     delete document;
