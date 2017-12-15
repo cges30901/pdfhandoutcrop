@@ -44,7 +44,11 @@
       </spacer>
      </item>
      <item>
-      <widget class="QSpinBox" name="spbColumns"/>
+      <widget class="QSpinBox" name="spbColumns">
+       <property name="value">
+        <number>1</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -71,7 +75,11 @@
       </spacer>
      </item>
      <item>
-      <widget class="QSpinBox" name="spbRows"/>
+      <widget class="QSpinBox" name="spbRows">
+       <property name="value">
+        <number>1</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
