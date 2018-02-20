@@ -53,16 +53,11 @@ void MainWindow::on_btnWidthHeight_clicked()
     set=7;
 }
 
-void MainWindow::on_lneInput_returnPressed()
-{
-    loadPdf();
-}
-
 void MainWindow::loadPdf()
 {
     ui->labelSelectPoint->setText(tr("Loading..."));
     ui->labelSelectPoint->repaint();
-    Poppler::Document* document=Poppler::Document::load(ui->lneInput->text());
+    Poppler::Document* document=Poppler::Document::load(fileInput);
     if (!document || document->isLocked()) {
         QMessageBox::warning(this,tr("warning"),tr("can not open input file"));
         ui->labelSelectPoint->setText(tr(""));
@@ -139,18 +134,18 @@ void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
     drawPixmap();
 }
 
-void MainWindow::on_btnConvert_clicked()
+void MainWindow::convert()
 {
-    if(ui->lneInput->text().isEmpty()){
+    if(fileInput.isEmpty()){
         QMessageBox::warning(this,tr("warning"),tr("Please set input file"));
         return;
     }
-    if(ui->lneOutput->text().isEmpty()){
+    if(fileOutput.isEmpty()){
         QMessageBox::warning(this,tr("warning"),tr("Please set output file"));
         return;
     }
 #ifndef CONVERT_PODOFO
-    Poppler::Document* document=Poppler::Document::load(ui->lneInput->text());
+    Poppler::Document* document=Poppler::Document::load(fileInput);
     if (!document || document->isLocked()) {
         QMessageBox::warning(this,tr("warning"),tr("can not open input file"));
         ui->labelSelectPoint->setText(tr(""));
@@ -166,7 +161,7 @@ void MainWindow::on_btnConvert_clicked()
     double width=ui->spbWidth->value();
     double height=ui->spbHeight->value();
 
-    QPdfWriter pdfWriter(ui->lneOutput->text());
+    QPdfWriter pdfWriter(fileOutput);
     pdfWriter.setPageSize(QPageSize(QPageSize::A4));
     pdfWriter.setPageOrientation(QPageLayout::Landscape); //width>height in slide
     pdfWriter.setPageMargins(QMarginsF(0,0,0,0)); //remove margin
@@ -205,7 +200,7 @@ void MainWindow::on_btnConvert_clicked()
     PdfError::EnableLogging(false);
     PdfMemDocument pdfInput;
     try{
-        pdfInput.Load(ui->lneInput->text().toLocal8Bit().constData());
+        pdfInput.Load(fileInput.toLocal8Bit().constData());
         QProgressDialog progress("Converting...", "Abort", 0, pdfInput.GetPageCount()+2, this);
         progress.setWindowModality(Qt::WindowModal);
         progress.setMinimumDuration(0);
@@ -267,7 +262,7 @@ void MainWindow::on_btnConvert_clicked()
             }
         }
         progress.setValue(pdfInput.GetPageCount()+1);
-        pdfOutput.Write(ui->lneOutput->text().toLocal8Bit().constData());
+        pdfOutput.Write(fileOutput.toLocal8Bit().constData());
     }
     catch(PdfError &e){
         QMessageBox::warning(this,tr("warning"),tr(e.what()));
@@ -275,23 +270,6 @@ void MainWindow::on_btnConvert_clicked()
     }
 #endif
     QMessageBox::information(this,"finished","convert finished");
-}
-
-void MainWindow::on_btnInput_clicked()
-{
-    QString filename=QFileDialog::getOpenFileName(this,QString(),ui->lneInput->text());
-    if(filename.length()!=0){
-        ui->lneInput->setText(filename);
-        emit on_lneInput_returnPressed();
-    }
-}
-
-void MainWindow::on_btnOutput_clicked()
-{
-    QString filename=QFileDialog::getSaveFileName(this,QString(),ui->lneOutput->text());
-    if(filename.length()!=0){
-        ui->lneOutput->setText(filename);
-    }
 }
 
 void MainWindow::drawPixmap()
@@ -446,4 +424,35 @@ void MainWindow::on_btnNext_clicked()
     current_page+=1;
     loadPdf();
     drawPixmap();
+}
+
+void MainWindow::on_action_Open_triggered()
+{
+    QString filename=QFileDialog::getOpenFileName(this,QString(),fileInput);
+    if(filename.length()!=0){
+        fileInput=filename;
+        loadPdf();
+    }
+}
+
+void MainWindow::on_action_Convert_triggered()
+{
+    QString filename=QFileDialog::getSaveFileName(this,QString(),fileOutput);
+    if(filename.length()!=0){
+        fileOutput=filename;
+        convert();
+    }
+}
+
+void MainWindow::on_actionAbout_Qt_triggered()
+{
+    QMessageBox::aboutQt(this,tr("About Qt"));
+}
+
+void MainWindow::on_action_About_triggered()
+{
+    QMessageBox::about(this,tr("About"),tr("<h3>hmpdfcrop</h3><br>"
+                                               "Author: Hsiu-Ming Chang<br>"
+                                               "e-mail: cges30901@gmail.com<br>"
+                                               "License: GPL v3"));
 }
