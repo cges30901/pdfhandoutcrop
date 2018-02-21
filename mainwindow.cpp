@@ -51,6 +51,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_btnWidthHeight_clicked()
 {
     set=7;
+    statusBar()->showMessage(tr("Please click the upper left point of any page"));
 }
 
 void MainWindow::loadPdf()
@@ -87,31 +88,37 @@ void MainWindow::loadPdf()
 void MainWindow::on_btnPageOne_clicked()
 {
     set=1;
+    statusBar()->showMessage(tr("Please click the upper left point of first page"));
 }
 
 void MainWindow::on_btnPageTwo_clicked()
 {
     set=2;
+    statusBar()->showMessage(tr("Please click the upper left point of second page"));
 }
 
 void MainWindow::on_btnPageThree_clicked()
 {
     set=3;
+    statusBar()->showMessage(tr("Please click the upper left point of third page"));
 }
 
 void MainWindow::on_btnPageFour_clicked()
 {
     set=4;
+    statusBar()->showMessage(tr("Please click the upper left point of fourth page"));
 }
 
 void MainWindow::on_btnPageFive_clicked()
 {
     set=5;
+    statusBar()->showMessage(tr("Please click the upper left point of fifth page"));
 }
 
 void MainWindow::on_btnPageSix_clicked()
 {
     set=6;
+    statusBar()->showMessage(tr("Please click the upper left point of sixth page"));
 }
 
 void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
@@ -121,6 +128,7 @@ void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
         spbPage[set][0]->setValue(x);
         spbPage[set][1]->setValue(y);
         set=0;
+        statusBar()->clearMessage();
     }
     else if(set==7){
         //set Width and Height - step one
@@ -129,6 +137,7 @@ void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
         upperleftY=y;
         //set lower right point if pressed again
         set=8;
+        statusBar()->showMessage(tr("Please click the lower right point of the page you clicked"));
     }
     else if(set==8){
         //set Width and Height - step two
@@ -137,6 +146,7 @@ void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
         ui->spbWidth->setValue(x-upperleftX);
         ui->spbHeight->setValue(y-upperleftY);
         set=0;
+        statusBar()->clearMessage();
     }
     drawPixmap();
 }
@@ -346,6 +356,7 @@ void MainWindow::on_btnAutoDetect_clicked()
         spbPage[i][1]->setValue(rows[(i-1)/columns.size()]);
     }
     drawPixmap();
+    statusBar()->showMessage(tr("found %1 pages").arg(rows.size()*columns.size()),2000);
 }
 
 QPoint MainWindow::findFirstPoint(int xOffset, int yOffset)
