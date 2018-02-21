@@ -117,16 +117,23 @@ void MainWindow::on_btnPageSix_clicked()
 void MainWindow::on_labelSelectPoint_mousePressed(int x, int y)
 {
     if(set>=1 and set <=6){
+        //store coordinate in spbPage[set]
         spbPage[set][0]->setValue(x);
         spbPage[set][1]->setValue(y);
         set=0;
     }
-    else if(set==7){//set Width and Height - step one
+    else if(set==7){
+        //set Width and Height - step one
+        //store coordinate of upper left point
         upperleftX=x;
         upperleftY=y;
+        //set lower right point if pressed again
         set=8;
     }
-    else if(set==8){//set Width and Height - step two
+    else if(set==8){
+        //set Width and Height - step two
+        //get coordinate of lower right point (x,y)
+        //and calculate width and height
         ui->spbWidth->setValue(x-upperleftX);
         ui->spbHeight->setValue(y-upperleftY);
         set=0;
