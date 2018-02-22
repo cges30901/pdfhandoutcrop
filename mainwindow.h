@@ -45,13 +45,9 @@ private slots:
     void on_labelSelectPoint_mousePressed(int , int );
     void convert();
     void on_btnAutoDetect_clicked();
-
     void on_btnUpdate_clicked();
-
     void on_btnPrevious_clicked();
-
     void on_btnNext_clicked();
-
     void on_action_Open_triggered();
     void on_action_Convert_triggered();
     void on_actionAbout_Qt_triggered();
