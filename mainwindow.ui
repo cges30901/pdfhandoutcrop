@@ -32,7 +32,7 @@
          <x>0</x>
          <y>0</y>
          <width>975</width>
-         <height>240</height>
+         <height>241</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -71,7 +71,7 @@
       <item>
        <widget class="QPushButton" name="btnUpdate">
         <property name="text">
-         <string>Update</string>
+         <string>&amp;Update</string>
         </property>
        </widget>
       </item>
@@ -81,14 +81,14 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>Previous</string>
+         <string>&amp;Previous</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btnNext">
         <property name="text">
-         <string>Next</string>
+         <string>&amp;Next</string>
         </property>
        </widget>
       </item>
@@ -105,7 +105,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Auto detect</string>
+         <string>&amp;Auto detect</string>
         </property>
        </widget>
       </item>
@@ -427,7 +427,7 @@
      <x>0</x>
      <y>0</y>
      <width>995</width>
-     <height>30</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
