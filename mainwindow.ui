@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>hmpdfcrop</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -32,7 +32,7 @@
          <x>0</x>
          <y>0</y>
          <width>975</width>
-         <height>241</height>
+         <height>251</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
