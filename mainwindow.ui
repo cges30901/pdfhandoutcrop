@@ -76,6 +76,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="labelPageNum">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btnPrevious">
         <property name="enabled">
          <bool>false</bool>

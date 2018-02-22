@@ -81,6 +81,7 @@ void MainWindow::loadPdf()
     image=pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY);
     pixmap=QPixmap::fromImage(image);
     ui->labelSelectPoint->setPixmap(pixmap);
+    ui->labelPageNum->setText(QString::number(current_page+1)+" / "+QString::number(document->numPages()));
     delete pdfPage;
     delete document;
 }
