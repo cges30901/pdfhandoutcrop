@@ -451,6 +451,8 @@ void MainWindow::on_action_Open_triggered()
     if(filename.length()!=0){
         fileInput=filename;
         current_page=0;
+        ui->btnAutoDetect->setEnabled(true);
+        ui->btnUpdate->setEnabled(true);
         loadPdf();
     }
 }
