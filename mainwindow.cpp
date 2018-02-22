@@ -450,6 +450,7 @@ void MainWindow::on_action_Open_triggered()
     QString filename=QFileDialog::getOpenFileName(this,QString(),fileInput);
     if(filename.length()!=0){
         fileInput=filename;
+        current_page=0;
         loadPdf();
     }
 }
