@@ -447,7 +447,7 @@ void MainWindow::on_btnNext_clicked()
 
 void MainWindow::on_action_Open_triggered()
 {
-    QString filename=QFileDialog::getOpenFileName(this,QString(),fileInput);
+    QString filename=QFileDialog::getOpenFileName(this,QString(),fileInput,tr("PDF documents (*.pdf)"));
     if(filename.length()!=0){
         fileInput=filename;
         current_page=0;
@@ -460,7 +460,7 @@ void MainWindow::on_action_Open_triggered()
 
 void MainWindow::on_action_Convert_triggered()
 {
-    QString filename=QFileDialog::getSaveFileName(this,QString(),fileOutput);
+    QString filename=QFileDialog::getSaveFileName(this,QString(),fileOutput,tr("PDF documents (*.pdf)"));
     if(filename.length()!=0){
         fileOutput=filename;
         convert();
