@@ -453,6 +453,7 @@ void MainWindow::on_action_Open_triggered()
         current_page=0;
         ui->btnAutoDetect->setEnabled(true);
         ui->btnUpdate->setEnabled(true);
+        this->setWindowTitle(tr("%1 - hmpdfcrop").arg(fileInput));
         loadPdf();
     }
 }
