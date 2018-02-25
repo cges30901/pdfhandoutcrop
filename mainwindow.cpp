@@ -352,7 +352,7 @@ void MainWindow::on_btnAutoDetect_clicked()
     ui->spbPagesPerSheet->setValue(rows.size()*columns.size());
     ui->spbWidth->setValue(width);
     ui->spbHeight->setValue(height);
-    for(int i=1;i<=ui->spbPagesPerSheet->value() and i<=rows.size()*columns.size();i++){
+    for(int i=1;i<=ui->spbPagesPerSheet->value() and unsigned(i)<=rows.size()*columns.size();i++){
         spbPage[i][0]->setValue(columns[(i-1)%columns.size()]);
         spbPage[i][1]->setValue(rows[(i-1)/columns.size()]);
     }
