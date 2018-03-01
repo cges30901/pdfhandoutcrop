@@ -10,8 +10,6 @@
 #include <QProgressDialog>
 #include "setpagesdialog.h"
 
-#define IMAGE_DENSITY 300
-
 using namespace PoDoFo;
 using namespace std;
 
@@ -78,7 +76,7 @@ void MainWindow::loadPdf()
         ui->btnNext->setEnabled(true);
     }
     Poppler::Page* pdfPage = document->page(current_page);
-    image=pdfPage->renderToImage(IMAGE_DENSITY,IMAGE_DENSITY);
+    image=pdfPage->renderToImage(density_render,density_render);
     pixmap=QPixmap::fromImage(image);
     ui->labelSelectPoint->setPixmap(pixmap);
     ui->labelPageNum->setText(QString::number(current_page+1)+" / "+QString::number(document->numPages()));
@@ -163,6 +161,8 @@ void MainWindow::convert()
         return;
     }
 #ifndef CONVERT_PODOFO
+    int density_convert=600;
+    double factor=density_convert/density_render;
     Poppler::Document* document=Poppler::Document::load(fileInput);
     if (!document || document->isLocked()) {
         QMessageBox::warning(this,tr("warning"),tr("can not open input file"));
@@ -176,14 +176,15 @@ void MainWindow::convert()
     progress.setMinimumDuration(0);
     progress.setValue(0);
 
-    double width=ui->spbWidth->value();
-    double height=ui->spbHeight->value();
+    double width=ui->spbWidth->value()*factor;
+    double height=ui->spbHeight->value()*factor;
 
     QPdfWriter pdfWriter(fileOutput);
     pdfWriter.setPageSize(QPageSize(QPageSize::A4));
     pdfWriter.setPageOrientation(QPageLayout::Landscape); //width>height in slide
     pdfWriter.setPageMargins(QMarginsF(0,0,0,0)); //remove margin
-    int dpi=max(width*2/11.69,height*2/8.27); //make image fit page
+    //make image fit page, 11.69 and 8.27 is the size of A4 paper in inches
+    int dpi=max(width/11.69,height/8.27);
     dpi+=1; //prevent round down
     pdfWriter.setResolution(dpi);
     QPainter painter(&pdfWriter);
@@ -191,8 +192,8 @@ void MainWindow::convert()
     int xOffset[ui->spbPagesPerSheet->value()];
     int yOffset[ui->spbPagesPerSheet->value()];
     for(int i=0;i<ui->spbPagesPerSheet->value();i++){
-        xOffset[i]=spbPage[i+1][0]->value();
-        yOffset[i]=spbPage[i+1][1]->value();
+        xOffset[i]=spbPage[i+1][0]->value()*factor;
+        yOffset[i]=spbPage[i+1][1]->value()*factor;
     }
 
     progress.setValue(1);
@@ -203,9 +204,9 @@ void MainWindow::convert()
         progress.setValue(i+1);
 
         Poppler::Page* pdfPage = document->page(i);
-        QImage image=pdfPage->renderToImage(IMAGE_DENSITY*2,IMAGE_DENSITY*2);
+        QImage image=pdfPage->renderToImage(density_convert,density_convert);
         for(int j=0;j<ui->spbPagesPerSheet->value();j++){
-            cropped=image.copy(xOffset[j]*2,yOffset[j]*2,width*2,height*2);
+            cropped=image.copy(xOffset[j],yOffset[j],width,height);
             painter.drawImage(0,0, cropped);
             if(i!=pages-1 or j!=ui->spbPagesPerSheet->value()-1){ //avoid extra page at the end
                 pdfWriter.newPage();
@@ -231,8 +232,8 @@ void MainWindow::convert()
             xOffset[i]=spbPage[i+1][0]->value();
             yOffset[i]=spbPage[i+1][1]->value();
         }
-        double width=ui->spbWidth->value()*72/IMAGE_DENSITY;
-        double height=ui->spbHeight->value()*72/IMAGE_DENSITY;
+        double width=ui->spbWidth->value()*72/density_render;
+        double height=ui->spbHeight->value()*72/density_render;
         PdfRect cropbox[pagesPerSheet];
 
         //detect rotation
@@ -244,23 +245,23 @@ void MainWindow::convert()
             //if page is rotated, change offset and size
             switch (rotation) {
             case 0:
-                cropbox[i]=PdfRect((double)xOffset[i]*72/IMAGE_DENSITY,
-                                   pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/IMAGE_DENSITY-height,
+                cropbox[i]=PdfRect((double)xOffset[i]*72/density_render,
+                                   pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/density_render-height,
                                    width,height);
                 break;
             case 90:
-                cropbox[i]=PdfRect((double)yOffset[i]*72/IMAGE_DENSITY,
-                                   (double)xOffset[i]*72/IMAGE_DENSITY,
+                cropbox[i]=PdfRect((double)yOffset[i]*72/density_render,
+                                   (double)xOffset[i]*72/density_render,
                                    height,width);
                 break;
             case 180:
-                cropbox[i]=PdfRect(pdfInput.GetPage(0)->GetPageSize().GetWidth()-(double)xOffset[i]*72/IMAGE_DENSITY-width,
-                                   (double)yOffset[i]*72/IMAGE_DENSITY,
+                cropbox[i]=PdfRect(pdfInput.GetPage(0)->GetPageSize().GetWidth()-(double)xOffset[i]*72/density_render-width,
+                                   (double)yOffset[i]*72/density_render,
                                    width,height);
                 break;
             case 270:
-                cropbox[i]=PdfRect(pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/IMAGE_DENSITY-height,
-                                   pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)xOffset[i]*72/IMAGE_DENSITY-height,
+                cropbox[i]=PdfRect(pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)yOffset[i]*72/density_render-height,
+                                   pdfInput.GetPage(0)->GetPageSize().GetHeight()-(double)xOffset[i]*72/density_render-height,
                                    height,width);
                 break;
             default:
@@ -478,4 +479,16 @@ void MainWindow::on_action_About_triggered()
                                                "Author: Hsiu-Ming Chang<br>"
                                                "e-mail: cges30901@gmail.com<br>"
                                                "License: GPL v3"));
+}
+
+void MainWindow::on_btnZoomIn_clicked()
+{
+    density_render*=1.2;
+    loadPdf();
+}
+
+void MainWindow::on_btnZoomOut_clicked()
+{
+    density_render/=1.2;
+    loadPdf();
 }

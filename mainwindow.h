@@ -23,6 +23,7 @@ class MainWindow : public QMainWindow
     int set;
     int upperleftX,upperleftY;
     QString fileInput,fileOutput;
+    double density_render=300;
 
     void drawPixmap();
     QPoint findFirstPoint(int xOffset=0,int yOffset=0);
@@ -52,6 +53,8 @@ private slots:
     void on_action_Convert_triggered();
     void on_actionAbout_Qt_triggered();
     void on_action_About_triggered();
+    void on_btnZoomIn_clicked();
+    void on_btnZoomOut_clicked();
 
 private:
     Ui::MainWindow *ui;

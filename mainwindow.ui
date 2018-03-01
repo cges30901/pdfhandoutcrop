@@ -105,6 +105,20 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="btnZoomIn">
+        <property name="text">
+         <string>Zoom &amp;in</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnZoomOut">
+        <property name="text">
+         <string>Zoom &amp;out</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
