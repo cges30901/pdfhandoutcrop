@@ -454,7 +454,7 @@ void MainWindow::on_action_Open_triggered()
         current_page=0;
         ui->btnAutoDetect->setEnabled(true);
         ui->btnUpdate->setEnabled(true);
-        this->setWindowTitle(tr("%1 - hmpdfcrop").arg(fileInput));
+        this->setWindowTitle(tr("%1 - PdfHandoutCrop").arg(fileInput));
         loadPdf();
     }
 }
@@ -475,7 +475,7 @@ void MainWindow::on_actionAbout_Qt_triggered()
 
 void MainWindow::on_action_About_triggered()
 {
-    QMessageBox::about(this,tr("About"),tr("<h3>hmpdfcrop</h3><br>"
+    QMessageBox::about(this,tr("About"),tr("<h3>PdfHandoutCrop</h3><br>"
                                                "Author: Hsiu-Ming Chang<br>"
                                                "e-mail: cges30901@gmail.com<br>"
                                                "License: GPL v3"));

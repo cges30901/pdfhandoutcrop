@@ -9,7 +9,7 @@ LIBS+=-lpoppler-qt5 -lpodofo
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = pdf-qt
+TARGET = pdfhandoutcrop
 TEMPLATE = app
 
 
