@@ -390,18 +390,25 @@ QPoint MainWindow::findFirstPoint(int xOffset, int yOffset)
 
 void MainWindow::findSize(QPoint first, int &width, int &height){
     //find width
-    for(int i=0;i+first.x()<image.width();i++){
+    int i;
+    for(i=0;i+first.x()<image.width();i++){
         if(image.pixel(first.x()+i,first.y())==4294967295){
-            width=i;
             break;
         }
     }
-    for(int i=0;i+first.y()<image.height();i++){
+    //width=i is moved out of the for loop
+    //to avoid width not defined if a white pixel cannot be found
+    width=i;
+
+    //find height
+    for(i=0;i+first.y()<image.height();i++){
         if(image.pixel(first.x(),first.y()+i)==4294967295){
-            height=i;
             break;
         }
     }
+    //height=i is moved out of the for loop
+    //to avoid height not defined if a white pixel cannot be found
+    height=i;
 }
 
 void MainWindow::findColumns(QPoint first, int width, std::vector<int>& columns)
