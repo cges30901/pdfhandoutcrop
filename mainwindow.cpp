@@ -284,6 +284,7 @@ void MainWindow::convert()
         pdfOutput.Write(fileOutput.toLocal8Bit().constData());
     }
     catch(PdfError &e){
+        e.PrintErrorMsg();
         QMessageBox::warning(this,tr("warning"),tr(e.what()));
         return;
     }
