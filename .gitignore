@@ -100,8 +100,6 @@ ENV/
 # mypy
 .mypy_cache/
 
-# files created with pyuic5
-ui_*.py
-
 # eric 6 project files
 .eric6project/
+
