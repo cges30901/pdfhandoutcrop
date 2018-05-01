@@ -62,6 +62,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.labelSelectPoint.setText(self.tr("Loading..."))
         self.labelSelectPoint.repaint()
         self.document=popplerqt5.Poppler.Document.load(self.fileInput)
+        if self.document is None:
+            QMessageBox.warning(self, self.tr("Warning"), self.tr("Cannot open input file"))
+            return
         if self.current_page==0:
             self.btnPrevious.setEnabled(False)
         else:
