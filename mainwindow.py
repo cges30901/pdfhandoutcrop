@@ -147,7 +147,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #ask when only one page is detected (shared border)
         if len(columns)==1 and len(rows)==1:
             dlgSetPages=SetPagesDialog(self)
-            if dlgSetPages.exec()==QDialog.Accepted:
+            if dlgSetPages.exec_()==QDialog.Accepted:
                 numColumns=dlgSetPages.spbColumns.value()
                 numRows=dlgSetPages.spbRows.value()
                 height/=numRows
