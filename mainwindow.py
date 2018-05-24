@@ -1,6 +1,6 @@
 import copy
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog
-from PyQt5.QtCore import pyqtSlot, Qt, QPoint
+from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
 from PyQt5.QtGui import QPixmap, QPainter, QPainterPath
 import popplerqt5
 from PyPDF2 import PdfFileReader, PdfFileWriter
@@ -26,6 +26,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.fileOutput=""
         self.set=0
         self.havePixmap=False
+        self.labelSelectPoint.installEventFilter(self)
 
     @pyqtSlot()
     def on_action_Open_triggered(self):
@@ -221,7 +222,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.set=7
         self.statusBar.showMessage(self.tr("Please click the upper left point of any page"))
 
-    def on_labelSelectPoint_mousePressed(self, x, y):
+    def labelSelectPoint_mousePressed(self, x, y):
         if self.set>=1 and self.set <=6:
             #store coordinate in spbPage[self.set-1]
             self.spbPage[self.set-1][0].setValue(x)
@@ -297,3 +298,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def on_btnZoomOut_clicked(self):
         self.density_render/=1.2
         self.loadPdf()
+
+    def eventFilter(self, watched, event):
+        if watched==self.labelSelectPoint and event.type()==QEvent.MouseButtonPress:
+            self.labelSelectPoint_mousePressed(event.x(), event.y())
+        return False
