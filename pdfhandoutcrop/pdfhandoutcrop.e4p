@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project pdfhandoutcrop -->
-<!-- Saved: 2018-04-08, 23:19:59 -->
+<!-- Saved: 2018-05-25, 22:31:20 -->
 <!-- Copyright (C) 2018 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -15,9 +15,11 @@
   <Sources>
     <Source>__init__.py</Source>
     <Source>mainwindow.py</Source>
-    <Source>selectpointlabel.py</Source>
     <Source>setpagesdialog.py</Source>
   </Sources>
+  <Others>
+    <Other>.gitignore</Other>
+  </Others>
   <MainScript>__init__.py</MainScript>
   <Vcs>
     <VcsType>Git</VcsType>

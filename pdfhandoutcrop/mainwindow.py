@@ -4,8 +4,8 @@ from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
 from PyQt5.QtGui import QPixmap, QPainter, QPainterPath
 import popplerqt5
 from PyPDF2 import PdfFileReader, PdfFileWriter
-from ui_mainwindow import Ui_MainWindow
-from setpagesdialog import SetPagesDialog
+from pdfhandoutcrop.ui_mainwindow import Ui_MainWindow
+from pdfhandoutcrop.setpagesdialog import SetPagesDialog
 
 class MainWindow(QMainWindow, Ui_MainWindow):
 

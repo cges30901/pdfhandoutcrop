@@ -1,8 +1,8 @@
 import sys
 from PyQt5.QtWidgets import QApplication
-from mainwindow import MainWindow
+from pdfhandoutcrop.mainwindow import MainWindow
 
-if __name__ == '__main__':
+def main():
     
     app = QApplication(sys.argv)
 
@@ -10,3 +10,6 @@ if __name__ == '__main__':
     w.show()
     
     sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    main()

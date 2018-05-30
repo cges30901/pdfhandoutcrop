@@ -1,4 +1,4 @@
-from ui_setpagesdialog import Ui_SetPagesDialog
+from pdfhandoutcrop.ui_setpagesdialog import Ui_SetPagesDialog
 from PyQt5.QtWidgets import QDialog
 
 class SetPagesDialog(QDialog, Ui_SetPagesDialog):
