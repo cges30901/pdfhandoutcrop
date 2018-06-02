@@ -25,7 +25,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.fileInput=""
         self.fileOutput=""
         self.set=0
-        self.havePixmap=False
+        self.needPaint=False
         self.labelSelectPoint.installEventFilter(self)
 
     @pyqtSlot()
@@ -65,7 +65,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.document=popplerqt5.Poppler.Document.load(self.fileInput)
         if self.document is None:
             QMessageBox.warning(self, self.tr("Warning"), self.tr("Cannot open input file"))
-            self.havePixmap=False
             self.labelSelectPoint.setText("")
             return
         if self.current_page==0:
@@ -79,7 +78,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.pdfPage = self.document.page(self.current_page)
         self.image=self.pdfPage.renderToImage(self.density_render, self.density_render)
         self.pixmap=QPixmap.fromImage(self.image)
-        self.havePixmap=True
+        self.needPaint=True
         self.labelSelectPoint.setPixmap(self.pixmap)
         self.labelPageNum.setText(str(self.current_page+1)+" / "+str(self.document.numPages()))
 
@@ -167,6 +166,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for i in range(len(rows)*len(columns)):
             self.spbPage[i][0].setValue(columns[i%len(columns)])
             self.spbPage[i][1].setValue(sheetHeight-pageHeight-rows[i//len(columns)])
+        self.needPaint=True
         self.update()
         self.statusBar.showMessage(self.tr("Found {0} pages").format(len(rows)*len(columns)), 2000)
 
@@ -231,6 +231,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             sheetHeight=self.pdfPage.pageSizeF().height()*self.density_render/72
             pageHeight=self.spbHeight.value()
             self.spbPage[self.set-1][1].setValue(sheetHeight-pageHeight-y)
+            self.needPaint=True
             self.set=0
             self.statusBar.clearMessage()
         elif self.set==7:
@@ -247,12 +248,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             #and calculate width and height
             self.spbWidth.setValue(x-self.upperleftX)
             self.spbHeight.setValue(y-self.upperleftY)
+            self.needPaint=True
             self.set=0
             self.statusBar.clearMessage()
         self.update()
 
     def paintEvent(self, e):
-        if self.havePixmap:
+        if self.needPaint:
             pixmap_draw=QPixmap(self.pixmap)
             painter=QPainter()
             painter.begin(pixmap_draw)
@@ -274,29 +276,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 painter.drawPath(path[i])
             painter.end()
             self.labelSelectPoint.setPixmap(pixmap_draw)
+            self.needPaint=False
 
     @pyqtSlot(bool)
     def on_btnUpdate_clicked(self):
+        self.needPaint=True
         self.update()
 
     @pyqtSlot(bool)
     def on_btnPrevious_clicked(self):
         self.current_page-=1
         self.loadPdf()
+        self.needPaint=True
         self.update()
 
     @pyqtSlot(bool)
     def on_btnNext_clicked(self):
         self.current_page+=1
         self.loadPdf()
+        self.needPaint=True
         self.update()
 
     def on_btnZoomIn_clicked(self):
         self.density_render*=1.2
+        self.needPaint=True
         self.loadPdf()
 
     def on_btnZoomOut_clicked(self):
         self.density_render/=1.2
+        self.needPaint=True
         self.loadPdf()
 
     def eventFilter(self, watched, event):
