@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=pdfhandoutcrop
+Comment=A tool to crop pdf handout with multiple pages per sheet
+Icon=pdfhandoutcrop
+Exec=pdfhandoutcrop
+Terminal=false
+Hidden=false
+Categories=Utility;
