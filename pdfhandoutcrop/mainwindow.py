@@ -1,7 +1,7 @@
 import copy
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
-from PyQt5.QtGui import QPixmap, QPainter, QPainterPath
+from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon
 import popplerqt5
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from pdfhandoutcrop.ui_mainwindow import Ui_MainWindow
@@ -12,6 +12,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.setWindowIcon(QIcon('pdfhandoutcrop.png'))
         self.spbPage=[[self.spbPage1X, self.spbPage1Y],
             [self.spbPage2X, self.spbPage2Y],
             [self.spbPage3X, self.spbPage3Y],

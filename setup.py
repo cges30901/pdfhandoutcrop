@@ -37,5 +37,8 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     install_requires=['PyQt5', 'python-poppler-qt5', 'PyPDF2'],
     python_requires='>=3',
-    scripts=['scripts/pdfhandoutcrop']
+    scripts=['scripts/pdfhandoutcrop'],
+    package_data={
+        'pdfhandoutcrop': ['pdfhandoutcrop.png'],
+    },
 )
