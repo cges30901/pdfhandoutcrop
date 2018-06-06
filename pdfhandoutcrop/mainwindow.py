@@ -1,4 +1,5 @@
 import copy
+import os
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
 from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon
@@ -12,7 +13,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.setWindowIcon(QIcon('pdfhandoutcrop.png'))
+        self.setWindowIcon(QIcon(os.path.dirname(os.path.abspath(__file__))+'/pdfhandoutcrop.png'))
         self.spbPage=[[self.spbPage1X, self.spbPage1Y],
             [self.spbPage2X, self.spbPage2Y],
             [self.spbPage3X, self.spbPage3Y],
