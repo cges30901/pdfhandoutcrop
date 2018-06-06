@@ -38,7 +38,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.fileInput=filename
             self.btnAutoDetect.setEnabled(True)
             self.btnUpdate.setEnabled(True)
-            self.setWindowTitle(self.tr("{0} - PdfHandoutCrop").format(self.fileInput))
+            self.setWindowTitle(self.tr("{0} - PdfHandoutCrop").format(os.path.basename(self.fileInput)))
             self.loadPdf()
 
     @pyqtSlot()
