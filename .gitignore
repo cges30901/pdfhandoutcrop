@@ -103,3 +103,5 @@ ENV/
 # eric 6 project files
 .eric6project/
 
+# Qt translation files
+pdfhandoutcrop/language/*.qm
