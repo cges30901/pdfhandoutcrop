@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1043</width>
+    <width>1139</width>
     <height>499</height>
    </rect>
   </property>
@@ -31,7 +31,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1023</width>
+         <width>1119</width>
          <height>327</height>
         </rect>
        </property>
@@ -113,7 +113,7 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>&amp;Update</string>
+         <string>&amp;Reload</string>
         </property>
        </widget>
       </item>
@@ -130,7 +130,7 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>&amp;Previous</string>
+         <string comment="previous page">&amp;Previous</string>
         </property>
        </widget>
       </item>
@@ -140,7 +140,7 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>&amp;Next</string>
+         <string comment="next page">&amp;Next</string>
         </property>
        </widget>
       </item>
@@ -216,7 +216,7 @@
       <item>
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>x:</string>
+         <string comment="x coordinate">x:</string>
         </property>
        </widget>
       </item>
@@ -230,7 +230,7 @@
       <item>
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>y:</string>
+         <string comment="y coordinate">y:</string>
         </property>
        </widget>
       </item>
@@ -270,7 +270,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1043</width>
+     <width>1139</width>
      <height>32</height>
     </rect>
    </property>

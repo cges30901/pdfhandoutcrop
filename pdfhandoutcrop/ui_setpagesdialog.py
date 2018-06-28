@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_SetPagesDialog(object):
     def setupUi(self, SetPagesDialog):
         SetPagesDialog.setObjectName("SetPagesDialog")
-        SetPagesDialog.resize(400, 199)
+        SetPagesDialog.resize(521, 208)
         self.verticalLayout = QtWidgets.QVBoxLayout(SetPagesDialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label = QtWidgets.QLabel(SetPagesDialog)
@@ -57,7 +57,7 @@ class Ui_SetPagesDialog(object):
 
     def retranslateUi(self, SetPagesDialog):
         _translate = QtCore.QCoreApplication.translate
-        SetPagesDialog.setWindowTitle(_translate("SetPagesDialog", "Select pages"))
+        SetPagesDialog.setWindowTitle(_translate("SetPagesDialog", "Select layout"))
         self.label.setText(_translate("SetPagesDialog", "Only one page is detected. Please select layout"))
         self.label_2.setText(_translate("SetPagesDialog", "Columns:"))
         self.label_3.setText(_translate("SetPagesDialog", "Rows:"))

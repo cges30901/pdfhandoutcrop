@@ -16,7 +16,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setWindowIcon(QIcon(os.path.dirname(os.path.abspath(__file__))+'/pdfhandoutcrop.png'))
         self.page_position=[[0, 0] for x in range(self.spbPagesPerSheet.value())]
         for i in range(self.spbPagesPerSheet.value()):
-            self.comboPosition.addItem("Page {0}".format(i+1))
+            self.comboPosition.addItem(self.tr("Page {0}").format(i+1))
         self.density_render=150.0
         self.current_page=0
         #self.fileInput and self.fileOutput need to be defined first
@@ -52,11 +52,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def on_action_About_triggered(self):
-        QMessageBox.about(self, self.tr("About"), self.tr('''
-        <h3>PdfHandoutCrop</h3><br>
-        Author: Hsiu-Ming Chang<br>
-        e-mail: cges30901@gmail.com<br>
-        License: GPL v3'''))
+        QMessageBox.about(self, self.tr("About"), self.tr(
+'''<h3>PdfHandoutCrop</h3><br>
+Author: Hsiu-Ming Chang<br>
+e-mail: cges30901@gmail.com<br>
+License: GPL v3'''))
 
     @pyqtSlot(int)
     def on_spbPagesPerSheet_valueChanged(self, num):
@@ -112,7 +112,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         outputStream = open(self.fileOutput, "wb")
         pdfOutput.write(outputStream)
         outputStream.close()
-        QMessageBox.information(self, "Finish", "Convert finished")
+        QMessageBox.information(self, self.tr("Finished"), self.tr("Convert finished"))
 
     @pyqtSlot(bool)
     def on_btnAutoDetect_clicked(self):
