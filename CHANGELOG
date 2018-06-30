@@ -1,0 +1,13 @@
+version 0.2.1 2018.06.30
+-internationalization and add Chinese (Traditional) translation
+
+version 0.2.0 2018.06.20
+-do not show path of input file in window title
+-change user interface, using combobox to support more pages per sheet
+
+version 0.1.1 2018.06.05
+-only draw pixmap when needed
+-add desktop file and icon
+
+version 0.1.0 2018.05.30
+-Initial commit
