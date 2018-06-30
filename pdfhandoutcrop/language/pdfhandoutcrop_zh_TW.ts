@@ -84,52 +84,52 @@
         <translation>{0} - PdfHandoutCrop</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="57"/>
+        <location filename="../mainwindow.py" line="58"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="75"/>
+        <location filename="../mainwindow.py" line="76"/>
         <source>Loading...</source>
         <translation>載入中...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="233"/>
+        <location filename="../mainwindow.py" line="234"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="79"/>
+        <location filename="../mainwindow.py" line="80"/>
         <source>Cannot open input file</source>
         <translation>無法開啟輸入檔案</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="124"/>
+        <location filename="../mainwindow.py" line="125"/>
         <source>Cannot find a page</source>
         <translation>無法找到頁面</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="186"/>
+        <location filename="../mainwindow.py" line="187"/>
         <source>Found {0} pages</source>
         <translation>找到 {0} 頁</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="221"/>
+        <location filename="../mainwindow.py" line="222"/>
         <source>Please click the upper left point of page {0}</source>
         <translation>請按一下第 {0} 頁的左上角</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="227"/>
+        <location filename="../mainwindow.py" line="228"/>
         <source>Please click the upper left point of any page</source>
         <translation>請按一下任何一頁的左上角</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="233"/>
+        <location filename="../mainwindow.py" line="234"/>
         <source>Height should be set first</source>
         <translation>應該要先設定高度</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="252"/>
+        <location filename="../mainwindow.py" line="253"/>
         <source>Please click the lower right point of the page you clicked</source>
         <translation>請按一下你剛剛按的那一頁的右下角</translation>
     </message>
@@ -151,12 +151,12 @@
         <translation>第 {0} 頁</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="117"/>
+        <location filename="../mainwindow.py" line="118"/>
         <source>Finished</source>
         <translation>已完成</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="117"/>
+        <location filename="../mainwindow.py" line="118"/>
         <source>Convert finished</source>
         <translation>轉換已完成</translation>
     </message>
@@ -183,7 +183,18 @@
 Author: Hsiu-Ming Chang&lt;br&gt;
 e-mail: cges30901@gmail.com&lt;br&gt;
 License: GPL v3</source>
-        <translation>&lt;h3&gt;PdfHandoutCrop&lt;/h3&gt;&lt;br&gt;
+        <translation type="obsolete">&lt;h3&gt;PdfHandoutCrop&lt;/h3&gt;&lt;br&gt;
+作者：張修銘&lt;br&gt;
+電子郵件：cges30901@gmail.com&lt;br&gt;
+授權：GPL v3</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.py" line="58"/>
+        <source>&lt;h3&gt;PdfHandoutCrop {0}&lt;/h3&gt;&lt;br&gt;
+Author: Hsiu-Ming Chang&lt;br&gt;
+e-mail: cges30901@gmail.com&lt;br&gt;
+License: GPL v3</source>
+        <translation type="unfinished">&lt;h3&gt;PdfHandoutCrop {0}&lt;/h3&gt;&lt;br&gt;
 作者：張修銘&lt;br&gt;
 電子郵件：cges30901@gmail.com&lt;br&gt;
 授權：GPL v3</translation>

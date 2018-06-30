@@ -83,52 +83,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="57"/>
+        <location filename="../mainwindow.py" line="58"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="75"/>
+        <location filename="../mainwindow.py" line="76"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="233"/>
+        <location filename="../mainwindow.py" line="234"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="79"/>
+        <location filename="../mainwindow.py" line="80"/>
         <source>Cannot open input file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="124"/>
+        <location filename="../mainwindow.py" line="125"/>
         <source>Cannot find a page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="186"/>
+        <location filename="../mainwindow.py" line="187"/>
         <source>Found {0} pages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="221"/>
+        <location filename="../mainwindow.py" line="222"/>
         <source>Please click the upper left point of page {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="227"/>
+        <location filename="../mainwindow.py" line="228"/>
         <source>Please click the upper left point of any page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="233"/>
+        <location filename="../mainwindow.py" line="234"/>
         <source>Height should be set first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="252"/>
+        <location filename="../mainwindow.py" line="253"/>
         <source>Please click the lower right point of the page you clicked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -150,12 +150,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="117"/>
+        <location filename="../mainwindow.py" line="118"/>
         <source>Finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="117"/>
+        <location filename="../mainwindow.py" line="118"/>
         <source>Convert finished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -177,8 +177,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="57"/>
-        <source>&lt;h3&gt;PdfHandoutCrop&lt;/h3&gt;&lt;br&gt;
+        <location filename="../mainwindow.py" line="58"/>
+        <source>&lt;h3&gt;PdfHandoutCrop {0}&lt;/h3&gt;&lt;br&gt;
 Author: Hsiu-Ming Chang&lt;br&gt;
 e-mail: cges30901@gmail.com&lt;br&gt;
 License: GPL v3</source>

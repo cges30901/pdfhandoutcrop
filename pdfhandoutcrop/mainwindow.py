@@ -52,11 +52,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def on_action_About_triggered(self):
+        version="0.2.1"
         QMessageBox.about(self, self.tr("About"), self.tr(
-'''<h3>PdfHandoutCrop</h3><br>
+'''<h3>PdfHandoutCrop {0}</h3><br>
 Author: Hsiu-Ming Chang<br>
 e-mail: cges30901@gmail.com<br>
-License: GPL v3'''))
+License: GPL v3''').format(version))
 
     @pyqtSlot(int)
     def on_spbPagesPerSheet_valueChanged(self, num):
