@@ -39,6 +39,6 @@ setup(
     python_requires='>=3',
     scripts=['scripts/pdfhandoutcrop'],
     package_data={
-        'pdfhandoutcrop': ['pdfhandoutcrop.png'],
+        'pdfhandoutcrop': ['pdfhandoutcrop.png', 'language/*.ts', 'language/*.qm'],
     },
 )
