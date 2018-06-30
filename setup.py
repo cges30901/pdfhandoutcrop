@@ -12,11 +12,11 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pdfhandoutcrop',
-    version='0.2.0',
+    version='0.2.1',
     description='A tool to crop pdf handout with multiple pages per sheet',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/cges30901/pdfhandoutcrop',
+    url='https://cges30901.github.io/pdfhandoutcrop/',
     author='Hsiu-Ming Chang',
     author_email='cges30901@gmail.com',
     license='GPLv3+',
@@ -28,6 +28,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Operating System :: OS Independent',
         'Natural Language :: English',
+        'Natural Language :: Chinese (Traditional)',
     ],
     keywords='pdf crop',
     project_urls={
