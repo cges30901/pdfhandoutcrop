@@ -62,7 +62,7 @@ License: GPL v3''').format(version))
     @pyqtSlot(int)
     def on_spbPagesPerSheet_valueChanged(self, num):
         while num>len(self.page_position):
-            self.comboPosition.addItem("Page {0}".format(len(self.page_position)+1))
+            self.comboPosition.addItem(self.tr("Page {0}").format(len(self.page_position)+1))
             self.page_position.append([0, 0])
         while num<len(self.page_position):
             self.comboPosition.removeItem(len(self.page_position)-1)
