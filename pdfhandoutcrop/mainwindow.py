@@ -119,8 +119,9 @@ License: GPL v3''').format(version))
     def on_btnAutoDetect_clicked(self):
         #find the upperleft point of the first page
         pointUpperLeft=self.findFirstPoint()
-        if pointUpperLeft.x()==-1:  #cannot find a page
-            QMessageBox.warning(self, self.tr("Warning"), self.tr("Cannot find a page"))
+        if pointUpperLeft.x()==-1:  #Page can not be found
+            QMessageBox.warning(self, self.tr("Page can not be found"),
+                self.tr("Page can not be found. Auto detect only works if pages have border."))
             return
 
         #find width
