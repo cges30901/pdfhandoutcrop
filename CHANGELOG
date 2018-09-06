@@ -1,3 +1,6 @@
+version 0.3.0 2018.09.06
+-set mediabox correctly if page is rotated
+
 version 0.2.1 2018.06.30
 -internationalization and add Chinese (Traditional) translation
 
