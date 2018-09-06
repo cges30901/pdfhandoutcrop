@@ -101,14 +101,45 @@ License: GPL v3''').format(version))
         factor=72/self.density_render
         width=self.spbWidth.value()*factor
         height=self.spbHeight.value()*factor
+        sheetHeight=self.pdfPage.pageSizeF().height()
+        sheetWidth=self.pdfPage.pageSizeF().width()
+        rotation=pdfInput.getPage(0).get('/Rotate')
+
+        #make rotation 0, 90, 180 or 270
+        if rotation is None:
+            rotation=0
+        elif rotation<0:
+            rotation=rotation%360+360
+
+        #operation above might change rotation to 360,
+        #so "if" is used instead of "elif"
+        if rotation>=360:
+            rotation=rotation%360
+
         for i in range(numPages):
             page=pdfInput.getPage(i)
             for j in range(pagesPerSheet):
                 page_crop=copy.copy(page)
-                page_crop.mediaBox.lowerLeft=(self.page_position[j][0]*factor,
-                    self.page_position[j][1]*factor+height)
-                page_crop.mediaBox.upperRight=(self.page_position[j][0]*factor+width,
-                    self.page_position[j][1]*factor)
+                if rotation==90:
+                    page_crop.mediaBox.lowerLeft=(sheetHeight-self.page_position[j][1]*factor-height,
+                        self.page_position[j][0]*factor+width)
+                    page_crop.mediaBox.upperRight=(sheetHeight-self.page_position[j][1]*factor,
+                        self.page_position[j][0]*factor)
+                elif rotation==180:
+                    page_crop.mediaBox.lowerLeft=(sheetWidth-self.page_position[j][0]*factor-width,
+                        sheetHeight-self.page_position[j][1]*factor)
+                    page_crop.mediaBox.upperRight=(sheetWidth-self.page_position[j][0]*factor,
+                        sheetHeight-self.page_position[j][1]*factor-height)
+                elif rotation==270:
+                    page_crop.mediaBox.lowerLeft=(self.page_position[j][1]*factor,
+                        sheetWidth-self.page_position[j][0]*factor)
+                    page_crop.mediaBox.upperRight=(self.page_position[j][1]*factor+height,
+                        sheetWidth-self.page_position[j][0]*factor-width)
+                else: #not rotated
+                    page_crop.mediaBox.lowerLeft=(self.page_position[j][0]*factor,
+                        self.page_position[j][1]*factor+height)
+                    page_crop.mediaBox.upperRight=(self.page_position[j][0]*factor+width,
+                        self.page_position[j][1]*factor)
                 pdfOutput.addPage(page_crop)
         outputStream = open(self.fileOutput, "wb")
         pdfOutput.write(outputStream)
