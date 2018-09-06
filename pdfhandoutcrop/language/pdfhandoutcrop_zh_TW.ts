@@ -94,7 +94,7 @@
         <translation>載入中...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="234"/>
+        <location filename="../mainwindow.py" line="266"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -104,32 +104,27 @@
         <translation>無法開啟輸入檔案</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="125"/>
-        <source>Cannot find a page</source>
-        <translation>無法找到頁面</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.py" line="187"/>
+        <location filename="../mainwindow.py" line="219"/>
         <source>Found {0} pages</source>
         <translation>找到 {0} 頁</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="222"/>
+        <location filename="../mainwindow.py" line="254"/>
         <source>Please click the upper left point of page {0}</source>
         <translation>請按一下第 {0} 頁的左上角</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="228"/>
+        <location filename="../mainwindow.py" line="260"/>
         <source>Please click the upper left point of any page</source>
         <translation>請按一下任何一頁的左上角</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="234"/>
+        <location filename="../mainwindow.py" line="266"/>
         <source>Height should be set first</source>
         <translation>應該要先設定高度</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="253"/>
+        <location filename="../mainwindow.py" line="285"/>
         <source>Please click the lower right point of the page you clicked</source>
         <translation>請按一下你剛剛按的那一頁的右下角</translation>
     </message>
@@ -146,17 +141,17 @@
         <translation>下一頁(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="19"/>
+        <location filename="../mainwindow.py" line="67"/>
         <source>Page {0}</source>
         <translation>第 {0} 頁</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="118"/>
+        <location filename="../mainwindow.py" line="149"/>
         <source>Finished</source>
         <translation>已完成</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="118"/>
+        <location filename="../mainwindow.py" line="149"/>
         <source>Convert finished</source>
         <translation>轉換已完成</translation>
     </message>
@@ -178,26 +173,25 @@
         <translation>重新載入(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="57"/>
-        <source>&lt;h3&gt;PdfHandoutCrop&lt;/h3&gt;&lt;br&gt;
-Author: Hsiu-Ming Chang&lt;br&gt;
-e-mail: cges30901@gmail.com&lt;br&gt;
-License: GPL v3</source>
-        <translation type="obsolete">&lt;h3&gt;PdfHandoutCrop&lt;/h3&gt;&lt;br&gt;
-作者：張修銘&lt;br&gt;
-電子郵件：cges30901@gmail.com&lt;br&gt;
-授權：GPL v3</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.py" line="58"/>
         <source>&lt;h3&gt;PdfHandoutCrop {0}&lt;/h3&gt;&lt;br&gt;
 Author: Hsiu-Ming Chang&lt;br&gt;
 e-mail: cges30901@gmail.com&lt;br&gt;
 License: GPL v3</source>
-        <translation type="unfinished">&lt;h3&gt;PdfHandoutCrop {0}&lt;/h3&gt;&lt;br&gt;
+        <translation>&lt;h3&gt;PdfHandoutCrop {0}&lt;/h3&gt;&lt;br&gt;
 作者：張修銘&lt;br&gt;
 電子郵件：cges30901@gmail.com&lt;br&gt;
 授權：GPL v3</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.py" line="156"/>
+        <source>Page can not be found</source>
+        <translation>無法找到頁面</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.py" line="156"/>
+        <source>Page can not be found. Auto detect only works if pages have border.</source>
+        <translation>無法找到頁面。自動偵測只有在頁面有框線時才能運作。</translation>
     </message>
 </context>
 <context>

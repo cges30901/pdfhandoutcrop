@@ -93,7 +93,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="234"/>
+        <location filename="../mainwindow.py" line="266"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -103,32 +103,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="125"/>
-        <source>Cannot find a page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.py" line="187"/>
+        <location filename="../mainwindow.py" line="219"/>
         <source>Found {0} pages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="222"/>
+        <location filename="../mainwindow.py" line="254"/>
         <source>Please click the upper left point of page {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="228"/>
+        <location filename="../mainwindow.py" line="260"/>
         <source>Please click the upper left point of any page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="234"/>
+        <location filename="../mainwindow.py" line="266"/>
         <source>Height should be set first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="253"/>
+        <location filename="../mainwindow.py" line="285"/>
         <source>Please click the lower right point of the page you clicked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -145,17 +140,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="19"/>
+        <location filename="../mainwindow.py" line="67"/>
         <source>Page {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="118"/>
+        <location filename="../mainwindow.py" line="149"/>
         <source>Finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="118"/>
+        <location filename="../mainwindow.py" line="149"/>
         <source>Convert finished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -182,6 +177,16 @@
 Author: Hsiu-Ming Chang&lt;br&gt;
 e-mail: cges30901@gmail.com&lt;br&gt;
 License: GPL v3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.py" line="156"/>
+        <source>Page can not be found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.py" line="156"/>
+        <source>Page can not be found. Auto detect only works if pages have border.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
