@@ -3,3 +3,10 @@ include README.md
 
 # Include the license file
 include LICENSE.txt
+
+include CHANGELOG
+include pdfhandoutcrop.desktop
+recursive-include icons pdfhandoutcrop.png
+include pdfhandoutcrop/pdfhandoutcrop.pro
+include pdfhandoutcrop/pdfhandoutcrop.e4p
+include pdfhandoutcrop/*.ui
