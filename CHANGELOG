@@ -1,3 +1,7 @@
+version 0.3.1 2018.09.07
+-update Chinese (Traditional) translation
+-include more files in MANIFEST.in
+
 version 0.3.0 2018.09.06
 -set mediabox correctly if page is rotated
 
