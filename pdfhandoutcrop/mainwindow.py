@@ -250,7 +250,7 @@ License: GPL v3''').format(version))
     def on_btnPosition_clicked(self):
         self.set=1
         self.statusBar.showMessage(self.tr(
-            "Please click the upper left point of page {0}".format(self.comboPosition.currentIndex()+1)))
+            "Please click the upper left point of page {0}").format(self.comboPosition.currentIndex()+1))
 
     @pyqtSlot(bool)
     def on_btnWidthHeight_clicked(self):
