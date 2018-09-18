@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.11.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -162,14 +162,18 @@ class Ui_MainWindow(object):
         self.actionAbout_Qt.setObjectName("actionAbout_Qt")
         self.action_About = QtWidgets.QAction(MainWindow)
         self.action_About.setObjectName("action_About")
+        self.action_Quit = QtWidgets.QAction(MainWindow)
+        self.action_Quit.setObjectName("action_Quit")
         self.menu_File.addAction(self.action_Open)
         self.menu_File.addAction(self.action_Convert)
+        self.menu_File.addAction(self.action_Quit)
         self.menu_Help.addAction(self.actionAbout_Qt)
         self.menu_Help.addAction(self.action_About)
         self.menuBar.addAction(self.menu_File.menuAction())
         self.menuBar.addAction(self.menu_Help.menuAction())
 
         self.retranslateUi(MainWindow)
+        self.action_Quit.triggered.connect(MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -194,4 +198,5 @@ class Ui_MainWindow(object):
         self.action_Convert.setText(_translate("MainWindow", "&Convert"))
         self.actionAbout_Qt.setText(_translate("MainWindow", "About &Qt"))
         self.action_About.setText(_translate("MainWindow", "&About"))
+        self.action_Quit.setText(_translate("MainWindow", "&Quit"))
 

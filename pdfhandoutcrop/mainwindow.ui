@@ -280,6 +280,7 @@
     </property>
     <addaction name="action_Open"/>
     <addaction name="action_Convert"/>
+    <addaction name="action_Quit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -320,8 +321,30 @@
     <string>&amp;About</string>
    </property>
   </action>
+  <action name="action_Quit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>action_Quit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>569</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
