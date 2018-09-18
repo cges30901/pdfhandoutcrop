@@ -20,7 +20,7 @@ def main():
     app.installTranslator(qtTranslator)
 
     w = MainWindow()
-    w.show()
+    w.showMaximized()
     
     sys.exit(app.exec_())
 
