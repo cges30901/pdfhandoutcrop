@@ -1,3 +1,8 @@
+version 0.3.2 2018.09.19
+-load Qt translation
+-update and fix translation
+-maximize window at start
+
 version 0.3.1 2018.09.07
 -update Chinese (Traditional) translation
 -include more files in MANIFEST.in
