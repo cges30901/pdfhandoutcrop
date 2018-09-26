@@ -186,7 +186,7 @@ class Ui_MainWindow(object):
         self.btnNext.setText(_translate("MainWindow", "&Next", "next page"))
         self.btnZoomIn.setText(_translate("MainWindow", "Zoom &in"))
         self.btnZoomOut.setText(_translate("MainWindow", "Zoom &out"))
-        self.labelWidthHeight.setText(_translate("MainWindow", "Width and Height"))
+        self.labelWidthHeight.setText(_translate("MainWindow", "Width and Height:"))
         self.btnWidthHeight.setText(_translate("MainWindow", "Click to set"))
         self.label_2.setText(_translate("MainWindow", "Position:"))
         self.label_3.setText(_translate("MainWindow", "x:", "x coordinate"))

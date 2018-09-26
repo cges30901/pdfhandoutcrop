@@ -28,11 +28,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="168"/>
-        <source>Width and Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="247"/>
         <source>Click to set</source>
         <translation type="unfinished"></translation>
@@ -192,6 +187,11 @@ License: GPL v3</source>
     <message>
         <location filename="../mainwindow.ui" line="326"/>
         <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="168"/>
+        <source>Width and Height:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -165,7 +165,7 @@
       <item>
        <widget class="QLabel" name="labelWidthHeight">
         <property name="text">
-         <string>Width and Height</string>
+         <string>Width and Height:</string>
         </property>
        </widget>
       </item>

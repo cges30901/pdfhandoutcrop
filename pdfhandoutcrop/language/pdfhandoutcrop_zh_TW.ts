@@ -29,11 +29,6 @@
         <translation>縮小(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="168"/>
-        <source>Width and Height</source>
-        <translation>寬和高</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="247"/>
         <source>Click to set</source>
         <translation>按一下來設定</translation>
@@ -197,6 +192,11 @@ License: GPL v3</source>
         <location filename="../mainwindow.ui" line="326"/>
         <source>&amp;Quit</source>
         <translation>離開(&amp;Q)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="168"/>
+        <source>Width and Height:</source>
+        <translation type="unfinished">寬和高：</translation>
     </message>
 </context>
 <context>
