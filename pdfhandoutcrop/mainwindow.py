@@ -116,6 +116,13 @@ License: GPL v3''').format(version))
         if rotation>=360:
             rotation=rotation%360
 
+        #if lowerLeft of original mediaBox is not [0,0],
+        #new mediaBox should be adjusted according to that.
+        #FIXME: only fixed when page is not rotated currently.
+        mediaBox_old=pdfInput.getPage(0).mediaBox
+        lowerLeftX_old=mediaBox_old.lowerLeft[0].as_numeric()
+        lowerLeftY_old=mediaBox_old.lowerLeft[1].as_numeric()
+
         for i in range(numPages):
             page=pdfInput.getPage(i)
             for j in range(pagesPerSheet):
@@ -136,10 +143,10 @@ License: GPL v3''').format(version))
                     page_crop.mediaBox.upperRight=(self.page_position[j][1]*factor+height,
                         sheetWidth-self.page_position[j][0]*factor-width)
                 else: #not rotated
-                    page_crop.mediaBox.lowerLeft=(self.page_position[j][0]*factor,
-                        self.page_position[j][1]*factor+height)
-                    page_crop.mediaBox.upperRight=(self.page_position[j][0]*factor+width,
-                        self.page_position[j][1]*factor)
+                    page_crop.mediaBox.lowerLeft=(self.page_position[j][0]*factor+lowerLeftX_old,
+                        self.page_position[j][1]*factor+height+lowerLeftY_old)
+                    page_crop.mediaBox.upperRight=(self.page_position[j][0]*factor+width+lowerLeftX_old,
+                        self.page_position[j][1]*factor+lowerLeftY_old)
                 pdfOutput.addPage(page_crop)
         outputStream = open(self.fileOutput, "wb")
         pdfOutput.write(outputStream)
