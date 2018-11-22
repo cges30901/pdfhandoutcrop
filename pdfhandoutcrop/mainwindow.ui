@@ -108,7 +108,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="btnUpdate">
+       <widget class="QPushButton" name="btnReload">
         <property name="enabled">
          <bool>false</bool>
         </property>

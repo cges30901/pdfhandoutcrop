@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.2
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -71,10 +71,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.spbPagesPerSheet)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem)
-        self.btnUpdate = QtWidgets.QPushButton(self.centralWidget)
-        self.btnUpdate.setEnabled(False)
-        self.btnUpdate.setObjectName("btnUpdate")
-        self.horizontalLayout_2.addWidget(self.btnUpdate)
+        self.btnReload = QtWidgets.QPushButton(self.centralWidget)
+        self.btnReload.setEnabled(False)
+        self.btnReload.setObjectName("btnReload")
+        self.horizontalLayout_2.addWidget(self.btnReload)
         self.labelPageNum = QtWidgets.QLabel(self.centralWidget)
         self.labelPageNum.setText("")
         self.labelPageNum.setObjectName("labelPageNum")
@@ -181,7 +181,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "PdfHandoutCrop"))
         self.btnAutoDetect.setText(_translate("MainWindow", "&Auto detect"))
         self.label.setText(_translate("MainWindow", "Pages per sheet:"))
-        self.btnUpdate.setText(_translate("MainWindow", "&Reload"))
+        self.btnReload.setText(_translate("MainWindow", "&Reload"))
         self.btnPrevious.setText(_translate("MainWindow", "&Previous", "previous page"))
         self.btnNext.setText(_translate("MainWindow", "&Next", "next page"))
         self.btnZoomIn.setText(_translate("MainWindow", "Zoom &in"))
