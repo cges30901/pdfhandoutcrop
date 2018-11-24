@@ -103,7 +103,11 @@ License: GPL v3''').format(version))
         height=self.spbHeight.value()*factor
         sheetHeight=self.pdfPage.pageSizeF().height()
         sheetWidth=self.pdfPage.pageSizeF().width()
-        rotation=pdfInput.getPage(0).get('/Rotate')
+        #Getting mediaBox of page 0 directly makes output pages of first sheet
+        #have same mediaBox, so I use copy.copy() to workaround this problem.
+        page0=copy.copy(pdfInput.getPage(0))
+
+        rotation=page0.get('/Rotate')
 
         #make rotation 0, 90, 180 or 270
         if rotation is None:
@@ -119,7 +123,7 @@ License: GPL v3''').format(version))
         #if lowerLeft of original mediaBox is not [0,0],
         #new mediaBox should be adjusted according to that.
         #FIXME: only fixed when page is not rotated currently.
-        mediaBox_old=pdfInput.getPage(0).mediaBox
+        mediaBox_old=page0.mediaBox
         lowerLeftX_old=mediaBox_old.lowerLeft[0].as_numeric()
         lowerLeftY_old=mediaBox_old.lowerLeft[1].as_numeric()
 
