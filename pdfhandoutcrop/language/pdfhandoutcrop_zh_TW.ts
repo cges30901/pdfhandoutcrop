@@ -49,22 +49,22 @@
         <translation>說明(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="306"/>
+        <location filename="../mainwindow.ui" line="311"/>
         <source>&amp;Open</source>
         <translation>開啟(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="311"/>
+        <location filename="../mainwindow.ui" line="316"/>
         <source>&amp;Convert</source>
         <translation>轉換(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="316"/>
+        <location filename="../mainwindow.ui" line="321"/>
         <source>About &amp;Qt</source>
         <translation>關於 &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="321"/>
+        <location filename="../mainwindow.ui" line="326"/>
         <source>&amp;About</source>
         <translation>關於(&amp;A)</translation>
     </message>
@@ -79,47 +79,47 @@
         <translation>{0} - PdfHandoutCrop</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="58"/>
+        <location filename="../mainwindow.py" line="78"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="76"/>
+        <location filename="../mainwindow.py" line="96"/>
         <source>Loading...</source>
         <translation>載入中...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="266"/>
+        <location filename="../mainwindow.py" line="297"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="80"/>
+        <location filename="../mainwindow.py" line="100"/>
         <source>Cannot open input file</source>
         <translation>無法開啟輸入檔案</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="219"/>
+        <location filename="../mainwindow.py" line="250"/>
         <source>Found {0} pages</source>
         <translation>找到 {0} 頁</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="254"/>
+        <location filename="../mainwindow.py" line="285"/>
         <source>Please click the upper left point of page {0}</source>
         <translation>請按一下第 {0} 頁的左上角</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="260"/>
+        <location filename="../mainwindow.py" line="291"/>
         <source>Please click the upper left point of any page</source>
         <translation>請按一下任何一頁的左上角</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="266"/>
+        <location filename="../mainwindow.py" line="297"/>
         <source>Height should be set first</source>
         <translation>應該要先設定高度</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="285"/>
+        <location filename="../mainwindow.py" line="316"/>
         <source>Please click the lower right point of the page you clicked</source>
         <translation>請按一下你剛剛按的那一頁的右下角</translation>
     </message>
@@ -136,17 +136,17 @@
         <translation>下一頁(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="67"/>
+        <location filename="../mainwindow.py" line="87"/>
         <source>Page {0}</source>
         <translation>第 {0} 頁</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="149"/>
+        <location filename="../mainwindow.py" line="180"/>
         <source>Finished</source>
         <translation>已完成</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="149"/>
+        <location filename="../mainwindow.py" line="180"/>
         <source>Convert finished</source>
         <translation>轉換已完成</translation>
     </message>
@@ -168,7 +168,7 @@
         <translation>重新載入(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="58"/>
+        <location filename="../mainwindow.py" line="78"/>
         <source>&lt;h3&gt;PdfHandoutCrop {0}&lt;/h3&gt;&lt;br&gt;
 Author: Hsiu-Ming Chang&lt;br&gt;
 e-mail: cges30901@gmail.com&lt;br&gt;
@@ -179,24 +179,44 @@ License: GPL v3</source>
 授權：GPL v3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="156"/>
+        <location filename="../mainwindow.py" line="187"/>
         <source>Page can not be found</source>
         <translation>無法找到頁面</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="156"/>
+        <location filename="../mainwindow.py" line="187"/>
         <source>Page can not be found. Auto detect only works if pages have border.</source>
         <translation>無法找到頁面。自動偵測只有在頁面有框線時才能運作。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="326"/>
+        <location filename="../mainwindow.ui" line="331"/>
         <source>&amp;Quit</source>
         <translation>離開(&amp;Q)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="168"/>
         <source>Width and Height:</source>
-        <translation type="unfinished">寬和高：</translation>
+        <translation>寬和高：</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="336"/>
+        <source>&amp;Website</source>
+        <translation>網站(&amp;W)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="341"/>
+        <source>&amp;Donate</source>
+        <translation>捐款(&amp;D)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="346"/>
+        <source>&amp;Project page</source>
+        <translation>專案頁面(&amp;P)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="351"/>
+        <source>&amp;Blog</source>
+        <translation>部落格(&amp;B)</translation>
     </message>
 </context>
 <context>

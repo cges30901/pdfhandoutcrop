@@ -1,8 +1,8 @@
 import copy
 import os
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog
-from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
-from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon
+from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent, QUrl
+from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon, QDesktopServices
 import popplerqt5
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from pdfhandoutcrop.ui_mainwindow import Ui_MainWindow
@@ -45,6 +45,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if filename!="":
             self.fileOutput=filename
             self.convert()
+
+    @pyqtSlot()
+    def on_action_Website_triggered(self):
+        QDesktopServices.openUrl(QUrl("https://cges30901.github.io/pdfhandoutcrop/"))
+
+    @pyqtSlot()
+    def on_action_Project_page_triggered(self):
+        QDesktopServices.openUrl(QUrl("https://github.com/cges30901/pdfhandoutcrop"))
+
+    @pyqtSlot()
+    def on_action_Donate_triggered(self):
+        QDesktopServices.openUrl(QUrl("https://cges30901.github.io/pdfhandoutcrop/donate.html"))
+
+    @pyqtSlot()
+    def on_action_Blog_triggered(self):
+        QDesktopServices.openUrl(QUrl("https://hsiu-ming.blogspot.com/"))
 
     @pyqtSlot()
     def on_actionAbout_Qt_triggered(self):
