@@ -1,3 +1,8 @@
+version 0.4.0 2018.11.26
+-fix mediaBox if lowerLeft of original mediaBox is not [0,0] (only fixed when page is not rotated)
+-add actions in menuBar
+-other changes
+
 version 0.3.2 2018.09.19
 -load Qt translation
 -update and fix translation
