@@ -2,8 +2,8 @@ import copy
 import os
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent, QUrl
-from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon, QDesktopServices
-import popplerqt5
+from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon, QDesktopServices, QImage
+import fitz
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from pdfhandoutcrop.ui_mainwindow import Ui_MainWindow
 from pdfhandoutcrop.setpagesdialog import SetPagesDialog
@@ -17,7 +17,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.page_position=[[0, 0] for x in range(self.spbPagesPerSheet.value())]
         for i in range(self.spbPagesPerSheet.value()):
             self.comboPosition.addItem(self.tr("Page {0}").format(i+1))
-        self.density_render=150.0
+        self.scaling = 2.0
         self.current_page=0
         #self.fileInput and self.fileOutput need to be defined first
         #because QFileDialog needs them
@@ -89,36 +89,33 @@ License: GPL v3''').format(version))
     def loadPdf(self):
         self.labelSelectPoint.setText(self.tr("Loading..."))
         self.labelSelectPoint.repaint()
-        self.document=popplerqt5.Poppler.Document.load(self.fileInput)
-        if self.document is None:
-            QMessageBox.warning(self, self.tr("Warning"), self.tr("Cannot open input file"))
-            self.labelSelectPoint.setText("")
-            return
+        self.document=fitz.open(self.fileInput)
         if self.current_page==0:
             self.btnPrevious.setEnabled(False)
         else:
             self.btnPrevious.setEnabled(True)
-        if self.current_page==self.document.numPages()-1:
+        if self.current_page==self.document.pageCount-1:
             self.btnNext.setEnabled(False)
         else:
             self.btnNext.setEnabled(True)
-        self.pdfPage = self.document.page(self.current_page)
-        self.image=self.pdfPage.renderToImage(self.density_render, self.density_render)
+        self.page = self.document.loadPage(self.current_page)
+        pix = self.page.getPixmap(fitz.Matrix(self.scaling, 0, 0, self.scaling, 0, 0), alpha = False)
+        self.samples = pix.samples
+        self.image=QImage(self.samples, pix.width, pix.height, pix.stride, QImage.Format_RGB888);
         self.pixmap=QPixmap.fromImage(self.image)
         self.needPaint=True
         self.labelSelectPoint.setPixmap(self.pixmap)
-        self.labelPageNum.setText(str(self.current_page+1)+" / "+str(self.document.numPages()))
+        self.labelPageNum.setText(str(self.current_page+1)+" / "+str(self.document.pageCount))
 
     def convert(self):
         pdfInput=PdfFileReader(self.fileInput)
         pdfOutput=PdfFileWriter()
         numPages=pdfInput.getNumPages()
         pagesPerSheet=self.spbPagesPerSheet.value()
-        factor=72/self.density_render
-        width=self.spbWidth.value()*factor
-        height=self.spbHeight.value()*factor
-        sheetHeight=self.pdfPage.pageSizeF().height()
-        sheetWidth=self.pdfPage.pageSizeF().width()
+        width=self.spbWidth.value()/self.scaling
+        height=self.spbHeight.value()/self.scaling
+        sheetHeight=self.image.height()
+        sheetWidth=self.image.width()
         #Getting mediaBox of page 0 directly makes output pages of first sheet
         #have same mediaBox, so I use copy.copy() to workaround this problem.
         page0=copy.copy(pdfInput.getPage(0))
@@ -148,25 +145,25 @@ License: GPL v3''').format(version))
             for j in range(pagesPerSheet):
                 page_crop=copy.copy(page)
                 if rotation==90:
-                    page_crop.mediaBox.lowerLeft=(sheetHeight-self.page_position[j][1]*factor-height,
-                        self.page_position[j][0]*factor+width)
-                    page_crop.mediaBox.upperRight=(sheetHeight-self.page_position[j][1]*factor,
-                        self.page_position[j][0]*factor)
+                    page_crop.mediaBox.lowerLeft=(sheetHeight-self.page_position[j][1]/self.scaling-height,
+                        self.page_position[j][0]/self.scaling+width)
+                    page_crop.mediaBox.upperRight=(sheetHeight-self.page_position[j][1]/self.scaling,
+                        self.page_position[j][0]/self.scaling)
                 elif rotation==180:
-                    page_crop.mediaBox.lowerLeft=(sheetWidth-self.page_position[j][0]*factor-width,
-                        sheetHeight-self.page_position[j][1]*factor)
-                    page_crop.mediaBox.upperRight=(sheetWidth-self.page_position[j][0]*factor,
-                        sheetHeight-self.page_position[j][1]*factor-height)
+                    page_crop.mediaBox.lowerLeft=(sheetWidth-self.page_position[j][0]/self.scaling-width,
+                        sheetHeight-self.page_position[j][1]/self.scaling)
+                    page_crop.mediaBox.upperRight=(sheetWidth-self.page_position[j][0]/self.scaling,
+                        sheetHeight-self.page_position[j][1]/self.scaling-height)
                 elif rotation==270:
-                    page_crop.mediaBox.lowerLeft=(self.page_position[j][1]*factor,
-                        sheetWidth-self.page_position[j][0]*factor)
-                    page_crop.mediaBox.upperRight=(self.page_position[j][1]*factor+height,
-                        sheetWidth-self.page_position[j][0]*factor-width)
+                    page_crop.mediaBox.lowerLeft=(self.page_position[j][1]/self.scaling,
+                        sheetWidth-self.page_position[j][0]/self.scaling)
+                    page_crop.mediaBox.upperRight=(self.page_position[j][1]/self.scaling+height,
+                        sheetWidth-self.page_position[j][0]/self.scaling-width)
                 else: #not rotated
-                    page_crop.mediaBox.lowerLeft=(self.page_position[j][0]*factor+lowerLeftX_old,
-                        self.page_position[j][1]*factor+height+lowerLeftY_old)
-                    page_crop.mediaBox.upperRight=(self.page_position[j][0]*factor+width+lowerLeftX_old,
-                        self.page_position[j][1]*factor+lowerLeftY_old)
+                    page_crop.mediaBox.lowerLeft=(self.page_position[j][0]/self.scaling+lowerLeftX_old,
+                        self.page_position[j][1]/self.scaling+height+lowerLeftY_old)
+                    page_crop.mediaBox.upperRight=(self.page_position[j][0]/self.scaling+width+lowerLeftX_old,
+                        self.page_position[j][1]/self.scaling+lowerLeftY_old)
                 pdfOutput.addPage(page_crop)
         outputStream = open(self.fileOutput, "wb")
         pdfOutput.write(outputStream)
@@ -231,7 +228,7 @@ License: GPL v3''').format(version))
         self.spbWidth.setValue(width)
         self.spbHeight.setValue(height)
         #point (0,0) is in lowerLeft, so coordinate need to be changed
-        sheetHeight=self.pdfPage.pageSizeF().height()*self.density_render/72
+        sheetHeight=self.image.height()
         pageHeight=self.spbHeight.value()
         for i in range(len(rows)*len(columns)):
             self.page_position[i][0]=columns[i%len(columns)]
@@ -294,7 +291,7 @@ License: GPL v3''').format(version))
             self.spbPositionX.setValue(x)
 
             #point (0,0) is in lowerLeft, so y coordinate need to be changed
-            sheetHeight=self.pdfPage.pageSizeF().height()*self.density_render/72
+            sheetHeight=self.image.height()
             pageHeight=self.spbHeight.value()
             self.spbPositionY.setValue(sheetHeight-pageHeight-y)
             self.needPaint=True
@@ -327,7 +324,7 @@ License: GPL v3''').format(version))
             painter.setPen(Qt.red)
             path=[QPainterPath() for i in range(self.spbPagesPerSheet.value())]
             for i in range(self.spbPagesPerSheet.value()):
-                sheetHeight=self.pdfPage.pageSizeF().height()*self.density_render/72
+                sheetHeight=self.image.height()
                 pageHeight=self.spbHeight.value()
                 path[i].moveTo(self.page_position[i][0],
                     sheetHeight-pageHeight-self.page_position[i][1])
@@ -364,12 +361,12 @@ License: GPL v3''').format(version))
         self.update()
 
     def on_btnZoomIn_clicked(self):
-        self.density_render*=1.2
+        self.scaling *= 1.2
         self.needPaint=True
         self.loadPdf()
 
     def on_btnZoomOut_clicked(self):
-        self.density_render/=1.2
+        self.scaling /= 1.2
         self.needPaint=True
         self.loadPdf()
 
