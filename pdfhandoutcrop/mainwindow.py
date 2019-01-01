@@ -241,8 +241,8 @@ License: GPL v3''').format(version))
         self.statusBar.showMessage(self.tr("Found {0} pages").format(len(rows)*len(columns)), 2000)
 
     def findFirstPoint(self):
-        for yOffset in range(self.image.height()):
-            for xOffset in range(self.image.width()):
+        for yOffset in range(self.image.height()-100):
+            for xOffset in range(self.image.width()-100):
                 pixel=self.image.pixel(xOffset, yOffset)
                 #4294967295 is white
                 if pixel!=4294967295:
