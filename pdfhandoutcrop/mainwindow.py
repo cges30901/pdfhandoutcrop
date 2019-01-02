@@ -36,6 +36,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.btnAutoDetect.setEnabled(True)
             self.btnReload.setEnabled(True)
             self.setWindowTitle(self.tr("{0} - PdfHandoutCrop").format(os.path.basename(self.fileInput)))
+            self.document=fitz.open(self.fileInput)
             self.loadPdf()
 
     @pyqtSlot()
@@ -89,7 +90,6 @@ License: GPL v3''').format(version))
     def loadPdf(self):
         self.labelSelectPoint.setText(self.tr("Loading..."))
         self.labelSelectPoint.repaint()
-        self.document=fitz.open(self.fileInput)
         if self.current_page==0:
             self.btnPrevious.setEnabled(False)
         else:
