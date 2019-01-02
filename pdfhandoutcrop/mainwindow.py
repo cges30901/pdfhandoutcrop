@@ -115,8 +115,8 @@ License: GPL v3''').format(version))
         pagesPerSheet=self.spbPagesPerSheet.value()
         width=self.spbWidth.value()/self.scaling
         height=self.spbHeight.value()/self.scaling
-        sheetHeight=self.image.height()
-        sheetWidth=self.image.width()
+        sheetHeight=self.image.height()/self.scaling
+        sheetWidth=self.image.width()/self.scaling
         #Getting mediaBox of page 0 directly makes output pages of first sheet
         #have same mediaBox, so I use copy.copy() to workaround this problem.
         page0=copy.copy(pdfInput.getPage(0))
