@@ -36,6 +36,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.btnAutoDetect.setEnabled(True)
             self.btnReload.setEnabled(True)
             self.setWindowTitle(self.tr("{0} - PdfHandoutCrop").format(os.path.basename(self.fileInput)))
+            self.current_page=0
             self.document=fitz.open(self.fileInput)
             self.loadPdf()
 
