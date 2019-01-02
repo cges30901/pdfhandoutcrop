@@ -197,7 +197,7 @@ License: GPL v3''').format(version))
         #find columns
         columns=[pointUpperLeft.x()]
         iter=pointUpperLeft.x()+width
-        while iter<self.image.width():
+        while iter<self.image.width()-100:
             if self.image.pixel(iter, pointUpperLeft.y())!=4294967295:
                 columns.append(iter)
                 iter+=width
@@ -206,7 +206,7 @@ License: GPL v3''').format(version))
         #find rows
         rows=[pointUpperLeft.y()]
         iter=pointUpperLeft.y()+height
-        while iter<self.image.height():
+        while iter<self.image.height()-100:
             if self.image.pixel(pointUpperLeft.x(), iter)!=4294967295:
                 rows.append(iter)
                 iter+=height
