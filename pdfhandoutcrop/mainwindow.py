@@ -33,11 +33,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.tr("PDF documents (*.pdf)"))[0]
         if filename!="":
             self.fileInput=filename
+            try:
+                self.document=fitz.open(self.fileInput)
+            except:
+                QMessageBox.warning(self, self.tr("Error"), self.tr("Cannot open input file"))
+                self.labelSelectPoint.setText("")
+                return
             self.btnAutoDetect.setEnabled(True)
             self.btnReload.setEnabled(True)
             self.setWindowTitle(self.tr("{0} - PdfHandoutCrop").format(os.path.basename(self.fileInput)))
             self.current_page=0
-            self.document=fitz.open(self.fileInput)
             self.loadPdf()
 
     @pyqtSlot()
