@@ -41,12 +41,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.loadPdf()
 
     @pyqtSlot()
-    def on_action_Convert_triggered(self):
+    def on_action_Save_triggered(self):
         filename=QFileDialog.getSaveFileName(self, "", self.fileOutput,
             self.tr("PDF documents (*.pdf)"))[0]
         if filename!="":
             self.fileOutput=filename
-            self.convert()
+            self.save()
 
     @pyqtSlot()
     def on_action_Website_triggered(self):
@@ -108,7 +108,7 @@ License: GPL v3''').format(version))
         self.labelSelectPoint.setPixmap(self.pixmap)
         self.labelPageNum.setText(str(self.current_page+1)+" / "+str(self.document.pageCount))
 
-    def convert(self):
+    def save(self):
         pdfInput=PdfFileReader(self.fileInput)
         pdfOutput=PdfFileWriter()
         numPages=pdfInput.getNumPages()
@@ -169,7 +169,7 @@ License: GPL v3''').format(version))
         outputStream = open(self.fileOutput, "wb")
         pdfOutput.write(outputStream)
         outputStream.close()
-        QMessageBox.information(self, self.tr("Finished"), self.tr("Convert finished"))
+        QMessageBox.information(self, self.tr("Finished"), self.tr("Cropped PDF saved"))
 
     @pyqtSlot(bool)
     def on_btnAutoDetect_clicked(self):

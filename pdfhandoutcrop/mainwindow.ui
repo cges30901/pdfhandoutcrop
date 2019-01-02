@@ -279,7 +279,7 @@
      <string>&amp;File</string>
     </property>
     <addaction name="action_Open"/>
-    <addaction name="action_Convert"/>
+    <addaction name="action_Save"/>
     <addaction name="action_Quit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -311,9 +311,9 @@
     <string>&amp;Open</string>
    </property>
   </action>
-  <action name="action_Convert">
+  <action name="action_Save">
    <property name="text">
-    <string>&amp;Convert</string>
+    <string>&amp;Save</string>
    </property>
   </action>
   <action name="actionAbout_Qt">
