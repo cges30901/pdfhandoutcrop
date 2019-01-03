@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name:           pdfhandoutcrop
-Version:        0.4.0
+Version:        0.5.0
 Release:        0
 License:        GPL-3.0+
 Summary:        A tool to crop pdf handout with multiple pages per sheet
@@ -24,7 +24,7 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 Requires:       python3-PyPDF2
 Requires:       python3-qt5
-Requires:       python3-poppler-qt5
+Requires:       python3-PyMuPDF
 %if 0%{?suse_version}
 BuildRequires:  update-desktop-files
 %endif
