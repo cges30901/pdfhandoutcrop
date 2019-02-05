@@ -186,14 +186,14 @@ License: GPL v3''').format(version))
             return
 
         #find width
-        width=0
+        width=100
         while pointUpperLeft.x()+width<self.image.width():
             if self.image.pixel(pointUpperLeft.x()+width, pointUpperLeft.y())==4294967295:
                 break
             width+=1
 
         #find height
-        height=0
+        height=100
         while pointUpperLeft.y()+height<self.image.height():
             if self.image.pixel(pointUpperLeft.x(), pointUpperLeft.y()+height)==4294967295:
                 break
