@@ -83,7 +83,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="296"/>
+        <location filename="../mainwindow.py" line="317"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -93,27 +93,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="249"/>
+        <location filename="../mainwindow.py" line="270"/>
         <source>Found {0} pages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="284"/>
+        <location filename="../mainwindow.py" line="305"/>
         <source>Please click the upper left point of page {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="290"/>
+        <location filename="../mainwindow.py" line="311"/>
         <source>Please click the upper left point of any page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="296"/>
+        <location filename="../mainwindow.py" line="317"/>
         <source>Height should be set first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="315"/>
+        <location filename="../mainwindow.py" line="336"/>
         <source>Please click the lower right point of the page you clicked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -233,18 +233,43 @@ License: GPL v3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../setlayoutdialog.ui" line="29"/>
-        <source>Columns:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../setlayoutdialog.ui" line="60"/>
-        <source>Rows:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../setlayoutdialog.ui" line="117"/>
+        <location filename="../setlayoutdialog.ui" line="140"/>
         <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.py" line="9"/>
+        <source>left to right, then down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.py" line="10"/>
+        <source>right to left, then down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.py" line="11"/>
+        <source>top to bottom, then right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.py" line="12"/>
+        <source>top to bottom, then left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.ui" line="29"/>
+        <source>&amp;Columns:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.ui" line="63"/>
+        <source>&amp;Rows:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.ui" line="97"/>
+        <source>&amp;Order:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

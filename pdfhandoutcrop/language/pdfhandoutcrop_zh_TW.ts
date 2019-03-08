@@ -84,7 +84,7 @@
         <translation>載入中...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="296"/>
+        <location filename="../mainwindow.py" line="317"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -94,27 +94,27 @@
         <translation>無法開啟輸入檔案</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="249"/>
+        <location filename="../mainwindow.py" line="270"/>
         <source>Found {0} pages</source>
         <translation>找到 {0} 頁</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="284"/>
+        <location filename="../mainwindow.py" line="305"/>
         <source>Please click the upper left point of page {0}</source>
         <translation>請按一下第 {0} 頁的左上角</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="290"/>
+        <location filename="../mainwindow.py" line="311"/>
         <source>Please click the upper left point of any page</source>
         <translation>請按一下任何一頁的左上角</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="296"/>
+        <location filename="../mainwindow.py" line="317"/>
         <source>Height should be set first</source>
         <translation>應該要先設定高度</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="315"/>
+        <location filename="../mainwindow.py" line="336"/>
         <source>Please click the lower right point of the page you clicked</source>
         <translation>請按一下你剛剛按的那一頁的右下角</translation>
     </message>
@@ -237,19 +237,44 @@ License: GPL v3</source>
         <translation>只偵測到一頁。請選擇版面配置</translation>
     </message>
     <message>
-        <location filename="../setlayoutdialog.ui" line="29"/>
-        <source>Columns:</source>
-        <translation>欄：</translation>
-    </message>
-    <message>
-        <location filename="../setlayoutdialog.ui" line="60"/>
-        <source>Rows:</source>
-        <translation>列：</translation>
-    </message>
-    <message>
-        <location filename="../setlayoutdialog.ui" line="117"/>
+        <location filename="../setlayoutdialog.ui" line="140"/>
         <source>Ok</source>
         <translation>確定</translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.py" line="9"/>
+        <source>left to right, then down</source>
+        <translation>由左至右，再向下</translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.py" line="10"/>
+        <source>right to left, then down</source>
+        <translation>由右至左，再向下</translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.py" line="11"/>
+        <source>top to bottom, then right</source>
+        <translation>由上至下，再向右</translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.py" line="12"/>
+        <source>top to bottom, then left</source>
+        <translation>由上至下，再向左</translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.ui" line="29"/>
+        <source>&amp;Columns:</source>
+        <translation>欄(&amp;C)：</translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.ui" line="63"/>
+        <source>&amp;Rows:</source>
+        <translation>列(&amp;R)：</translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.ui" line="97"/>
+        <source>&amp;Order:</source>
+        <translation>順序(&amp;O)：</translation>
     </message>
 </context>
 </TS>
