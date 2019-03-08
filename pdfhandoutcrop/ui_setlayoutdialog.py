@@ -61,6 +61,9 @@ class Ui_SetLayoutDialog(object):
         self.pushButton.setObjectName("pushButton")
         self.horizontalLayout_3.addWidget(self.pushButton)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.label_2.setBuddy(self.spbColumns)
+        self.label_3.setBuddy(self.spbRows)
+        self.label_4.setBuddy(self.comboOrder)
 
         self.retranslateUi(SetLayoutDialog)
         QtCore.QMetaObject.connectSlotsByName(SetLayoutDialog)
@@ -69,9 +72,9 @@ class Ui_SetLayoutDialog(object):
         _translate = QtCore.QCoreApplication.translate
         SetLayoutDialog.setWindowTitle(_translate("SetLayoutDialog", "Select layout"))
         self.label.setText(_translate("SetLayoutDialog", "Only one page is detected. Please select layout"))
-        self.label_2.setText(_translate("SetLayoutDialog", "Columns:"))
-        self.label_3.setText(_translate("SetLayoutDialog", "Rows:"))
-        self.label_4.setText(_translate("SetLayoutDialog", "Order:"))
+        self.label_2.setText(_translate("SetLayoutDialog", "&Columns:"))
+        self.label_3.setText(_translate("SetLayoutDialog", "&Rows:"))
+        self.label_4.setText(_translate("SetLayoutDialog", "&Order:"))
         self.pushButton.setText(_translate("SetLayoutDialog", "Ok"))
 
 

@@ -26,7 +26,10 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Columns:</string>
+        <string>&amp;Columns:</string>
+       </property>
+       <property name="buddy">
+        <cstring>spbColumns</cstring>
        </property>
       </widget>
      </item>
@@ -57,7 +60,10 @@
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Rows:</string>
+        <string>&amp;Rows:</string>
+       </property>
+       <property name="buddy">
+        <cstring>spbRows</cstring>
        </property>
       </widget>
      </item>
@@ -88,7 +94,10 @@
      <item>
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Order:</string>
+        <string>&amp;Order:</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboOrder</cstring>
        </property>
       </widget>
      </item>
