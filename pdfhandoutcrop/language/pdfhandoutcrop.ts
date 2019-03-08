@@ -221,30 +221,30 @@ License: GPL v3</source>
     </message>
 </context>
 <context>
-    <name>SetPagesDialog</name>
+    <name>SetLayoutDialog</name>
     <message>
-        <location filename="../setpagesdialog.ui" line="20"/>
+        <location filename="../setlayoutdialog.ui" line="14"/>
+        <source>Select layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../setlayoutdialog.ui" line="20"/>
         <source>Only one page is detected. Please select layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../setpagesdialog.ui" line="29"/>
+        <location filename="../setlayoutdialog.ui" line="29"/>
         <source>Columns:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../setpagesdialog.ui" line="60"/>
+        <location filename="../setlayoutdialog.ui" line="60"/>
         <source>Rows:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../setpagesdialog.ui" line="117"/>
+        <location filename="../setlayoutdialog.ui" line="117"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../setpagesdialog.ui" line="14"/>
-        <source>Select layout</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

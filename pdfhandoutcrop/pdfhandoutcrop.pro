@@ -1,8 +1,8 @@
 SOURCES += mainwindow.py \
-    setpagesdialog.py
+    setlayoutdialog.py
 
 FORMS += mainwindow.ui \
-    setpagesdialog.ui
+    setlayoutdialog.ui
 
 TRANSLATIONS=language/pdfhandoutcrop.ts \
     language/pdfhandoutcrop_zh_TW.ts

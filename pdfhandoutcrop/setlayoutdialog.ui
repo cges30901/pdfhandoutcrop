@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SetPagesDialog</class>
- <widget class="QDialog" name="SetPagesDialog">
+ <class>SetLayoutDialog</class>
+ <widget class="QDialog" name="SetLayoutDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>521</width>
-    <height>208</height>
+    <height>305</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -80,6 +80,20 @@
         <number>1</number>
        </property>
       </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Order:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboOrder"/>
      </item>
     </layout>
    </item>

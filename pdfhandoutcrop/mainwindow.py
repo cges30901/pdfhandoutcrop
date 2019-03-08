@@ -6,7 +6,7 @@ from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon, QDesktopServices
 import fitz
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from pdfhandoutcrop.ui_mainwindow import Ui_MainWindow
-from pdfhandoutcrop.setpagesdialog import SetPagesDialog
+from pdfhandoutcrop.setlayoutdialog import SetLayoutDialog
 
 class MainWindow(QMainWindow, Ui_MainWindow):
 
@@ -217,12 +217,18 @@ License: GPL v3''').format(version))
                 iter+=height
             iter+=1
 
-        #ask when only one page is detected (shared border)
-        if len(columns)==1 and len(rows)==1:
-            dlgSetPages=SetPagesDialog(self)
-            if dlgSetPages.exec_()==QDialog.Accepted:
-                numColumns=dlgSetPages.spbColumns.value()
-                numRows=dlgSetPages.spbRows.value()
+        dlgSetLayout=SetLayoutDialog(self)
+        if len(columns)!=1 or len(rows)!=1:
+            dlgSetLayout.label.hide()
+            dlgSetLayout.spbColumns.setValue(len(columns))
+            dlgSetLayout.spbRows.setValue(len(rows))
+            dlgSetLayout.spbColumns.setEnabled(False)
+            dlgSetLayout.spbRows.setEnabled(False)
+        if dlgSetLayout.exec_()==QDialog.Accepted:
+            #ask columns and rows when only one page is detected (shared border)
+            if len(columns)==1 and len(rows)==1:
+                numColumns=dlgSetLayout.spbColumns.value()
+                numRows=dlgSetLayout.spbRows.value()
                 height/=numRows
                 width/=numColumns
                 for i in range(1, numColumns):
@@ -236,10 +242,25 @@ License: GPL v3''').format(version))
         #point (0,0) is in lowerLeft, so coordinate need to be changed
         sheetHeight=self.image.height()
         pageHeight=self.spbHeight.value()
-        for i in range(len(rows)*len(columns)):
-            self.page_position[i][0]=columns[i%len(columns)]
-            self.page_position[i][1]=sheetHeight-pageHeight-rows[i//len(columns)]
-            #update value of spbPositionX and spbPositionY
+
+        if dlgSetLayout.comboOrder.currentIndex()==0:
+            for i in range(len(rows)*len(columns)):
+                self.page_position[i][0]=columns[i%len(columns)]
+                self.page_position[i][1]=sheetHeight-pageHeight-rows[i//len(columns)]
+        elif dlgSetLayout.comboOrder.currentIndex()==1:
+            for i in range(len(rows)*len(columns)):
+                self.page_position[i][0]=columns[len(columns)-1-i%len(columns)]
+                self.page_position[i][1]=sheetHeight-pageHeight-rows[i//len(columns)]
+        elif dlgSetLayout.comboOrder.currentIndex()==2:
+            for i in range(len(rows)*len(columns)):
+                self.page_position[i][0]=columns[i//len(rows)]
+                self.page_position[i][1]=sheetHeight-pageHeight-rows[i%len(rows)]
+        elif dlgSetLayout.comboOrder.currentIndex()==3:
+            for i in range(len(rows)*len(columns)):
+                self.page_position[i][0]=columns[len(columns)-1-i//len(rows)]
+                self.page_position[i][1]=sheetHeight-pageHeight-rows[i%len(rows)]
+
+        #update value of spbPositionX and spbPositionY
         self.spbPositionX.setValue(self.page_position[self.comboPosition.currentIndex()][0])
         self.spbPositionY.setValue(self.page_position[self.comboPosition.currentIndex()][1])
         self.needPaint=True
