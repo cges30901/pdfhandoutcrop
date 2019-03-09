@@ -1,3 +1,8 @@
+version 0.6.0 2019.03.09
+-Allow user to set order of pages
+-minor improvement of auto detection
+-Add shortcut key in SetLayoutDialog
+
 version 0.5.0 2019.01.03
 -Switch to PyMuPDF for rendering PDF
 -bug fixes

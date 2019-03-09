@@ -75,7 +75,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def on_action_About_triggered(self):
-        version="0.5.0"
+        version="0.6.0"
         QMessageBox.about(self, self.tr("About"), self.tr(
 '''<h3>PdfHandoutCrop {0}</h3><br>
 Author: Hsiu-Ming Chang<br>

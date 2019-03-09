@@ -1,7 +1,7 @@
 #
 # spec file for package python-pdfhandoutcrop
 #
-# Copyright (c) 2018 Hsiu-Ming Chang <cges30901@gmail.com>
+# Copyright (c) 2019 Hsiu-Ming Chang <cges30901@gmail.com>
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name:           pdfhandoutcrop
-Version:        0.5.0
+Version:        0.6.0
 Release:        0
 License:        GPL-3.0+
 Summary:        A tool to crop pdf handout with multiple pages per sheet

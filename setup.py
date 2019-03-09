@@ -12,7 +12,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pdfhandoutcrop',
-    version='0.5.0',
+    version='0.6.0',
     description='A tool to crop pdf handout with multiple pages per sheet',
     long_description=long_description,
     long_description_content_type='text/markdown',
