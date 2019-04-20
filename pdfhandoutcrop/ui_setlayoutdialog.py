@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'setlayoutdialog.ui'
 #
-# Created by: PyQt5 UI code generator 5.12
+# Created by: PyQt5 UI code generator 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -53,19 +53,16 @@ class Ui_SetLayoutDialog(object):
         self.verticalLayout.addLayout(self.horizontalLayout_6)
         spacerItem2 = QtWidgets.QSpacerItem(20, 38, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem2)
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_3.addItem(spacerItem3)
-        self.pushButton = QtWidgets.QPushButton(SetLayoutDialog)
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout_3.addWidget(self.pushButton)
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.buttonBox = QtWidgets.QDialogButtonBox(SetLayoutDialog)
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setObjectName("buttonBox")
+        self.verticalLayout.addWidget(self.buttonBox)
         self.label_2.setBuddy(self.spbColumns)
         self.label_3.setBuddy(self.spbRows)
         self.label_4.setBuddy(self.comboOrder)
 
         self.retranslateUi(SetLayoutDialog)
+        self.buttonBox.accepted.connect(SetLayoutDialog.accept)
         QtCore.QMetaObject.connectSlotsByName(SetLayoutDialog)
 
     def retranslateUi(self, SetLayoutDialog):
@@ -75,6 +72,5 @@ class Ui_SetLayoutDialog(object):
         self.label_2.setText(_translate("SetLayoutDialog", "&Columns:"))
         self.label_3.setText(_translate("SetLayoutDialog", "&Rows:"))
         self.label_4.setText(_translate("SetLayoutDialog", "&Order:"))
-        self.pushButton.setText(_translate("SetLayoutDialog", "Ok"))
 
 

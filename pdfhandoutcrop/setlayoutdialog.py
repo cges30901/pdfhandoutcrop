@@ -10,6 +10,3 @@ class SetLayoutDialog(QDialog, Ui_SetLayoutDialog):
         self.comboOrder.addItem(self.tr("right to left, then down"))
         self.comboOrder.addItem(self.tr("top to bottom, then right"))
         self.comboOrder.addItem(self.tr("top to bottom, then left"))
-
-    def on_pushButton_clicked(self):
-        self.accept()
