@@ -51,7 +51,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.tr("PDF documents (*.pdf)"))[0]
         if filename!="":
             self.fileOutput=filename
-            self.save()
+            self.save_pymupdf()
 
     @pyqtSlot()
     def on_action_Website_triggered(self):
@@ -174,6 +174,33 @@ License: GPL v3''').format(version))
         outputStream = open(self.fileOutput, "wb")
         pdfOutput.write(outputStream)
         outputStream.close()
+        QMessageBox.information(self, self.tr("Finished"), self.tr("Cropped PDF saved"))
+
+    def save_pymupdf(self):
+        pdfOutput=fitz.open()
+        numPages=self.document.pageCount
+        pagesPerSheet=self.spbPagesPerSheet.value()
+        width=self.spbWidth.value()/self.scaling
+        height=self.spbHeight.value()/self.scaling
+        sheetHeight=self.image.height()/self.scaling
+        sheetWidth=self.image.width()/self.scaling
+
+        page0=self.document.loadPage(0)
+        rotation=page0.rotation
+
+        for i in range(numPages):
+            for j in range(pagesPerSheet):
+                # rotation and original cropbox not considered yet
+                pdfOutput.insertPDF(self.document, i, i)
+                insertedPage = i * pagesPerSheet + j
+                page_crop = pdfOutput.loadPage(insertedPage)
+                page_crop.setCropBox(fitz.Rect(
+                    self.page_position[j][0]/self.scaling,
+                    sheetHeight-self.page_position[j][1]/self.scaling-height,
+                    self.page_position[j][0]/self.scaling+width,
+                    sheetHeight-self.page_position[j][1]/self.scaling))
+        pdfOutput.save(self.fileOutput)
+        pdfOutput.close()
         QMessageBox.information(self, self.tr("Finished"), self.tr("Cropped PDF saved"))
 
     @pyqtSlot(bool)
