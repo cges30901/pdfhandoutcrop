@@ -280,6 +280,10 @@
     </property>
     <addaction name="action_Open"/>
     <addaction name="action_Save"/>
+    <addaction name="separator"/>
+    <addaction name="actionPymupdf"/>
+    <addaction name="actionPypdf2"/>
+    <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -349,6 +353,25 @@
   <action name="action_Blog">
    <property name="text">
     <string>&amp;Blog</string>
+   </property>
+  </action>
+  <action name="actionPymupdf">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Crop with Py&amp;MuPDF</string>
+   </property>
+  </action>
+  <action name="actionPypdf2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Crop with &amp;PyPDF2</string>
    </property>
   </action>
  </widget>

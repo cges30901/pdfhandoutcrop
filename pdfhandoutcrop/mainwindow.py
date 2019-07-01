@@ -1,6 +1,6 @@
 import copy
 import os
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog, QActionGroup
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent, QUrl
 from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon, QDesktopServices, QImage
 import fitz
@@ -14,6 +14,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.setWindowIcon(QIcon(os.path.dirname(os.path.abspath(__file__))+'/pdfhandoutcrop.png'))
+        group = QActionGroup(self)
+        group.addAction(self.actionPymupdf)
+        group.addAction(self.actionPypdf2)
         self.page_position=[[0, 0] for x in range(self.spbPagesPerSheet.value())]
         for i in range(self.spbPagesPerSheet.value()):
             self.comboPosition.addItem(self.tr("Page {0}").format(i+1))
@@ -51,7 +54,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.tr("PDF documents (*.pdf)"))[0]
         if filename!="":
             self.fileOutput=filename
-            self.save_pymupdf()
+            if self.actionPymupdf.isChecked():
+                self.save_pymupdf()
+            else:
+                self.save_pypdf2()
 
     @pyqtSlot()
     def on_action_Website_triggered(self):
@@ -113,7 +119,7 @@ License: GPL v3''').format(version))
         self.labelSelectPoint.setPixmap(self.pixmap)
         self.labelPageNum.setText(str(self.current_page+1)+" / "+str(self.document.pageCount))
 
-    def save(self):
+    def save_pypdf2(self):
         pdfInput=PdfFileReader(self.fileInput)
         pdfOutput=PdfFileWriter()
         numPages=pdfInput.getNumPages()

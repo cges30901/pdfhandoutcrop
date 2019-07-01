@@ -2,11 +2,12 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -172,8 +173,19 @@ class Ui_MainWindow(object):
         self.action_Project_page.setObjectName("action_Project_page")
         self.action_Blog = QtWidgets.QAction(MainWindow)
         self.action_Blog.setObjectName("action_Blog")
+        self.actionPymupdf = QtWidgets.QAction(MainWindow)
+        self.actionPymupdf.setCheckable(True)
+        self.actionPymupdf.setObjectName("actionPymupdf")
+        self.actionPypdf2 = QtWidgets.QAction(MainWindow)
+        self.actionPypdf2.setCheckable(True)
+        self.actionPypdf2.setChecked(True)
+        self.actionPypdf2.setObjectName("actionPypdf2")
         self.menu_File.addAction(self.action_Open)
         self.menu_File.addAction(self.action_Save)
+        self.menu_File.addSeparator()
+        self.menu_File.addAction(self.actionPymupdf)
+        self.menu_File.addAction(self.actionPypdf2)
+        self.menu_File.addSeparator()
         self.menu_File.addAction(self.action_Quit)
         self.menu_Help.addAction(self.action_Website)
         self.menu_Help.addAction(self.action_Project_page)
@@ -216,4 +228,7 @@ class Ui_MainWindow(object):
         self.action_Donate.setText(_translate("MainWindow", "&Donate"))
         self.action_Project_page.setText(_translate("MainWindow", "&Project page"))
         self.action_Blog.setText(_translate("MainWindow", "&Blog"))
+        self.actionPymupdf.setText(_translate("MainWindow", "Crop with Py&MuPDF"))
+        self.actionPypdf2.setText(_translate("MainWindow", "Crop with &PyPDF2"))
+
 
