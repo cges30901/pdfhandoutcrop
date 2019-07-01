@@ -205,7 +205,7 @@ License: GPL v3''').format(version))
                     sheetHeight-self.page_position[j][1]/self.scaling-height,
                     self.page_position[j][0]/self.scaling+width,
                     sheetHeight-self.page_position[j][1]/self.scaling))
-        pdfOutput.save(self.fileOutput)
+        pdfOutput.save(self.fileOutput, 4)
         pdfOutput.close()
         QMessageBox.information(self, self.tr("Finished"), self.tr("Cropped PDF saved"))
 
