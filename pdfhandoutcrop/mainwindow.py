@@ -196,15 +196,34 @@ License: GPL v3''').format(version))
 
         for i in range(numPages):
             for j in range(pagesPerSheet):
-                # rotation and original cropbox not considered yet
+                # original cropbox not considered yet
                 pdfOutput.insertPDF(self.document, i, i)
                 insertedPage = i * pagesPerSheet + j
                 page_crop = pdfOutput.loadPage(insertedPage)
-                page_crop.setCropBox(fitz.Rect(
-                    self.page_position[j][0]/self.scaling,
-                    sheetHeight-self.page_position[j][1]/self.scaling-height,
-                    self.page_position[j][0]/self.scaling+width,
-                    sheetHeight-self.page_position[j][1]/self.scaling))
+                if rotation==90:
+                    page_crop.setCropBox(fitz.Rect(
+                        sheetHeight-self.page_position[j][1]/self.scaling-height,
+                        sheetWidth-self.page_position[j][0]/self.scaling-width,
+                        sheetHeight-self.page_position[j][1]/self.scaling,
+                        sheetWidth-self.page_position[j][0]/self.scaling))
+                elif rotation==180:
+                    page_crop.setCropBox(fitz.Rect(
+                        sheetWidth-self.page_position[j][0]/self.scaling-width,
+                        self.page_position[j][1]/self.scaling,
+                        sheetWidth-self.page_position[j][0]/self.scaling,
+                        self.page_position[j][1]/self.scaling+height))
+                elif rotation==270:
+                    page_crop.setCropBox(fitz.Rect(
+                        self.page_position[j][1]/self.scaling,
+                        self.page_position[j][0]/self.scaling,
+                        self.page_position[j][1]/self.scaling+height,
+                        self.page_position[j][0]/self.scaling+width))
+                else: #not rotated
+                    page_crop.setCropBox(fitz.Rect(
+                        self.page_position[j][0]/self.scaling,
+                        sheetHeight-self.page_position[j][1]/self.scaling-height,
+                        self.page_position[j][0]/self.scaling+width,
+                        sheetHeight-self.page_position[j][1]/self.scaling))
         pdfOutput.save(self.fileOutput, 4)
         pdfOutput.close()
         QMessageBox.information(self, self.tr("Finished"), self.tr("Cropped PDF saved"))
