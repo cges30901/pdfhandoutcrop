@@ -43,77 +43,77 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="287"/>
+        <location filename="../mainwindow.ui" line="291"/>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="311"/>
+        <location filename="../mainwindow.ui" line="315"/>
         <source>&amp;Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="321"/>
+        <location filename="../mainwindow.ui" line="325"/>
         <source>About &amp;Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="326"/>
+        <location filename="../mainwindow.ui" line="330"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="50"/>
+        <location filename="../mainwindow.py" line="53"/>
         <source>PDF documents (*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="44"/>
+        <location filename="../mainwindow.py" line="47"/>
         <source>{0} - PdfHandoutCrop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="79"/>
+        <location filename="../mainwindow.py" line="85"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="97"/>
+        <location filename="../mainwindow.py" line="103"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="315"/>
+        <location filename="../mainwindow.py" line="367"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="39"/>
+        <location filename="../mainwindow.py" line="42"/>
         <source>Cannot open input file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="268"/>
+        <location filename="../mainwindow.py" line="320"/>
         <source>Found {0} pages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="303"/>
+        <location filename="../mainwindow.py" line="355"/>
         <source>Please click the upper left point of page {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="309"/>
+        <location filename="../mainwindow.py" line="361"/>
         <source>Please click the upper left point of any page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="315"/>
+        <location filename="../mainwindow.py" line="367"/>
         <source>Height should be set first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="334"/>
+        <location filename="../mainwindow.py" line="386"/>
         <source>Please click the lower right point of the page you clicked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -130,12 +130,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="88"/>
+        <location filename="../mainwindow.py" line="94"/>
         <source>Page {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="177"/>
+        <location filename="../mainwindow.py" line="229"/>
         <source>Finished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -157,7 +157,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="79"/>
+        <location filename="../mainwindow.py" line="85"/>
         <source>&lt;h3&gt;PdfHandoutCrop {0}&lt;/h3&gt;&lt;br&gt;
 Author: Hsiu-Ming Chang&lt;br&gt;
 e-mail: cges30901@gmail.com&lt;br&gt;
@@ -165,17 +165,17 @@ License: GPL v3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="184"/>
+        <location filename="../mainwindow.py" line="236"/>
         <source>Page can not be found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="184"/>
+        <location filename="../mainwindow.py" line="236"/>
         <source>Page can not be found. Auto detect only works if pages have border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="331"/>
+        <location filename="../mainwindow.ui" line="335"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -185,38 +185,48 @@ License: GPL v3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="336"/>
+        <location filename="../mainwindow.ui" line="340"/>
         <source>&amp;Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="341"/>
+        <location filename="../mainwindow.ui" line="345"/>
         <source>&amp;Donate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="346"/>
+        <location filename="../mainwindow.ui" line="350"/>
         <source>&amp;Project page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="351"/>
+        <location filename="../mainwindow.ui" line="355"/>
         <source>&amp;Blog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="316"/>
+        <location filename="../mainwindow.ui" line="320"/>
         <source>&amp;Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="39"/>
+        <location filename="../mainwindow.py" line="42"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="177"/>
+        <location filename="../mainwindow.py" line="229"/>
         <source>Cropped PDF saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="363"/>
+        <source>Crop with Py&amp;MuPDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="374"/>
+        <source>Crop with &amp;PyPDF2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
