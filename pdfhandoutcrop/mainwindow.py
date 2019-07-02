@@ -194,6 +194,12 @@ License: GPL v3''').format(version))
         page0=self.document.loadPage(0)
         rotation=page0.rotation
 
+        #if lowerLeft of original mediaBox is not [0,0],
+        #new mediaBox should be adjusted according to that.
+        #FIXME: only fixed when page is not rotated currently.
+        mat = page0._getTransformation()
+        shift=mat.e
+
         for i in range(numPages):
             for j in range(pagesPerSheet):
                 # original cropbox not considered yet
@@ -220,9 +226,9 @@ License: GPL v3''').format(version))
                         self.page_position[j][0]/self.scaling+width))
                 else: #not rotated
                     page_crop.setCropBox(fitz.Rect(
-                        self.page_position[j][0]/self.scaling,
+                        self.page_position[j][0]/self.scaling-shift,
                         sheetHeight-self.page_position[j][1]/self.scaling-height,
-                        self.page_position[j][0]/self.scaling+width,
+                        self.page_position[j][0]/self.scaling+width-shift,
                         sheetHeight-self.page_position[j][1]/self.scaling))
         pdfOutput.save(self.fileOutput, 4)
         pdfOutput.close()
