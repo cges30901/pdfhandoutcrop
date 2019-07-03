@@ -1,3 +1,7 @@
+version 0.7.0 2019.07.03
+-Allow user to use either PyPDF2 or PyMuPDF to crop
+-other changes
+
 version 0.6.0 2019.03.09
 -Allow user to set order of pages
 -minor improvement of auto detection
