@@ -7,6 +7,7 @@ import fitz
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from pdfhandoutcrop.ui_mainwindow import Ui_MainWindow
 from pdfhandoutcrop.setlayoutdialog import SetLayoutDialog
+from pdfhandoutcrop import pdf
 
 class MainWindow(QMainWindow, Ui_MainWindow):
 
@@ -54,10 +55,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.tr("PDF documents (*.pdf)"))[0]
         if filename!="":
             self.fileOutput=filename
+            cropbox=pdf.Cropbox
+            cropbox.width=self.spbWidth.value()
+            cropbox.height=self.spbHeight.value()
+            cropbox.list=self.page_position
             if self.actionPymupdf.isChecked():
-                self.save_pymupdf()
+                pdf.save_pymupdf(self.fileInput, self.fileOutput, cropbox)
             else:
-                self.save_pypdf2()
+                pdf.save_pypdf2(self.fileInput, self.fileOutput, cropbox)
+            QMessageBox.information(self, self.tr("Finished"), self.tr("Cropped PDF saved"))
+
 
     @pyqtSlot()
     def on_action_Website_triggered(self):
@@ -110,237 +117,70 @@ License: GPL v3''').format(version))
             self.btnNext.setEnabled(False)
         else:
             self.btnNext.setEnabled(True)
-        self.page = self.document.loadPage(self.current_page)
-        pix = self.page.getPixmap(fitz.Matrix(self.scaling, 0, 0, self.scaling, 0, 0), alpha = False)
-        self.samples = pix.samples
-        self.image=QImage(self.samples, pix.width, pix.height, pix.stride, QImage.Format_RGB888);
+        self.image=pdf.renderPage(self.document, self.current_page)
         self.pixmap=QPixmap.fromImage(self.image)
         self.needPaint=True
         self.labelSelectPoint.setPixmap(self.pixmap)
         self.labelPageNum.setText(str(self.current_page+1)+" / "+str(self.document.pageCount))
 
-    def save_pypdf2(self):
-        pdfInput=PdfFileReader(self.fileInput)
-        pdfOutput=PdfFileWriter()
-        numPages=pdfInput.getNumPages()
-        pagesPerSheet=self.spbPagesPerSheet.value()
-        width=self.spbWidth.value()/self.scaling
-        height=self.spbHeight.value()/self.scaling
-        sheetHeight=self.image.height()/self.scaling
-        sheetWidth=self.image.width()/self.scaling
-        #Getting mediaBox of page 0 directly makes output pages of first sheet
-        #have same mediaBox, so I use copy.copy() to workaround this problem.
-        page0=copy.copy(pdfInput.getPage(0))
-
-        rotation=page0.get('/Rotate')
-
-        #make rotation 0, 90, 180 or 270
-        if rotation is None:
-            rotation=0
-        elif rotation<0:
-            rotation=rotation%360+360
-
-        #operation above might change rotation to 360,
-        #so "if" is used instead of "elif"
-        if rotation>=360:
-            rotation=rotation%360
-
-        #if lowerLeft of original mediaBox is not [0,0],
-        #new mediaBox should be adjusted according to that.
-        #FIXME: only fixed when page is not rotated currently.
-        mediaBox_old=page0.mediaBox
-        lowerLeftX_old=mediaBox_old.lowerLeft[0].as_numeric()
-        lowerLeftY_old=mediaBox_old.lowerLeft[1].as_numeric()
-
-        for i in range(numPages):
-            page=pdfInput.getPage(i)
-            for j in range(pagesPerSheet):
-                page_crop=copy.copy(page)
-                if rotation==90:
-                    page_crop.mediaBox.lowerLeft=(sheetHeight-self.page_position[j][1]/self.scaling-height,
-                        self.page_position[j][0]/self.scaling+width)
-                    page_crop.mediaBox.upperRight=(sheetHeight-self.page_position[j][1]/self.scaling,
-                        self.page_position[j][0]/self.scaling)
-                elif rotation==180:
-                    page_crop.mediaBox.lowerLeft=(sheetWidth-self.page_position[j][0]/self.scaling-width,
-                        sheetHeight-self.page_position[j][1]/self.scaling)
-                    page_crop.mediaBox.upperRight=(sheetWidth-self.page_position[j][0]/self.scaling,
-                        sheetHeight-self.page_position[j][1]/self.scaling-height)
-                elif rotation==270:
-                    page_crop.mediaBox.lowerLeft=(self.page_position[j][1]/self.scaling,
-                        sheetWidth-self.page_position[j][0]/self.scaling)
-                    page_crop.mediaBox.upperRight=(self.page_position[j][1]/self.scaling+height,
-                        sheetWidth-self.page_position[j][0]/self.scaling-width)
-                else: #not rotated
-                    page_crop.mediaBox.lowerLeft=(self.page_position[j][0]/self.scaling+lowerLeftX_old,
-                        self.page_position[j][1]/self.scaling+height+lowerLeftY_old)
-                    page_crop.mediaBox.upperRight=(self.page_position[j][0]/self.scaling+width+lowerLeftX_old,
-                        self.page_position[j][1]/self.scaling+lowerLeftY_old)
-                pdfOutput.addPage(page_crop)
-        outputStream = open(self.fileOutput, "wb")
-        pdfOutput.write(outputStream)
-        outputStream.close()
-        QMessageBox.information(self, self.tr("Finished"), self.tr("Cropped PDF saved"))
-
-    def save_pymupdf(self):
-        pdfOutput=fitz.open()
-        numPages=self.document.pageCount
-        pagesPerSheet=self.spbPagesPerSheet.value()
-        width=self.spbWidth.value()/self.scaling
-        height=self.spbHeight.value()/self.scaling
-        sheetHeight=self.image.height()/self.scaling
-        sheetWidth=self.image.width()/self.scaling
-
-        page0=self.document.loadPage(0)
-        rotation=page0.rotation
-
-        #if lowerLeft of original mediaBox is not [0,0],
-        #new mediaBox should be adjusted according to that.
-        #FIXME: only fixed when page is not rotated currently.
-        mat = page0._getTransformation()
-        shift=mat.e
-
-        for i in range(numPages):
-            for j in range(pagesPerSheet):
-                # original cropbox not considered yet
-                pdfOutput.insertPDF(self.document, i, i)
-                insertedPage = i * pagesPerSheet + j
-                page_crop = pdfOutput.loadPage(insertedPage)
-                if rotation==90:
-                    page_crop.setCropBox(fitz.Rect(
-                        sheetHeight-self.page_position[j][1]/self.scaling-height,
-                        sheetWidth-self.page_position[j][0]/self.scaling-width,
-                        sheetHeight-self.page_position[j][1]/self.scaling,
-                        sheetWidth-self.page_position[j][0]/self.scaling))
-                elif rotation==180:
-                    page_crop.setCropBox(fitz.Rect(
-                        sheetWidth-self.page_position[j][0]/self.scaling-width,
-                        self.page_position[j][1]/self.scaling,
-                        sheetWidth-self.page_position[j][0]/self.scaling,
-                        self.page_position[j][1]/self.scaling+height))
-                elif rotation==270:
-                    page_crop.setCropBox(fitz.Rect(
-                        self.page_position[j][1]/self.scaling,
-                        self.page_position[j][0]/self.scaling,
-                        self.page_position[j][1]/self.scaling+height,
-                        self.page_position[j][0]/self.scaling+width))
-                else: #not rotated
-                    page_crop.setCropBox(fitz.Rect(
-                        self.page_position[j][0]/self.scaling-shift,
-                        sheetHeight-self.page_position[j][1]/self.scaling-height,
-                        self.page_position[j][0]/self.scaling+width-shift,
-                        sheetHeight-self.page_position[j][1]/self.scaling))
-        pdfOutput.save(self.fileOutput, 4)
-        pdfOutput.close()
-        QMessageBox.information(self, self.tr("Finished"), self.tr("Cropped PDF saved"))
-
     @pyqtSlot(bool)
     def on_btnAutoDetect_clicked(self):
-        #find the upperleft point of the first page
-        pointUpperLeft=self.findFirstPoint()
-        if pointUpperLeft.x()==-1:  #Page can not be found
+        cropbox=pdf.autodetect(self.image)
+        if cropbox==None:  #Page can not be found
             QMessageBox.warning(self, self.tr("Page can not be found"),
                 self.tr("Page can not be found. Auto detect only works if pages have border."))
             return
 
-        #find width
-        width=100
-        while pointUpperLeft.x()+width<self.image.width():
-            if self.image.pixel(pointUpperLeft.x()+width, pointUpperLeft.y())==4294967295:
-                break
-            width+=1
-
-        #find height
-        height=100
-        while pointUpperLeft.y()+height<self.image.height():
-            if self.image.pixel(pointUpperLeft.x(), pointUpperLeft.y()+height)==4294967295:
-                break
-            height+=1
-
-        #find columns
-        columns=[pointUpperLeft.x()]
-        iter=pointUpperLeft.x()+width
-        while iter<self.image.width()-100:
-            if self.image.pixel(iter, pointUpperLeft.y())!=4294967295:
-                columns.append(iter)
-                iter+=width
-            iter+=1
-
-        #find rows
-        rows=[pointUpperLeft.y()]
-        iter=pointUpperLeft.y()+height
-        while iter<self.image.height()-100:
-            if self.image.pixel(pointUpperLeft.x(), iter)!=4294967295:
-                rows.append(iter)
-                iter+=height
-            iter+=1
-
         dlgSetLayout=SetLayoutDialog(self)
-        if len(columns)!=1 or len(rows)!=1:
+        if cropbox.length!=1:
             dlgSetLayout.label.hide()
-            dlgSetLayout.spbColumns.setValue(len(columns))
-            dlgSetLayout.spbRows.setValue(len(rows))
+            dlgSetLayout.spbColumns.setValue(len(cropbox.columns))
+            dlgSetLayout.spbRows.setValue(len(cropbox.rows))
             dlgSetLayout.spbColumns.setEnabled(False)
             dlgSetLayout.spbRows.setEnabled(False)
         if dlgSetLayout.exec_()==QDialog.Accepted:
             #ask columns and rows when only one page is detected (shared border)
-            if len(columns)==1 and len(rows)==1:
+            if cropbox.length==1:
                 numColumns=dlgSetLayout.spbColumns.value()
                 numRows=dlgSetLayout.spbRows.value()
-                height/=numRows
-                width/=numColumns
+                cropbox.height/=numRows
+                cropbox.width/=numColumns
+                cropbox.length=numRows*numColumns
                 for i in range(1, numColumns):
-                    columns.append(columns[i-1]+width)
+                    cropbox.columns.append(cropbox.columns[i-1]+cropbox.width)
                 for i in range(1, numRows):
-                    rows.append(rows[i-1]+height)
+                    cropbox.rows.append(cropbox.rows[i-1]+cropbox.height)
 
-        self.spbPagesPerSheet.setValue(len(rows)*len(columns))
-        self.spbWidth.setValue(width)
-        self.spbHeight.setValue(height)
+        self.spbPagesPerSheet.setValue(cropbox.length)
+        self.spbWidth.setValue(cropbox.width)
+        self.spbHeight.setValue(cropbox.height)
         #point (0,0) is in lowerLeft, so coordinate need to be changed
         sheetHeight=self.image.height()
         pageHeight=self.spbHeight.value()
 
         if dlgSetLayout.comboOrder.currentIndex()==0:
-            for i in range(len(rows)*len(columns)):
-                self.page_position[i][0]=columns[i%len(columns)]
-                self.page_position[i][1]=sheetHeight-pageHeight-rows[i//len(columns)]
+            for i in range(cropbox.length):
+                self.page_position[i][0]=cropbox.columns[i%len(cropbox.columns)]
+                self.page_position[i][1]=sheetHeight-pageHeight-cropbox.rows[i//len(cropbox.columns)]
         elif dlgSetLayout.comboOrder.currentIndex()==1:
-            for i in range(len(rows)*len(columns)):
-                self.page_position[i][0]=columns[len(columns)-1-i%len(columns)]
-                self.page_position[i][1]=sheetHeight-pageHeight-rows[i//len(columns)]
+            for i in range(cropbox.length):
+                self.page_position[i][0]=cropbox.columns[len(cropbox.columns)-1-i%len(cropbox.columns)]
+                self.page_position[i][1]=sheetHeight-pageHeight-cropbox.rows[i//len(cropbox.columns)]
         elif dlgSetLayout.comboOrder.currentIndex()==2:
-            for i in range(len(rows)*len(columns)):
-                self.page_position[i][0]=columns[i//len(rows)]
-                self.page_position[i][1]=sheetHeight-pageHeight-rows[i%len(rows)]
+            for i in range(cropbox.length):
+                self.page_position[i][0]=cropbox.columns[i//len(cropbox.rows)]
+                self.page_position[i][1]=sheetHeight-pageHeight-cropbox.rows[i%len(cropbox.rows)]
         elif dlgSetLayout.comboOrder.currentIndex()==3:
-            for i in range(len(rows)*len(columns)):
-                self.page_position[i][0]=columns[len(columns)-1-i//len(rows)]
-                self.page_position[i][1]=sheetHeight-pageHeight-rows[i%len(rows)]
+            for i in range(cropbox.length):
+                self.page_position[i][0]=cropbox.columns[len(cropbox.columns)-1-i//len(cropbox.rows)]
+                self.page_position[i][1]=sheetHeight-pageHeight-cropbox.rows[i%len(cropbox.rows)]
 
         #update value of spbPositionX and spbPositionY
         self.spbPositionX.setValue(self.page_position[self.comboPosition.currentIndex()][0])
         self.spbPositionY.setValue(self.page_position[self.comboPosition.currentIndex()][1])
         self.needPaint=True
         self.update()
-        self.statusBar.showMessage(self.tr("Found {0} pages").format(len(rows)*len(columns)), 2000)
-
-    def findFirstPoint(self):
-        for yOffset in range(self.image.height()-100):
-            for xOffset in range(self.image.width()-100):
-                pixel=self.image.pixel(xOffset, yOffset)
-                #4294967295 is white
-                if pixel!=4294967295:
-                    for length in range(1, 101):
-                        if (self.image.pixel(xOffset+length, yOffset)==4294967295
-                            or self.image.pixel(xOffset, yOffset+length)==4294967295):
-                            #not a page
-                            break
-                        if length==100:
-                            #page found
-                            return QPoint(xOffset, yOffset)
-        #cannot find a page
-        return QPoint(-1, -1)
+        self.statusBar.showMessage(self.tr("Found {0} pages").format(cropbox.length), 2000)
 
     @pyqtSlot(int)
     def on_comboPosition_currentIndexChanged(self, num):
