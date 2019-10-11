@@ -59,8 +59,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 pdf.save_pymupdf(self.fileInput, self.fileOutput,
                     self.page_position, self.spbWidth.value(), self.spbHeight.value())
             else:
-                pdf.save_pypdf2(self.fileInput, self.fileOutput,
-                    self.page_position, self.spbWidth.value(), self.spbHeight.value())
+                try:
+                    pdf.save_pypdf2(self.fileInput, self.fileOutput,
+                        self.page_position, self.spbWidth.value(), self.spbHeight.value())
+                except:
+                    QMessageBox.warning(self, self.tr("Error"),
+                        self.tr("Cropping with PyPDF2 failed. Try cropping with PyMuPDF instead."))
+                    return
             QMessageBox.information(self, self.tr("Finished"), self.tr("Cropped PDF saved"))
 
 
