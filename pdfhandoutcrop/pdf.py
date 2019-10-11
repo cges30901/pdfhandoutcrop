@@ -199,10 +199,3 @@ def save_pymupdf(fileInput, fileOutput, cropboxList, width, height):
                     sheetHeight-cropboxList[j][1]/scaling))
     pdfOutput.save(fileOutput, 4)
     pdfOutput.close()
-
-# fileInput="2pages.pdf"
-# document=fitz.open(fileInput)
-# image=loadPage(document)
-# cropbox=autodetect(image)
-# save_pypdf2(fileInput,"out2.pdf",cropbox)
-# save_pymupdf(fileInput,"outm.pdf",cropbox)
