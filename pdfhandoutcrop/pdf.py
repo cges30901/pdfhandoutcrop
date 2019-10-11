@@ -6,13 +6,12 @@ from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QImage
 
 class Cropbox():
-    def __init__(self):
-        self.width=0
-        self.height=0
-        self.columns=[]
-        self.rows=[]
-        self.length=0
-        self.list=[]
+    def __init__(self, width=0, height=0, columns=[], rows=[]):
+        self.width=width
+        self.height=height
+        self.columns=columns
+        self.rows=rows
+        self.length=len(rows)*len(columns)
 
 def renderPage(document, pageNum):
     scaling=2.0
@@ -59,12 +58,7 @@ def autodetect(image):
             rows.append(iter)
             iter+=height
         iter+=1
-    cropbox=Cropbox()
-    cropbox.width=width
-    cropbox.height=height
-    cropbox.columns=columns
-    cropbox.rows=rows
-    cropbox.length=len(rows)*len(columns)
+    cropbox=Cropbox(width, height, columns, rows)
     return cropbox
 
 def findFirstPoint(image):
@@ -84,7 +78,7 @@ def findFirstPoint(image):
     #cannot find a page
     return QPoint(-1, -1)
 
-def save_pypdf2(fileInput, fileOutput, cropbox):
+def save_pypdf2(fileInput, fileOutput, cropboxList, width, height):
     scaling=2.0
     pdfInput=PdfFileReader(fileInput)
     pdfOutput=PdfFileWriter()
@@ -92,9 +86,9 @@ def save_pypdf2(fileInput, fileOutput, cropbox):
     #Getting mediaBox of page 0 directly makes output pages of first sheet
     #have same mediaBox, so I use copy.copy() to workaround this problem.
     page0=copy.copy(pdfInput.getPage(0))
-    pagesPerSheet=len(cropbox.list)
-    width=cropbox.width/scaling
-    height=cropbox.height/scaling
+    pagesPerSheet=len(cropboxList)
+    width=width/scaling
+    height=height/scaling
 
     rotation=page0.get('/Rotate')
     #make rotation 0, 90, 180 or 270
@@ -126,39 +120,39 @@ def save_pypdf2(fileInput, fileOutput, cropbox):
         for j in range(pagesPerSheet):
             page_crop=copy.copy(page)
             if rotation==90:
-                page_crop.mediaBox.lowerLeft=(sheetHeight-cropbox.list[j][1]/scaling-height,
-                    cropbox.list[j][0]/scaling+width)
-                page_crop.mediaBox.upperRight=(sheetHeight-cropbox.list[j][1]/scaling,
-                    cropbox.list[j][0]/scaling)
+                page_crop.mediaBox.lowerLeft=(sheetHeight-cropboxList[j][1]/scaling-height,
+                    cropboxList[j][0]/scaling+width)
+                page_crop.mediaBox.upperRight=(sheetHeight-cropboxList[j][1]/scaling,
+                    cropboxList[j][0]/scaling)
             elif rotation==180:
-                page_crop.mediaBox.lowerLeft=(sheetWidth-cropbox.list[j][0]/scaling-width,
-                    sheetHeight-cropbox.list[j][1]/scaling)
-                page_crop.mediaBox.upperRight=(sheetWidth-cropbox.list[j][0]/scaling,
-                    sheetHeight-cropbox.list[j][1]/scaling-height)
+                page_crop.mediaBox.lowerLeft=(sheetWidth-cropboxList[j][0]/scaling-width,
+                    sheetHeight-cropboxList[j][1]/scaling)
+                page_crop.mediaBox.upperRight=(sheetWidth-cropboxList[j][0]/scaling,
+                    sheetHeight-cropboxList[j][1]/scaling-height)
             elif rotation==270:
-                page_crop.mediaBox.lowerLeft=(cropbox.list[j][1]/scaling,
-                    sheetWidth-cropbox.list[j][0]/scaling)
-                page_crop.mediaBox.upperRight=(cropbox.list[j][1]/scaling+height,
-                    sheetWidth-cropbox.list[j][0]/scaling-width)
+                page_crop.mediaBox.lowerLeft=(cropboxList[j][1]/scaling,
+                    sheetWidth-cropboxList[j][0]/scaling)
+                page_crop.mediaBox.upperRight=(cropboxList[j][1]/scaling+height,
+                    sheetWidth-cropboxList[j][0]/scaling-width)
             else: #not rotated
-                page_crop.mediaBox.lowerLeft=(cropbox.list[j][0]/scaling+lowerLeftX_old,
-                    cropbox.list[j][1]/scaling+height+lowerLeftY_old)
-                page_crop.mediaBox.upperRight=(cropbox.list[j][0]/scaling+width+lowerLeftX_old,
-                    cropbox.list[j][1]/scaling+lowerLeftY_old)
+                page_crop.mediaBox.lowerLeft=(cropboxList[j][0]/scaling+lowerLeftX_old,
+                    cropboxList[j][1]/scaling+height+lowerLeftY_old)
+                page_crop.mediaBox.upperRight=(cropboxList[j][0]/scaling+width+lowerLeftX_old,
+                    cropboxList[j][1]/scaling+lowerLeftY_old)
             pdfOutput.addPage(page_crop)
     outputStream = open(fileOutput, "wb")
     pdfOutput.write(outputStream)
     outputStream.close()
 
-def save_pymupdf(fileInput, fileOutput, cropbox):
+def save_pymupdf(fileInput, fileOutput, cropboxList, width, height):
     scaling=2.0
     document=fitz.open(fileInput)
     pdfOutput=fitz.open()
     numPages=document.pageCount
     page0=document.loadPage(0)
-    pagesPerSheet=len(cropbox.list)
-    width=cropbox.width/scaling
-    height=cropbox.height/scaling
+    pagesPerSheet=len(cropboxList)
+    width=width/scaling
+    height=height/scaling
     rotation=page0.rotation
     if rotation==90 or rotation==270: #MediaBox is [0,0,height,width]
         sheetWidth=page0.MediaBox[3]
@@ -181,28 +175,28 @@ def save_pymupdf(fileInput, fileOutput, cropbox):
             page_crop = pdfOutput.loadPage(insertedPage)
             if rotation==90:
                 page_crop.setCropBox(fitz.Rect(
-                    sheetHeight-cropbox.list[j][1]/scaling-height,
-                    sheetWidth-cropbox.list[j][0]/scaling-width,
-                    sheetHeight-cropbox.list[j][1]/scaling,
-                    sheetWidth-cropbox.list[j][0]/scaling))
+                    sheetHeight-cropboxList[j][1]/scaling-height,
+                    sheetWidth-cropboxList[j][0]/scaling-width,
+                    sheetHeight-cropboxList[j][1]/scaling,
+                    sheetWidth-cropboxList[j][0]/scaling))
             elif rotation==180:
                 page_crop.setCropBox(fitz.Rect(
-                    sheetWidth-cropbox.list[j][0]/scaling-width,
-                    cropbox.list[j][1]/scaling,
-                    sheetWidth-cropbox.list[j][0]/scaling,
-                    cropbox.list[j][1]/scaling+height))
+                    sheetWidth-cropboxList[j][0]/scaling-width,
+                    cropboxList[j][1]/scaling,
+                    sheetWidth-cropboxList[j][0]/scaling,
+                    cropboxList[j][1]/scaling+height))
             elif rotation==270:
                 page_crop.setCropBox(fitz.Rect(
-                    cropbox.list[j][1]/scaling,
-                    cropbox.list[j][0]/scaling,
-                    cropbox.list[j][1]/scaling+height,
-                    cropbox.list[j][0]/scaling+width))
+                    cropboxList[j][1]/scaling,
+                    cropboxList[j][0]/scaling,
+                    cropboxList[j][1]/scaling+height,
+                    cropboxList[j][0]/scaling+width))
             else: #not rotated
                 page_crop.setCropBox(fitz.Rect(
-                    cropbox.list[j][0]/scaling-shift,
-                    sheetHeight-cropbox.list[j][1]/scaling-height,
-                    cropbox.list[j][0]/scaling+width-shift,
-                    sheetHeight-cropbox.list[j][1]/scaling))
+                    cropboxList[j][0]/scaling-shift,
+                    sheetHeight-cropboxList[j][1]/scaling-height,
+                    cropboxList[j][0]/scaling+width-shift,
+                    sheetHeight-cropboxList[j][1]/scaling))
     pdfOutput.save(fileOutput, 4)
     pdfOutput.close()
 

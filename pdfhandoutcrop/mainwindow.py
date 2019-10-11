@@ -55,14 +55,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.tr("PDF documents (*.pdf)"))[0]
         if filename!="":
             self.fileOutput=filename
-            cropbox=pdf.Cropbox
-            cropbox.width=self.spbWidth.value()
-            cropbox.height=self.spbHeight.value()
-            cropbox.list=self.page_position
             if self.actionPymupdf.isChecked():
-                pdf.save_pymupdf(self.fileInput, self.fileOutput, cropbox)
+                pdf.save_pymupdf(self.fileInput, self.fileOutput,
+                    self.page_position, self.spbWidth.value(), self.spbHeight.value())
             else:
-                pdf.save_pypdf2(self.fileInput, self.fileOutput, cropbox)
+                pdf.save_pypdf2(self.fileInput, self.fileOutput,
+                    self.page_position, self.spbWidth.value(), self.spbHeight.value())
             QMessageBox.information(self, self.tr("Finished"), self.tr("Cropped PDF saved"))
 
 
