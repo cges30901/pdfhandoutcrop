@@ -1,11 +1,12 @@
 import sys
 import os
+import argparse
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QTranslator, QLocale, QLibraryInfo
 from pdfhandoutcrop.mainwindow import MainWindow
 
 def main():
-    
+
     app = QApplication(sys.argv)
 
     translator=QTranslator()
@@ -19,9 +20,12 @@ def main():
         QLibraryInfo.location(QLibraryInfo.TranslationsPath))
     app.installTranslator(qtTranslator)
 
-    w = MainWindow()
+    parser = argparse.ArgumentParser(description='A tool to crop pdf handout with multiple pages per sheet.')
+    parser.add_argument("fileInput", metavar='input file', nargs='?', default="")
+
+    w = MainWindow(parser.parse_args())
     w.showMaximized()
-    
+
     sys.exit(app.exec_())
 
 if __name__ == '__main__':

@@ -11,7 +11,7 @@ from pdfhandoutcrop import pdf
 
 class MainWindow(QMainWindow, Ui_MainWindow):
 
-    def __init__(self):
+    def __init__(self, args):
         super().__init__()
         self.setupUi(self)
         self.setWindowIcon(QIcon(os.path.dirname(os.path.abspath(__file__))+'/pdfhandoutcrop.png'))
@@ -25,29 +25,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.current_page=0
         #self.fileInput and self.fileOutput need to be defined first
         #because QFileDialog needs them
-        self.fileInput=""
+        self.fileInput=args.fileInput
         self.fileOutput=""
         self.set=0
         self.needPaint=False
         self.labelSelectPoint.installEventFilter(self)
+        if self.fileInput:
+            self.open(self.fileInput)
 
     @pyqtSlot()
     def on_action_Open_triggered(self):
         filename=QFileDialog.getOpenFileName(self, "", self.fileInput,
             self.tr("PDF documents (*.pdf)"))[0]
-        if filename!="":
+        if filename:
             self.fileInput=filename
-            try:
-                self.document=fitz.open(self.fileInput)
-            except:
-                QMessageBox.warning(self, self.tr("Error"), self.tr("Cannot open input file"))
-                self.labelSelectPoint.setText("")
-                return
-            self.btnAutoDetect.setEnabled(True)
-            self.btnReload.setEnabled(True)
-            self.setWindowTitle(self.tr("{0} - PdfHandoutCrop").format(os.path.basename(self.fileInput)))
-            self.current_page=0
-            self.loadPdf()
+            self.open(filename)
+
+    def open(self, filename):
+        try:
+            self.document=fitz.open(filename)
+        except:
+            QMessageBox.warning(self, self.tr("Error"), self.tr("Cannot open input file"))
+            self.labelSelectPoint.setText("")
+            return
+        self.btnAutoDetect.setEnabled(True)
+        self.btnReload.setEnabled(True)
+        self.setWindowTitle(self.tr("{0} - PdfHandoutCrop").format(os.path.basename(self.fileInput)))
+        self.current_page=0
+        self.loadPdf()
 
     @pyqtSlot()
     def on_action_Save_triggered(self):
