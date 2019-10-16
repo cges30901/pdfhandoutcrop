@@ -21,7 +21,8 @@ def main():
     app.installTranslator(qtTranslator)
 
     parser = argparse.ArgumentParser(description='A tool to crop pdf handout with multiple pages per sheet.')
-    parser.add_argument("fileInput", metavar='input file', nargs='?', default="")
+    parser.add_argument("fileInput", metavar='FILE', nargs='?', default="", help='input file')
+    parser.add_argument("-o", "--output", default="", help='output file')
 
     w = MainWindow(parser.parse_args())
     w.showMaximized()
