@@ -13,6 +13,27 @@ class Cropbox():
         self.rows=rows
         self.length=len(rows)*len(columns)
 
+    def toList(self, sequence, sheetHeight):
+        pageHeight=self.height
+        li=[]
+        if sequence==0:
+            for i in range(self.length):
+                li.append([self.columns[i%len(self.columns)],
+                    sheetHeight-pageHeight-self.rows[i//len(self.columns)]])
+        elif sequence==1:
+            for i in range(self.length):
+                li.append([self.columns[len(self.columns)-1-i%len(self.columns)],
+                    sheetHeight-pageHeight-self.rows[i//len(self.columns)]])
+        elif sequence==2:
+            for i in range(self.length):
+                li.append([self.columns[i//len(self.rows)],
+                    sheetHeight-pageHeight-self.rows[i%len(self.rows)]])
+        elif sequence==3:
+            for i in range(self.length):
+                li.append([self.columns[len(self.columns)-1-i//len(self.rows)],
+                    sheetHeight-pageHeight-self.rows[i%len(self.rows)]])
+        return li
+
 def renderPage(document, pageNum):
     scaling=2.0
     page = document.loadPage(pageNum)
