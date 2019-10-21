@@ -9,10 +9,24 @@ from pdfhandoutcrop.mainwindow import MainWindow
 from pdfhandoutcrop import pdf
 
 def commandline(args):
-    document=fitz.open(args.fileInput)
+    try:
+        document=fitz.open(args.fileInput)
+    except:
+        print("Cannot open input file")
+        return 1
     image=pdf.renderPage(document, 0)
     cropbox=pdf.autodetect(image)
-    pdf.save_pypdf2(args.fileInput, args.output, cropbox.toList(0, image.height()), cropbox.width, cropbox.height)
+    if cropbox==None:  #Page can not be found
+        print("Page can not be found. Auto detect only works if pages have border.")
+        return 2
+    try:
+        pdf.save_pypdf2(args.fileInput, args.output,
+            cropbox.toList(0, image.height()), cropbox.width, cropbox.height)
+    except:
+        print("Cropping with PyPDF2 failed. Trying cropping with PyMuPDF...")
+        pdf.save_pymupdf(args.fileInput, args.output,
+            cropbox.toList(0, image.height()), cropbox.width, cropbox.height)
+    return 0
 
 def main():
 
@@ -36,8 +50,7 @@ def main():
     args=parser.parse_args()
 
     if args.auto:
-        commandline(args)
-        return
+        return commandline(args)
     else:
         w = MainWindow(args)
         w.showMaximized()
