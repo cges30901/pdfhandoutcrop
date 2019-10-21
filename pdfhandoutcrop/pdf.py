@@ -14,6 +14,7 @@ class Cropbox():
         self.length=len(rows)*len(columns)
 
     def toList(self, sequence, sheetHeight):
+        #point (0,0) is in lowerLeft, so coordinate need to be changed
         pageHeight=self.height
         li=[]
         if sequence==0:

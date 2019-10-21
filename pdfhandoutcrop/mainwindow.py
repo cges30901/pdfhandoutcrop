@@ -162,10 +162,8 @@ License: GPL v3''').format(version))
         self.spbPagesPerSheet.setValue(cropbox.length)
         self.spbWidth.setValue(cropbox.width)
         self.spbHeight.setValue(cropbox.height)
-        #point (0,0) is in lowerLeft, so coordinate need to be changed
 
         self.page_position=cropbox.toList(dlgSetLayout.comboOrder.currentIndex(), self.image.height())
-
         #update value of spbPositionX and spbPositionY
         self.spbPositionX.setValue(self.page_position[self.comboPosition.currentIndex()][0])
         self.spbPositionY.setValue(self.page_position[self.comboPosition.currentIndex()][1])
