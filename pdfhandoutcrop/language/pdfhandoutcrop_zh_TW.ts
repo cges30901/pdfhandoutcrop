@@ -64,57 +64,57 @@
         <translation>關於(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="53"/>
+        <location filename="../mainwindow.py" line="59"/>
         <source>PDF documents (*.pdf)</source>
         <translation>PDF 文件 (*.pdf)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="47"/>
+        <location filename="../mainwindow.py" line="53"/>
         <source>{0} - PdfHandoutCrop</source>
         <translation>{0} - PdfHandoutCrop</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="85"/>
+        <location filename="../mainwindow.py" line="100"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="103"/>
+        <location filename="../mainwindow.py" line="118"/>
         <source>Loading...</source>
         <translation>載入中...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="367"/>
+        <location filename="../mainwindow.py" line="202"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="42"/>
+        <location filename="../mainwindow.py" line="48"/>
         <source>Cannot open input file</source>
         <translation>無法開啟輸入檔案</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="320"/>
+        <location filename="../mainwindow.py" line="172"/>
         <source>Found {0} pages</source>
         <translation>找到 {0} 頁</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="355"/>
+        <location filename="../mainwindow.py" line="190"/>
         <source>Please click the upper left point of page {0}</source>
         <translation>請按一下第 {0} 頁的左上角</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="361"/>
+        <location filename="../mainwindow.py" line="196"/>
         <source>Please click the upper left point of any page</source>
         <translation>請按一下任何一頁的左上角</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="367"/>
+        <location filename="../mainwindow.py" line="202"/>
         <source>Height should be set first</source>
         <translation>應該要先設定高度</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="386"/>
+        <location filename="../mainwindow.py" line="221"/>
         <source>Please click the lower right point of the page you clicked</source>
         <translation>請按一下你剛剛按的那一頁的右下角</translation>
     </message>
@@ -131,12 +131,12 @@
         <translation>下一頁(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="94"/>
+        <location filename="../mainwindow.py" line="109"/>
         <source>Page {0}</source>
         <translation>第 {0} 頁</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="229"/>
+        <location filename="../mainwindow.py" line="74"/>
         <source>Finished</source>
         <translation>已完成</translation>
     </message>
@@ -158,7 +158,7 @@
         <translation>重新載入(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="85"/>
+        <location filename="../mainwindow.py" line="100"/>
         <source>&lt;h3&gt;PdfHandoutCrop {0}&lt;/h3&gt;&lt;br&gt;
 Author: Hsiu-Ming Chang&lt;br&gt;
 e-mail: cges30901@gmail.com&lt;br&gt;
@@ -169,12 +169,12 @@ License: GPL v3</source>
 授權：GPL v3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="236"/>
+        <location filename="../mainwindow.py" line="138"/>
         <source>Page can not be found</source>
         <translation>無法找到頁面</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="236"/>
+        <location filename="../mainwindow.py" line="138"/>
         <source>Page can not be found. Auto detect only works if pages have border.</source>
         <translation>無法找到頁面。自動偵測只有在頁面有框線時才能運作。</translation>
     </message>
@@ -214,12 +214,12 @@ License: GPL v3</source>
         <translation>儲存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="42"/>
+        <location filename="../mainwindow.py" line="71"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="229"/>
+        <location filename="../mainwindow.py" line="74"/>
         <source>Cropped PDF saved</source>
         <translation>裁切的 PDF 已儲存</translation>
     </message>
@@ -232,6 +232,11 @@ License: GPL v3</source>
         <location filename="../mainwindow.ui" line="374"/>
         <source>Crop with &amp;PyPDF2</source>
         <translation>用 &amp;PyPDF2 裁切</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.py" line="71"/>
+        <source>Cropping with PyPDF2 failed. Try cropping with PyMuPDF instead.</source>
+        <translation>用 PyPDF2 裁切失敗。請嘗試用改用 PyMuPDF 裁切。</translation>
     </message>
 </context>
 <context>

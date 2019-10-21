@@ -63,57 +63,57 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="53"/>
+        <location filename="../mainwindow.py" line="59"/>
         <source>PDF documents (*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="47"/>
+        <location filename="../mainwindow.py" line="53"/>
         <source>{0} - PdfHandoutCrop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="85"/>
+        <location filename="../mainwindow.py" line="100"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="103"/>
+        <location filename="../mainwindow.py" line="118"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="367"/>
+        <location filename="../mainwindow.py" line="202"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="42"/>
+        <location filename="../mainwindow.py" line="48"/>
         <source>Cannot open input file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="320"/>
+        <location filename="../mainwindow.py" line="172"/>
         <source>Found {0} pages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="355"/>
+        <location filename="../mainwindow.py" line="190"/>
         <source>Please click the upper left point of page {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="361"/>
+        <location filename="../mainwindow.py" line="196"/>
         <source>Please click the upper left point of any page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="367"/>
+        <location filename="../mainwindow.py" line="202"/>
         <source>Height should be set first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="386"/>
+        <location filename="../mainwindow.py" line="221"/>
         <source>Please click the lower right point of the page you clicked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -130,12 +130,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="94"/>
+        <location filename="../mainwindow.py" line="109"/>
         <source>Page {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="229"/>
+        <location filename="../mainwindow.py" line="74"/>
         <source>Finished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -157,7 +157,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="85"/>
+        <location filename="../mainwindow.py" line="100"/>
         <source>&lt;h3&gt;PdfHandoutCrop {0}&lt;/h3&gt;&lt;br&gt;
 Author: Hsiu-Ming Chang&lt;br&gt;
 e-mail: cges30901@gmail.com&lt;br&gt;
@@ -165,12 +165,12 @@ License: GPL v3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="236"/>
+        <location filename="../mainwindow.py" line="138"/>
         <source>Page can not be found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="236"/>
+        <location filename="../mainwindow.py" line="138"/>
         <source>Page can not be found. Auto detect only works if pages have border.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -210,12 +210,12 @@ License: GPL v3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="42"/>
+        <location filename="../mainwindow.py" line="71"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.py" line="229"/>
+        <location filename="../mainwindow.py" line="74"/>
         <source>Cropped PDF saved</source>
         <translation type="unfinished"></translation>
     </message>
@@ -227,6 +227,11 @@ License: GPL v3</source>
     <message>
         <location filename="../mainwindow.ui" line="374"/>
         <source>Crop with &amp;PyPDF2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.py" line="71"/>
+        <source>Cropping with PyPDF2 failed. Try cropping with PyMuPDF instead.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
