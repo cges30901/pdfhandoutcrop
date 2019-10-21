@@ -1,3 +1,7 @@
+version 0.99.0 2019.10.21
+-Show message when cropping with PyPDF2 failed
+-Allow auto detect from command line
+
 version 0.7.0 2019.07.03
 -Allow user to use either PyPDF2 or PyMuPDF to crop
 -other changes

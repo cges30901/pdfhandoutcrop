@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name:           pdfhandoutcrop
-Version:        0.7.0
+Version:        0.99.0
 Release:        0
 License:        GPL-3.0+
 Summary:        A tool to crop pdf handout with multiple pages per sheet
