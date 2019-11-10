@@ -183,41 +183,19 @@ def save_pymupdf(fileInput, fileOutput, cropboxList, width, height):
         sheetWidth=page0.MediaBox[2]
         sheetHeight=page0.MediaBox[3]
 
-    #if lowerLeft of original mediaBox is not [0,0],
-    #new mediaBox should be adjusted according to that.
-    #FIXME: only fixed when page is not rotated currently.
-    mat = page0._getTransformation()
-    shift=mat.e
-
     for i in range(numPages):
         for j in range(pagesPerSheet):
-            # original cropbox not considered yet
-            pdfOutput.insertPDF(document, i, i)
-            insertedPage = i * pagesPerSheet + j
-            page_crop = pdfOutput.loadPage(insertedPage)
-            if rotation==90:
-                page_crop.setCropBox(fitz.Rect(
-                    sheetHeight-cropboxList[j][1]/scaling-height,
-                    sheetWidth-cropboxList[j][0]/scaling-width,
-                    sheetHeight-cropboxList[j][1]/scaling,
-                    sheetWidth-cropboxList[j][0]/scaling))
-            elif rotation==180:
-                page_crop.setCropBox(fitz.Rect(
-                    sheetWidth-cropboxList[j][0]/scaling-width,
-                    cropboxList[j][1]/scaling,
-                    sheetWidth-cropboxList[j][0]/scaling,
-                    cropboxList[j][1]/scaling+height))
-            elif rotation==270:
-                page_crop.setCropBox(fitz.Rect(
-                    cropboxList[j][1]/scaling,
-                    cropboxList[j][0]/scaling,
-                    cropboxList[j][1]/scaling+height,
-                    cropboxList[j][0]/scaling+width))
-            else: #not rotated
-                page_crop.setCropBox(fitz.Rect(
-                    cropboxList[j][0]/scaling-shift,
-                    sheetHeight-cropboxList[j][1]/scaling-height,
-                    cropboxList[j][0]/scaling+width-shift,
-                    sheetHeight-cropboxList[j][1]/scaling))
-    pdfOutput.save(fileOutput, 4)
+            if rotation==90 or rotation==270:
+                page=pdfOutput.newPage(-1, height, width)
+            else: #rotation is 0 or 180
+                page=pdfOutput.newPage(-1, width, height)
+
+            page.setRotation(rotation)
+            page.showPDFpage(page.rect, document, i, clip=fitz.Rect(
+                cropboxList[j][0]/scaling,
+                sheetHeight-cropboxList[j][1]/scaling-height,
+                cropboxList[j][0]/scaling+width,
+                sheetHeight-cropboxList[j][1]/scaling))
+
+    pdfOutput.save(fileOutput, 3)
     pdfOutput.close()
