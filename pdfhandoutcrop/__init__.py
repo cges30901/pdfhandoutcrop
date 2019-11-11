@@ -32,20 +32,6 @@ def commandline(args):
     return 0
 
 def main():
-
-    app = QApplication(sys.argv)
-
-    translator=QTranslator()
-    translator.load(QLocale(), "pdfhandoutcrop", "_",
-        os.path.dirname(os.path.abspath(__file__))+"/language")
-    app.installTranslator(translator)
-
-    #load Qt translation
-    qtTranslator=QTranslator()
-    qtTranslator.load(QLocale(), "qt", "_",
-        QLibraryInfo.location(QLibraryInfo.TranslationsPath))
-    app.installTranslator(qtTranslator)
-
     parser = argparse.ArgumentParser(description='A tool to crop pdf handout with multiple pages per sheet.')
     parser.add_argument("fileInput", metavar='FILE', nargs='?', default="", help='input file')
     parser.add_argument("-o", "--output", default="", help='output file')
@@ -55,6 +41,18 @@ def main():
     if args.auto:
         return commandline(args)
     else:
+        app = QApplication(sys.argv)
+
+        translator=QTranslator()
+        translator.load(QLocale(), "pdfhandoutcrop", "_",
+            os.path.dirname(os.path.abspath(__file__))+"/language")
+        app.installTranslator(translator)
+
+        #load Qt translation
+        qtTranslator=QTranslator()
+        qtTranslator.load(QLocale(), "qt", "_",
+            QLibraryInfo.location(QLibraryInfo.TranslationsPath))
+        app.installTranslator(qtTranslator)
         w = MainWindow(args)
         w.showMaximized()
         sys.exit(app.exec_())
