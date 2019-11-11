@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1146</width>
+    <width>1214</width>
     <height>499</height>
    </rect>
   </property>
@@ -31,8 +31,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1126</width>
-         <height>327</height>
+         <width>1194</width>
+         <height>324</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -270,8 +270,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1146</width>
-     <height>32</height>
+     <width>1214</width>
+     <height>35</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -359,15 +359,15 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Crop with Py&amp;MuPDF</string>
    </property>
   </action>
   <action name="actionPypdf2">
    <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">

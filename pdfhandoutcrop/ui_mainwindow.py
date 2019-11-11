@@ -2,9 +2,10 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.2
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -12,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1146, 499)
+        MainWindow.resize(1214, 499)
         self.centralWidget = QtWidgets.QWidget(MainWindow)
         self.centralWidget.setObjectName("centralWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralWidget)
@@ -28,7 +29,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1126, 327))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1194, 324))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout_5.setContentsMargins(11, 11, 11, 11)
@@ -142,7 +143,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout_3)
         MainWindow.setCentralWidget(self.centralWidget)
         self.menuBar = QtWidgets.QMenuBar(MainWindow)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 1146, 32))
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 1214, 35))
         self.menuBar.setObjectName("menuBar")
         self.menu_File = QtWidgets.QMenu(self.menuBar)
         self.menu_File.setObjectName("menu_File")
@@ -175,10 +176,10 @@ class Ui_MainWindow(object):
         self.action_Blog.setObjectName("action_Blog")
         self.actionPymupdf = QtWidgets.QAction(MainWindow)
         self.actionPymupdf.setCheckable(True)
+        self.actionPymupdf.setChecked(True)
         self.actionPymupdf.setObjectName("actionPymupdf")
         self.actionPypdf2 = QtWidgets.QAction(MainWindow)
         self.actionPypdf2.setCheckable(True)
-        self.actionPypdf2.setChecked(True)
         self.actionPypdf2.setObjectName("actionPypdf2")
         self.menu_File.addAction(self.action_Open)
         self.menu_File.addAction(self.action_Save)
@@ -230,5 +231,3 @@ class Ui_MainWindow(object):
         self.action_Blog.setText(_translate("MainWindow", "&Blog"))
         self.actionPymupdf.setText(_translate("MainWindow", "Crop with Py&MuPDF"))
         self.actionPypdf2.setText(_translate("MainWindow", "Crop with &PyPDF2"))
-
-

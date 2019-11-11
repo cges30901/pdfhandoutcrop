@@ -20,15 +20,9 @@ def commandline(args):
     if cropbox==None:  #Page can not be found
         print("Page can not be found. Auto detect only works if pages have border.")
         return 2
-    try:
-        pdf.save_pypdf2(args.fileInput, args.output,
-            [[x[0]/scaling, x[1]/scaling] for x in cropbox.toList(0, image.height())],
-                cropbox.width / scaling, cropbox.height / scaling)
-    except:
-        print("Cropping with PyPDF2 failed. Trying cropping with PyMuPDF...")
-        pdf.save_pymupdf(args.fileInput, args.output,
-            [[x[0]/scaling, x[1]/scaling] for x in cropbox.toList(0, image.height())],
-                cropbox.width / scaling, cropbox.height / scaling)
+    pdf.save_pymupdf(args.fileInput, args.output,
+        [[x[0]/scaling, x[1]/scaling] for x in cropbox.toList(0, image.height())],
+            cropbox.width / scaling, cropbox.height / scaling)
     return 0
 
 def main():
