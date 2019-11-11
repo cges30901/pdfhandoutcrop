@@ -14,6 +14,7 @@ def commandline(args):
     except:
         print("Cannot open input file")
         return 1
+    scaling=2.0
     image=pdf.renderPage(document, 0)
     cropbox=pdf.autodetect(image)
     if cropbox==None:  #Page can not be found
@@ -21,11 +22,13 @@ def commandline(args):
         return 2
     try:
         pdf.save_pypdf2(args.fileInput, args.output,
-            cropbox.toList(0, image.height()), cropbox.width, cropbox.height)
+            [[x[0]/scaling, x[1]/scaling] for x in cropbox.toList(0, image.height())],
+                cropbox.width / scaling, cropbox.height / scaling)
     except:
         print("Cropping with PyPDF2 failed. Trying cropping with PyMuPDF...")
         pdf.save_pymupdf(args.fileInput, args.output,
-            cropbox.toList(0, image.height()), cropbox.width, cropbox.height)
+            [[x[0]/scaling, x[1]/scaling] for x in cropbox.toList(0, image.height())],
+                cropbox.width / scaling, cropbox.height / scaling)
     return 0
 
 def main():

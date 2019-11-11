@@ -62,11 +62,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.fileOutput=filename
             if self.actionPymupdf.isChecked():
                 pdf.save_pymupdf(self.fileInput, self.fileOutput,
-                    self.page_position, self.spbWidth.value(), self.spbHeight.value())
+                    [[x[0]/self.scaling, x[1]/self.scaling] for x in self.page_position],
+                    self.spbWidth.value() / self.scaling, self.spbHeight.value() / self.scaling)
             else:
                 try:
                     pdf.save_pypdf2(self.fileInput, self.fileOutput,
-                        self.page_position, self.spbWidth.value(), self.spbHeight.value())
+                        [[x[0]/self.scaling, x[1]/self.scaling] for x in self.page_position],
+                        self.spbWidth.value() / self.scaling, self.spbHeight.value() / self.scaling)
                 except:
                     QMessageBox.warning(self, self.tr("Error"),
                         self.tr("Cropping with PyPDF2 failed. Try cropping with PyMuPDF instead."))
@@ -125,7 +127,7 @@ License: GPL v3''').format(version))
             self.btnNext.setEnabled(False)
         else:
             self.btnNext.setEnabled(True)
-        self.image=pdf.renderPage(self.document, self.current_page)
+        self.image=pdf.renderPage(self.document, self.current_page, self.scaling)
         self.pixmap=QPixmap.fromImage(self.image)
         self.needPaint=True
         self.labelSelectPoint.setPixmap(self.pixmap)

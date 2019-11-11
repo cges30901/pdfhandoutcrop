@@ -35,8 +35,7 @@ class Cropbox():
                     sheetHeight-pageHeight-self.rows[i%len(self.rows)]])
         return li
 
-def renderPage(document, pageNum):
-    scaling=2.0
+def renderPage(document, pageNum, scaling=2.0):
     page = document.loadPage(pageNum)
     pix = page.getPixmap(fitz.Matrix(scaling, 0, 0, scaling, 0, 0), alpha = False)
     samples = pix.samples
@@ -101,7 +100,6 @@ def findFirstPoint(image):
     return QPoint(-1, -1)
 
 def save_pypdf2(fileInput, fileOutput, cropboxList, width, height):
-    scaling=2.0
     pdfInput=PdfFileReader(fileInput)
     pdfOutput=PdfFileWriter()
     numPages=pdfInput.getNumPages()
@@ -109,8 +107,6 @@ def save_pypdf2(fileInput, fileOutput, cropboxList, width, height):
     #have same mediaBox, so I use copy.copy() to workaround this problem.
     page0=copy.copy(pdfInput.getPage(0))
     pagesPerSheet=len(cropboxList)
-    width=width/scaling
-    height=height/scaling
 
     rotation=page0.get('/Rotate')
     #make rotation 0, 90, 180 or 270
@@ -142,39 +138,36 @@ def save_pypdf2(fileInput, fileOutput, cropboxList, width, height):
         for j in range(pagesPerSheet):
             page_crop=copy.copy(page)
             if rotation==90:
-                page_crop.mediaBox.lowerLeft=(sheetHeight-cropboxList[j][1]/scaling-height,
-                    cropboxList[j][0]/scaling+width)
-                page_crop.mediaBox.upperRight=(sheetHeight-cropboxList[j][1]/scaling,
-                    cropboxList[j][0]/scaling)
+                page_crop.mediaBox.lowerLeft=(sheetHeight-cropboxList[j][1]-height,
+                    cropboxList[j][0]+width)
+                page_crop.mediaBox.upperRight=(sheetHeight-cropboxList[j][1],
+                    cropboxList[j][0])
             elif rotation==180:
-                page_crop.mediaBox.lowerLeft=(sheetWidth-cropboxList[j][0]/scaling-width,
-                    sheetHeight-cropboxList[j][1]/scaling)
-                page_crop.mediaBox.upperRight=(sheetWidth-cropboxList[j][0]/scaling,
-                    sheetHeight-cropboxList[j][1]/scaling-height)
+                page_crop.mediaBox.lowerLeft=(sheetWidth-cropboxList[j][0]-width,
+                    sheetHeight-cropboxList[j][1])
+                page_crop.mediaBox.upperRight=(sheetWidth-cropboxList[j][0],
+                    sheetHeight-cropboxList[j][1]-height)
             elif rotation==270:
-                page_crop.mediaBox.lowerLeft=(cropboxList[j][1]/scaling,
-                    sheetWidth-cropboxList[j][0]/scaling)
-                page_crop.mediaBox.upperRight=(cropboxList[j][1]/scaling+height,
-                    sheetWidth-cropboxList[j][0]/scaling-width)
+                page_crop.mediaBox.lowerLeft=(cropboxList[j][1],
+                    sheetWidth-cropboxList[j][0])
+                page_crop.mediaBox.upperRight=(cropboxList[j][1]+height,
+                    sheetWidth-cropboxList[j][0]-width)
             else: #not rotated
-                page_crop.mediaBox.lowerLeft=(cropboxList[j][0]/scaling+lowerLeftX_old,
-                    cropboxList[j][1]/scaling+height+lowerLeftY_old)
-                page_crop.mediaBox.upperRight=(cropboxList[j][0]/scaling+width+lowerLeftX_old,
-                    cropboxList[j][1]/scaling+lowerLeftY_old)
+                page_crop.mediaBox.lowerLeft=(cropboxList[j][0]+lowerLeftX_old,
+                    cropboxList[j][1]+height+lowerLeftY_old)
+                page_crop.mediaBox.upperRight=(cropboxList[j][0]+width+lowerLeftX_old,
+                    cropboxList[j][1]+lowerLeftY_old)
             pdfOutput.addPage(page_crop)
     outputStream = open(fileOutput, "wb")
     pdfOutput.write(outputStream)
     outputStream.close()
 
 def save_pymupdf(fileInput, fileOutput, cropboxList, width, height):
-    scaling=2.0
     document=fitz.open(fileInput)
     pdfOutput=fitz.open()
     numPages=document.pageCount
     page0=document.loadPage(0)
     pagesPerSheet=len(cropboxList)
-    width=width/scaling
-    height=height/scaling
     rotation=page0.rotation
     if rotation==90 or rotation==270: #MediaBox is [0,0,height,width]
         sheetWidth=page0.MediaBox[3]
@@ -192,10 +185,10 @@ def save_pymupdf(fileInput, fileOutput, cropboxList, width, height):
 
             page.setRotation(rotation)
             page.showPDFpage(page.rect, document, i, clip=fitz.Rect(
-                cropboxList[j][0]/scaling,
-                sheetHeight-cropboxList[j][1]/scaling-height,
-                cropboxList[j][0]/scaling+width,
-                sheetHeight-cropboxList[j][1]/scaling))
+                cropboxList[j][0],
+                sheetHeight-cropboxList[j][1]-height,
+                cropboxList[j][0]+width,
+                sheetHeight-cropboxList[j][1]))
 
     pdfOutput.save(fileOutput, 3)
     pdfOutput.close()
