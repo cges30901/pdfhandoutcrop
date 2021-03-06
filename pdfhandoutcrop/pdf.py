@@ -37,7 +37,7 @@ class Cropbox():
 
 def renderPage(document, pageNum, scaling=2.0):
     page = document.loadPage(pageNum)
-    pix = page.getPixmap(fitz.Matrix(scaling, 0, 0, scaling, 0, 0), alpha = False)
+    pix = page.getPixmap(matrix = fitz.Matrix(scaling, 0, 0, scaling, 0, 0))
     samples = pix.samples
     image=QImage(samples, pix.width, pix.height, pix.stride, QImage.Format_RGB888);
     return image
