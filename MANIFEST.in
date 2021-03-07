@@ -6,7 +6,7 @@ include LICENSE.txt
 
 include CHANGELOG
 include pdfhandoutcrop.desktop
-packaging-windows.bat
+include packaging-windows.bat
 include icons/pdfhandoutcrop.ico
 recursive-include icons pdfhandoutcrop.png
 include pdfhandoutcrop/pdfhandoutcrop.pro
