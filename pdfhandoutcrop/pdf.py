@@ -35,8 +35,8 @@ class Cropbox:
         return li
 
 def renderPage(document, pageNum, scaling=2.0):
-    page = document.loadPage(pageNum)
-    pix = page.getPixmap(matrix = fitz.Matrix(scaling, 0, 0, scaling, 0, 0))
+    page = document.load_page(pageNum)
+    pix = page.get_pixmap(matrix = fitz.Matrix(scaling, 0, 0, scaling, 0, 0))
     samples = pix.samples
     image=QImage(samples, pix.width, pix.height, pix.stride, QImage.Format_RGB888)
     return image
@@ -164,26 +164,26 @@ def save_pypdf2(fileInput, fileOutput, cropboxList, width, height):
 def save_pymupdf(fileInput, fileOutput, cropboxList, width, height):
     document=fitz.open(fileInput)
     pdfOutput=fitz.open()
-    numPages=document.pageCount
-    page0=document.loadPage(0)
+    numPages=document.page_count
+    page0=document.load_page(0)
     pagesPerSheet=len(cropboxList)
     rotation=page0.rotation
     if rotation==90 or rotation==270: #MediaBox is [0,0,height,width]
-        sheetWidth=page0.MediaBox[3]
-        sheetHeight=page0.MediaBox[2]
+        sheetWidth=page0.mediabox[3]
+        sheetHeight=page0.mediabox[2]
     else : #MediaBox is [0,0,height,width]
-        sheetWidth=page0.MediaBox[2]
-        sheetHeight=page0.MediaBox[3]
+        sheetWidth=page0.mediabox[2]
+        sheetHeight=page0.mediabox[3]
 
     for i in range(numPages):
         for j in range(pagesPerSheet):
             if rotation==90 or rotation==270:
-                page=pdfOutput.newPage(-1, height, width)
+                page=pdfOutput.new_page(-1, height, width)
             else: #rotation is 0 or 180
-                page=pdfOutput.newPage(-1, width, height)
+                page=pdfOutput.new_page(-1, width, height)
 
-            page.setRotation(rotation)
-            page.showPDFpage(page.rect, document, i, clip=fitz.Rect(
+            page.set_rotation(rotation)
+            page.show_pdf_page(page.rect, document, i, clip=fitz.Rect(
                 cropboxList[j][0],
                 sheetHeight-cropboxList[j][1]-height,
                 cropboxList[j][0]+width,

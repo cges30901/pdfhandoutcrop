@@ -121,7 +121,7 @@ License: GPL v3''').format(version))
             self.btnPrevious.setEnabled(False)
         else:
             self.btnPrevious.setEnabled(True)
-        if self.current_page==self.document.pageCount-1:
+        if self.current_page==self.document.page_count-1:
             self.btnNext.setEnabled(False)
         else:
             self.btnNext.setEnabled(True)
@@ -129,7 +129,7 @@ License: GPL v3''').format(version))
         self.pixmap=QPixmap.fromImage(self.image)
         self.needPaint=True
         self.labelSelectPoint.setPixmap(self.pixmap)
-        self.labelPageNum.setText(str(self.current_page+1)+" / "+str(self.document.pageCount))
+        self.labelPageNum.setText(str(self.current_page+1)+" / "+str(self.document.page_count))
 
     @pyqtSlot(bool)
     def on_btnAutoDetect_clicked(self):
