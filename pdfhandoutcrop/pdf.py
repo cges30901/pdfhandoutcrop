@@ -1,12 +1,11 @@
 import copy
-import os
 import fitz
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QImage
 
-class Cropbox():
-    def __init__(self, width=0, height=0, columns=[], rows=[]):
+class Cropbox:
+    def __init__(self, width, height, columns, rows):
         self.width=width
         self.height=height
         self.columns=columns
@@ -39,7 +38,7 @@ def renderPage(document, pageNum, scaling=2.0):
     page = document.loadPage(pageNum)
     pix = page.getPixmap(matrix = fitz.Matrix(scaling, 0, 0, scaling, 0, 0))
     samples = pix.samples
-    image=QImage(samples, pix.width, pix.height, pix.stride, QImage.Format_RGB888);
+    image=QImage(samples, pix.width, pix.height, pix.stride, QImage.Format_RGB888)
     return image
 
 def autodetect(image):

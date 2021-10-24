@@ -1,10 +1,8 @@
-import copy
 import os
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog, QActionGroup
-from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent, QUrl
-from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon, QDesktopServices, QImage
+from PyQt5.QtCore import pyqtSlot, Qt, QEvent, QUrl
+from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon, QDesktopServices
 import fitz
-from PyPDF2 import PdfFileReader, PdfFileWriter
 from pdfhandoutcrop.ui_mainwindow import Ui_MainWindow
 from pdfhandoutcrop.setlayoutdialog import SetLayoutDialog
 from pdfhandoutcrop import pdf

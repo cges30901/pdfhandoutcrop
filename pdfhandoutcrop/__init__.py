@@ -4,7 +4,6 @@ import argparse
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QTranslator, QLocale, QLibraryInfo
 import fitz
-from PyPDF2 import PdfFileReader, PdfFileWriter
 from pdfhandoutcrop.mainwindow import MainWindow
 from pdfhandoutcrop import pdf
 
