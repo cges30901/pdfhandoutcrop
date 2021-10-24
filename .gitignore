@@ -102,5 +102,8 @@ ENV/
 # eric 6 project files
 .eric6project/
 
+# PyCharm project files
+.idea/
+
 # Qt translation files
 pdfhandoutcrop/language/*.qm
