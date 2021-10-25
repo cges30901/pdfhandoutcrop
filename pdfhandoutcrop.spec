@@ -22,7 +22,6 @@ Group:          Productivity/Other
 Source:         https://files.pythonhosted.org/packages/source/p/pdfhandoutcrop/pdfhandoutcrop-%{version}.tar.gz
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
-Requires:       python3-PyPDF2
 Requires:       python3-qt5
 Requires:       python3-PyMuPDF
 %if 0%{?suse_version}

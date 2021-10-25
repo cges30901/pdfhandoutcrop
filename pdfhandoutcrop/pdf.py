@@ -1,6 +1,4 @@
-import copy
 import fitz
-from PyPDF2 import PdfFileReader, PdfFileWriter
 from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QImage
 
@@ -101,70 +99,6 @@ def findFirstPoint(image):
                         return QPoint(xOffset, yOffset)
     # cannot find a page
     return QPoint(-1, -1)
-
-
-def save_pypdf2(fileInput, fileOutput, cropboxList, width, height):
-    pdfInput = PdfFileReader(fileInput)
-    pdfOutput = PdfFileWriter()
-    numPages = pdfInput.getNumPages()
-    # Getting mediaBox of page 0 directly makes output pages of first sheet
-    # have same mediaBox, so I use copy.copy() to workaround this problem.
-    page0 = copy.copy(pdfInput.getPage(0))
-    pagesPerSheet = len(cropboxList)
-
-    rotation = page0.get('/Rotate')
-    # make rotation 0, 90, 180 or 270
-    if rotation is None:
-        rotation = 0
-    elif rotation < 0:
-        rotation = rotation % 360 + 360
-    # operation above might change rotation to 360,
-    # so "if" is used instead of "elif"
-    if rotation >= 360:
-        rotation = rotation % 360
-
-    if rotation == 90 or rotation == 270:  # mediaBox is [0,0,height,width]
-        sheetWidth = page0.mediaBox[3].as_numeric()
-        sheetHeight = page0.mediaBox[2].as_numeric()
-    else:  # mediaBox is [0,0,width,height]
-        sheetWidth = page0.mediaBox[2]
-        sheetHeight = page0.mediaBox[3]
-
-    # if lowerLeft of original mediaBox is not [0,0],
-    # new mediaBox should be adjusted according to that.
-    # FIXME: only fixed when page is not rotated currently.
-    mediaBox_old = page0.mediaBox
-    lowerLeftX_old = mediaBox_old.lowerLeft[0].as_numeric()
-    lowerLeftY_old = mediaBox_old.lowerLeft[1].as_numeric()
-
-    for i in range(numPages):
-        page = pdfInput.getPage(i)
-        for j in range(pagesPerSheet):
-            page_crop = copy.copy(page)
-            if rotation == 90:
-                page_crop.mediaBox.lowerLeft = (sheetHeight - cropboxList[j][1] - height,
-                                                cropboxList[j][0] + width)
-                page_crop.mediaBox.upperRight = (sheetHeight - cropboxList[j][1],
-                                                 cropboxList[j][0])
-            elif rotation == 180:
-                page_crop.mediaBox.lowerLeft = (sheetWidth - cropboxList[j][0] - width,
-                                                sheetHeight - cropboxList[j][1])
-                page_crop.mediaBox.upperRight = (sheetWidth - cropboxList[j][0],
-                                                 sheetHeight - cropboxList[j][1] - height)
-            elif rotation == 270:
-                page_crop.mediaBox.lowerLeft = (cropboxList[j][1],
-                                                sheetWidth - cropboxList[j][0])
-                page_crop.mediaBox.upperRight = (cropboxList[j][1] + height,
-                                                 sheetWidth - cropboxList[j][0] - width)
-            else:  # not rotated
-                page_crop.mediaBox.lowerLeft = (cropboxList[j][0] + lowerLeftX_old,
-                                                cropboxList[j][1] + height + lowerLeftY_old)
-                page_crop.mediaBox.upperRight = (cropboxList[j][0] + width + lowerLeftX_old,
-                                                 cropboxList[j][1] + lowerLeftY_old)
-            pdfOutput.addPage(page_crop)
-    outputStream = open(fileOutput, "wb")
-    pdfOutput.write(outputStream)
-    outputStream.close()
 
 
 def save_pymupdf(fileInput, fileOutput, cropboxList, width, height):

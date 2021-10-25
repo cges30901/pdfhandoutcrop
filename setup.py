@@ -40,7 +40,7 @@ setup(
         'Donate': 'https://cges30901.github.io/pdfhandoutcrop/donate.html',
     },
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
-    install_requires=['PyQt5', 'PyMuPDF', 'PyPDF2'],
+    install_requires=['PyQt5', 'PyMuPDF'],
     python_requires='>=3',
     scripts=['scripts/pdfhandoutcrop'],
     package_data={

@@ -14,9 +14,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.setWindowIcon(QIcon(os.path.dirname(os.path.abspath(__file__)) + '/pdfhandoutcrop.png'))
-        group = QActionGroup(self)
-        group.addAction(self.actionPymupdf)
-        group.addAction(self.actionPypdf2)
         self.page_position = [[0, 0]] * self.spbPagesPerSheet.value()
         for i in range(self.spbPagesPerSheet.value()):
             self.comboPosition.addItem(self.tr("Page {0}").format(i + 1))
@@ -59,19 +56,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                                self.tr("PDF documents (*.pdf)"))[0]
         if filename != "":
             self.fileOutput = filename
-            if self.actionPymupdf.isChecked():
-                pdf.save_pymupdf(self.fileInput, self.fileOutput,
-                                 [[x[0] / self.scaling, x[1] / self.scaling] for x in self.page_position],
-                                 self.spbWidth.value() / self.scaling, self.spbHeight.value() / self.scaling)
-            else:
-                try:
-                    pdf.save_pypdf2(self.fileInput, self.fileOutput,
-                                    [[x[0] / self.scaling, x[1] / self.scaling] for x in self.page_position],
-                                    self.spbWidth.value() / self.scaling, self.spbHeight.value() / self.scaling)
-                except:
-                    QMessageBox.warning(self, self.tr("Error"),
-                                        self.tr("Cropping with PyPDF2 failed. Try cropping with PyMuPDF instead."))
-                    return
+            pdf.save_pymupdf(self.fileInput, self.fileOutput,
+                             [[x[0] / self.scaling, x[1] / self.scaling] for x in self.page_position],
+                             self.spbWidth.value() / self.scaling, self.spbHeight.value() / self.scaling)
             QMessageBox.information(self, self.tr("Finished"), self.tr("Cropped PDF saved"))
 
     @pyqtSlot()
