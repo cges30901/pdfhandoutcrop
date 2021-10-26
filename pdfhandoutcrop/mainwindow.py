@@ -112,7 +112,12 @@ License: GPL v3''').format(version))
             self.btnNext.setEnabled(False)
         else:
             self.btnNext.setEnabled(True)
-        self.image = pdf.renderPage(self.document, self.current_page, self.scaling)
+        try:
+            self.image = pdf.renderPage(self.document, self.current_page, self.scaling)
+        except ValueError as e:
+            QMessageBox.warning(self, self.tr("Error"), self.tr("Cannot render page: ") + str(e))
+            self.labelSelectPoint.clear()
+            return
         self.pixmap = QPixmap.fromImage(self.image)
         self.needPaint = True
         self.labelSelectPoint.setPixmap(self.pixmap)
