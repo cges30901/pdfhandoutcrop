@@ -29,11 +29,10 @@ def commandline(args):
 def main():
     parser = argparse.ArgumentParser(description='A tool to crop pdf handout with multiple pages per sheet.')
     parser.add_argument("fileInput", metavar='FILE', nargs='?', default="", help='input file')
-    parser.add_argument("-o", "--output", default="", help='output file')
-    parser.add_argument("-a", "--auto", action='store_true', help='auto detect')
+    parser.add_argument("-o", "--output", default="", help='auto detect and save to OUTPUT file without showing GUI')
     args = parser.parse_args()
 
-    if args.auto:
+    if args.output:
         return commandline(args)
     else:
         app = QApplication(sys.argv)

@@ -22,7 +22,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # self.fileInput and self.fileOutput need to be defined first
         # because QFileDialog needs them
         self.fileInput = args.fileInput
-        self.fileOutput = args.output
+        self.fileOutput = ""
         self.set = 0
         self.needPaint = False
         self.labelSelectPoint.installEventFilter(self)
