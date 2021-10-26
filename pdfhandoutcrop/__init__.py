@@ -11,8 +11,8 @@ from pdfhandoutcrop import pdf
 def commandline(args):
     try:
         document = fitz.open(args.fileInput)
-    except:
-        print("Cannot open input file")
+    except (RuntimeError, ValueError) as e:
+        print("Cannot open input file:", e)
         return 1
     scaling = 2.0
     image = pdf.renderPage(document, 0)

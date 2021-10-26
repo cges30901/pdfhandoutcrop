@@ -1,5 +1,5 @@
 import os
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog, QActionGroup
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog
 from PyQt5.QtCore import pyqtSlot, Qt, QEvent, QUrl
 from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon, QDesktopServices
 import fitz
@@ -40,8 +40,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def open(self, filename):
         try:
             self.document = fitz.open(filename)
-        except:
-            QMessageBox.warning(self, self.tr("Error"), self.tr("Cannot open input file"))
+        except (RuntimeError, ValueError) as e:
+            QMessageBox.warning(self, self.tr("Error"), self.tr("Cannot open input file: ") + str(e))
             self.labelSelectPoint.setText("")
             return
         self.btnAutoDetect.setEnabled(True)
@@ -121,7 +121,7 @@ License: GPL v3''').format(version))
     @pyqtSlot(bool)
     def on_btnAutoDetect_clicked(self):
         cropbox = pdf.autodetect(self.image)
-        if cropbox == None:  # Page can not be found
+        if cropbox is None:  # Page can not be found
             QMessageBox.warning(self, self.tr("Page can not be found"),
                                 self.tr("Page can not be found. Auto detect only works if pages have border."))
             return
@@ -223,7 +223,7 @@ License: GPL v3''').format(version))
             painter = QPainter()
             painter.begin(pixmap_draw)
             painter.setPen(Qt.red)
-            path = [QPainterPath() for i in range(self.spbPagesPerSheet.value())]
+            path = [QPainterPath()] * self.spbPagesPerSheet.value()
             for i in range(self.spbPagesPerSheet.value()):
                 sheetHeight = self.image.height()
                 pageHeight = self.spbHeight.value()
