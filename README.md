@@ -1,3 +1,6 @@
+# Not actively maintained
+I am no longer interested in this project. I can try to fix this if it is broken, but I will probably not add new features.
+
 # PdfHandoutCrop
 A tool to crop pdf handout with multiple pages per sheet
 
