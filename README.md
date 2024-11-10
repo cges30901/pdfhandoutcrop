@@ -9,8 +9,5 @@ PdfHandoutCrop is a tool to crop pdf handout with multiple pages per sheet. Some
 # Issues
 If the PDF file is not cropped correctly or content in  output file is different from original file, there is a bug in PdfHandoutCrop. Please [report an issue](https://github.com/cges30901/pdfhandoutcrop/issues).
 
-# Homepage
-The home page for PdfHandoutCrop is at <https://cges30901.github.io/pdfhandoutcrop/>
-
 # Download
-To download PdfHandoutCrop, please go to the [download page](https://cges30901.github.io/pdfhandoutcrop/download.html)
+You can download from [PyPI](https://pypi.org/project/pdfhandoutcrop/)
