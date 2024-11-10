@@ -1,5 +1,5 @@
 from pdfhandoutcrop.ui_setlayoutdialog import Ui_SetLayoutDialog
-from PyQt5.QtWidgets import QDialog
+from PyQt6.QtWidgets import QDialog
 
 
 class SetLayoutDialog(QDialog, Ui_SetLayoutDialog):

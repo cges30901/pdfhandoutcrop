@@ -1,7 +1,7 @@
 import os
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog
-from PyQt5.QtCore import pyqtSlot, Qt, QEvent, QUrl
-from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QIcon, QDesktopServices
+from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QDialog
+from PyQt6.QtCore import pyqtSlot, Qt, QEvent, QUrl
+from PyQt6.QtGui import QColorConstants, QPixmap, QPainter, QPainterPath, QIcon, QDesktopServices
 import fitz
 from pdfhandoutcrop.ui_mainwindow import Ui_MainWindow
 from pdfhandoutcrop.setlayoutdialog import SetLayoutDialog
@@ -138,7 +138,7 @@ License: GPL v3''').format(version))
             dlgSetLayout.spbRows.setValue(len(cropbox.rows))
             dlgSetLayout.spbColumns.setEnabled(False)
             dlgSetLayout.spbRows.setEnabled(False)
-        if dlgSetLayout.exec_() == QDialog.Accepted:
+        if dlgSetLayout.exec() == QDialog.accepted:
             # ask columns and rows when only one page is detected (shared border)
             if cropbox.length == 1:
                 numColumns = dlgSetLayout.spbColumns.value()
@@ -227,7 +227,7 @@ License: GPL v3''').format(version))
             pixmap_draw = QPixmap(self.pixmap)
             painter = QPainter()
             painter.begin(pixmap_draw)
-            painter.setPen(Qt.red)
+            painter.setPen(QColorConstants.Red)
             path = [QPainterPath()] * self.spbPagesPerSheet.value()
             for i in range(self.spbPagesPerSheet.value()):
                 sheetHeight = self.image.height()
@@ -277,6 +277,6 @@ License: GPL v3''').format(version))
         self.loadPdf()
 
     def eventFilter(self, watched, event):
-        if watched == self.labelSelectPoint and event.type() == QEvent.MouseButtonPress:
-            self.labelSelectPoint_mousePressed(event.x(), event.y())
+        if watched == self.labelSelectPoint and event.type() == QEvent.Type.MouseButtonPress:
+            self.labelSelectPoint_mousePressed(int(event.position().x()), int(event.position().y()))
         return False

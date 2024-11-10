@@ -1,6 +1,6 @@
 import fitz
-from PyQt5.QtCore import QPoint
-from PyQt5.QtGui import QImage
+from PyQt6.QtCore import QPoint
+from PyQt6.QtGui import QImage
 
 
 class Cropbox:
@@ -38,7 +38,7 @@ def renderPage(document, pageNum, scaling=2.0):
     page = document.load_page(pageNum)
     pix = page.get_pixmap(matrix=fitz.Matrix(scaling, 0, 0, scaling, 0, 0))
     samples = pix.samples
-    image = QImage(samples, pix.width, pix.height, pix.stride, QImage.Format_RGB888)
+    image = QImage(samples, pix.width, pix.height, pix.stride, QImage.Format.Format_RGB888)
     return image
 
 

@@ -1,8 +1,8 @@
 import sys
 import os
 import argparse
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import QTranslator, QLocale, QLibraryInfo
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import QTranslator, QLocale, QLibraryInfo
 import fitz
 from pdfhandoutcrop.mainwindow import MainWindow
 from pdfhandoutcrop import pdf
@@ -45,11 +45,11 @@ def main():
         # load Qt translation
         qtTranslator = QTranslator()
         qtTranslator.load(QLocale(), "qt", "_",
-                          QLibraryInfo.location(QLibraryInfo.TranslationsPath))
+                          QLibraryInfo.path(QLibraryInfo.LibraryPath.TranslationsPath))
         app.installTranslator(qtTranslator)
         w = MainWindow(args)
         w.showMaximized()
-        sys.exit(app.exec_())
+        sys.exit(app.exec())
 
 
 if __name__ == '__main__':
